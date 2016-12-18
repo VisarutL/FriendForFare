@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileCell" rowHeight="353" id="89q-Nq-6XO" customClass="ProfileViewCell" customModule="FriendForFare" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="353"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="89q-Nq-6XO" id="cnS-cR-OxO">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="352.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5ZK-os-qpf">
+                        <rect key="frame" x="8" y="170.5" width="359" height="34"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tel : 082-790-9881" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UuT-6g-tXP">
+                                <rect key="frame" x="116" y="0.0" width="127" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email : Visarut.leelasatjarana@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcb-SZ-VFB">
+                                <rect key="frame" x="48" y="17" width="263.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IQr-Fi-S1r">
+                        <rect key="frame" x="128" y="20" width="120" height="120"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="120" id="Jgq-5Y-Ydx"/>
+                            <constraint firstAttribute="width" constant="120" id="g18-TX-VcN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visarut Leelasatjarana" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdO-nE-yyx">
+                        <rect key="frame" x="103.5" y="150" width="168.5" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rate-0" translatesAutoresizingMaskIntoConstraints="NO" id="BR9-Eu-EOb">
+                        <rect key="frame" x="44" y="214.5" width="287" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="Dyf-Da-9ia"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aoR-J9-WfD">
+                        <rect key="frame" x="0.0" y="351" width="375" height="1"/>
+                        <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="iGT-7W-5Ay"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQG-DA-TtH">
+                        <rect key="frame" x="0.0" y="260" width="375" height="20"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="vfb-ov-ZGh"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="BR9-Eu-EOb" firstAttribute="top" secondItem="5ZK-os-qpf" secondAttribute="bottom" constant="10" id="Aet-eS-OSk"/>
+                    <constraint firstItem="aoR-J9-WfD" firstAttribute="leading" secondItem="cnS-cR-OxO" secondAttribute="leading" id="BtL-wp-Nsw"/>
+                    <constraint firstItem="vdO-nE-yyx" firstAttribute="centerX" secondItem="cnS-cR-OxO" secondAttribute="centerX" id="KWI-DV-W6V"/>
+                    <constraint firstAttribute="trailing" secondItem="aoR-J9-WfD" secondAttribute="trailing" id="LFh-W5-Uc9"/>
+                    <constraint firstAttribute="trailing" secondItem="yQG-DA-TtH" secondAttribute="trailing" id="NwL-EO-4kB"/>
+                    <constraint firstItem="IQr-Fi-S1r" firstAttribute="centerX" secondItem="cnS-cR-OxO" secondAttribute="centerX" id="R5G-ZU-jBd"/>
+                    <constraint firstItem="yQG-DA-TtH" firstAttribute="centerX" secondItem="cnS-cR-OxO" secondAttribute="centerX" id="SNh-j0-il5"/>
+                    <constraint firstAttribute="trailing" secondItem="5ZK-os-qpf" secondAttribute="trailing" constant="8" id="XMs-PI-Os0"/>
+                    <constraint firstItem="yQG-DA-TtH" firstAttribute="top" secondItem="BR9-Eu-EOb" secondAttribute="bottom" constant="20" id="Z5c-Fq-nQX"/>
+                    <constraint firstItem="vdO-nE-yyx" firstAttribute="top" secondItem="IQr-Fi-S1r" secondAttribute="bottom" constant="10" id="dOx-1V-qIb"/>
+                    <constraint firstAttribute="bottom" secondItem="aoR-J9-WfD" secondAttribute="bottom" id="fw8-VP-oW5"/>
+                    <constraint firstItem="IQr-Fi-S1r" firstAttribute="top" secondItem="cnS-cR-OxO" secondAttribute="top" constant="20" id="jd0-qf-Xms"/>
+                    <constraint firstItem="5ZK-os-qpf" firstAttribute="top" secondItem="vdO-nE-yyx" secondAttribute="bottom" id="r3E-gp-c0K"/>
+                    <constraint firstItem="5ZK-os-qpf" firstAttribute="leading" secondItem="cnS-cR-OxO" secondAttribute="leading" constant="8" id="uuX-iE-pyq"/>
+                    <constraint firstItem="yQG-DA-TtH" firstAttribute="leading" secondItem="cnS-cR-OxO" secondAttribute="leading" id="vcS-Mc-2eO"/>
+                    <constraint firstItem="BR9-Eu-EOb" firstAttribute="centerX" secondItem="cnS-cR-OxO" secondAttribute="centerX" id="vol-HH-ilQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="emailLabel" destination="kcb-SZ-VFB" id="mKf-dm-s9q"/>
+                <outlet property="fullnameLabel" destination="vdO-nE-yyx" id="Atr-6u-6JZ"/>
+                <outlet property="profileImage" destination="IQr-Fi-S1r" id="c7y-rO-SG9"/>
+                <outlet property="rateImage" destination="BR9-Eu-EOb" id="KxL-AY-cH1"/>
+                <outlet property="telLabel" destination="UuT-6g-tXP" id="g3v-o5-5Kr"/>
+            </connections>
+            <point key="canvasLocation" x="9.5" y="334.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="rate-0" width="287" height="47"/>
+    </resources>
+</document>

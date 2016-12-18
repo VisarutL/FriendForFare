@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="154" id="5bK-sW-gbw" customClass="FriendRequestViewCell" customModule="FriendForFare" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="154"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5bK-sW-gbw" id="QWu-OU-5Pf">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iMn-Oy-jGi">
+                        <rect key="frame" x="20" y="41.5" width="70" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="E6w-Da-kmz"/>
+                            <constraint firstAttribute="height" constant="70" id="sn5-Bt-Ola"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GER-bg-wkt">
+                        <rect key="frame" x="110" y="42.5" width="257" height="69"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="QJf-e6-xV6">
+                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="34"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0n-Ea-Ygz">
+                                        <rect key="frame" x="0.0" y="0.0" width="35.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0C-dv-7SU">
+                                        <rect key="frame" x="0.0" y="17" width="35.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8bf-sM-DuD">
+                                <rect key="frame" x="0.0" y="39" width="257" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M6Q-cr-WUQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="118.5" height="30"/>
+                                        <color key="backgroundColor" red="0.12156862745098039" green="0.67450980392156867" blue="0.46274509803921571" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Confirm">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="confirmAction:" destination="5bK-sW-gbw" eventType="touchUpInside" id="ObK-BW-hOY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yop-QS-Frp">
+                                        <rect key="frame" x="138.5" y="0.0" width="118.5" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Delete">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteAction:" destination="5bK-sW-gbw" eventType="touchUpInside" id="kZg-25-IGD"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="8bf-sM-DuD" secondAttribute="trailing" id="QVh-50-zwY"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="iMn-Oy-jGi" firstAttribute="centerY" secondItem="QWu-OU-5Pf" secondAttribute="centerY" id="7Zg-tX-pMK"/>
+                    <constraint firstAttribute="trailing" secondItem="GER-bg-wkt" secondAttribute="trailing" constant="8" id="SgQ-5k-vPH"/>
+                    <constraint firstItem="GER-bg-wkt" firstAttribute="centerY" secondItem="iMn-Oy-jGi" secondAttribute="centerY" id="l5v-FO-MxH"/>
+                    <constraint firstItem="iMn-Oy-jGi" firstAttribute="leading" secondItem="QWu-OU-5Pf" secondAttribute="leading" constant="20" id="mgB-n5-XWw"/>
+                    <constraint firstItem="GER-bg-wkt" firstAttribute="leading" secondItem="iMn-Oy-jGi" secondAttribute="trailing" constant="20" id="qkB-lw-UBu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="confirmButton" destination="M6Q-cr-WUQ" id="1pi-ec-wIX"/>
+                <outlet property="nameLabel" destination="n0n-Ea-Ygz" id="FBI-xY-tIX"/>
+                <outlet property="profileImage" destination="iMn-Oy-jGi" id="3oQ-nv-KLV"/>
+                <outlet property="removeButton" destination="yop-QS-Frp" id="ov0-vD-OaQ"/>
+                <outlet property="usernameLabel" destination="p0C-dv-7SU" id="maj-Ip-0LO"/>
+            </connections>
+            <point key="canvasLocation" x="48.5" y="186"/>
+        </tableViewCell>
+    </objects>
+</document>
