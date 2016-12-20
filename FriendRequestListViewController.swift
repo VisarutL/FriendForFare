@@ -8,12 +8,15 @@
 
 import UIKit
 import XLPagerTabStrip
+import Alamofire
 
 class FriendRequestListViewController:UITableViewController {
     
     let friendRequestViewCelldentifier = "Cell"
     let friendRequestViewCell = "FriendRequestViewCell"
     var itemInfo = IndicatorInfo(title: "New")
+    var friendrequestList = [NSDictionary]()
+    
     init(style: UITableViewStyle, itemInfo: IndicatorInfo) {
         self.itemInfo = itemInfo
         super.init(style: style)
@@ -25,7 +28,7 @@ class FriendRequestListViewController:UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        selectData();
         tableView.register(UINib(nibName: friendRequestViewCell, bundle: nil), forCellReuseIdentifier: friendRequestViewCelldentifier)
     }
     
@@ -40,9 +43,10 @@ class FriendRequestListViewController:UITableViewController {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         cell.delegate = self
-        cell.indexPath = indexPath as NSIndexPath
-        cell.nameLabel.text = "FullName"
-        cell.usernameLabel.text = "Username"
+        
+        let friendrequest = friendrequestList[indexPath.row]
+        cell.nameLabel.text = "\(friendrequest["fname_user"]!) \(friendrequest["lname_user"]!)"
+        cell.usernameLabel.text = "\(friendrequest["username_user"]!)"
         
         return cell
         
@@ -50,12 +54,37 @@ class FriendRequestListViewController:UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return friendrequestList.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         print("row \(indexPath.row)")
+    }
+}
+
+extension FriendRequestListViewController {
+    //    (completionHandler:@escaping (_ r:[Region]?
+    
+    func selectData() {
+        Alamofire.request("http://localhost/friendforfare/put/index.php?function=friendrequestSelect").responseJSON { response in
+            switch response.result {
+            case .success:
+                
+                if let JSON = response.result.value {
+                    //                    print("JSON: \(JSON)")
+                    for friendrequest in JSON as! NSArray {
+                        self.friendrequestList.append(friendrequest as! NSDictionary)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
