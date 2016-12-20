@@ -12,9 +12,14 @@ class ReviewViewController:UITableViewController {
     
     let reviewCelldentifier = "Cell"
     let reviewCell = "ReviewViewCell"
-    
+    var myText:String?
+    var trip = [String: Any]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let myText = myText {
+            title = myText
+            print(myText)
+        }
         
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewCelldentifier)
     }
@@ -43,5 +48,8 @@ class ReviewViewController:UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
+    }
+    @IBAction func actionCancel(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -76,7 +76,7 @@ extension AllListViewController {
 //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectData() {
-        Alamofire.request("http://localhost/friendforfare/put/index.php?function=testSelect").responseJSON { response in
+        Alamofire.request("http://localhost/friendforfare/put/index.php?function=journeySelect").responseJSON { response in
             switch response.result {
             case .success:
                 
