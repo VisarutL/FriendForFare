@@ -8,9 +8,8 @@
 
 import UIKit
 import Alamofire
-
+import MobileCoreServices
 class RegisterViewController: UIViewController {
-    
     
     @IBOutlet weak var fristNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -21,7 +20,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var checkpasswordTextField: UITextField!
     @IBOutlet weak var maleBt: UIButton!
     @IBOutlet weak var femaleBt: UIButton!
-    
+    @IBOutlet weak var profileImage: UIImageView!
     var allTextField:[UITextField] {
         return [
             fristNameTextField,
@@ -34,52 +33,22 @@ class RegisterViewController: UIViewController {
         ]
     }
     
-    var fName:String?
-    var lName:String?
-    var email:String?
-    var tel:String?
-    var username:String?
-    var password:String?
-    var checkpassword:String?
+    var picker = UIImagePickerController()
+    var genderButtonToggle = true
     
-    var genderButtonToggle = true {
-        didSet {
-            if genderButtonToggle {
-                maleBt.backgroundColor = UIColor.cyan
-                maleBt.setTitleColor(UIColor.black, for: .normal)
-                femaleBt.backgroundColor = UIColor.gray
-                femaleBt.setTitleColor(UIColor.black, for: .normal)
-            } else {
-                maleBt.backgroundColor = UIColor.gray
-                maleBt.setTitleColor(UIColor.black, for: .normal)
-                femaleBt.backgroundColor = UIColor.red
-                femaleBt.setTitleColor(UIColor.black, for: .normal)
-            }
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+        profileImageSetting()
         callService()
-        genderButtonToggle = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    func genderButtonSetting() {
-        maleBt.backgroundColor = UIColor.cyan
-    }
-    
     func callService(){
         //        selectUserService()
-        
         uploadUserImage()
-        
-        
     }
     
     func initManager() -> SessionManager {
@@ -89,10 +58,15 @@ class RegisterViewController: UIViewController {
         let manager = Alamofire.SessionManager(configuration: configuration)
         return manager
     }
-    
-    
-    
+
     @IBAction func createAction(_ sender: Any) {
+        
+        func checkTextField() -> Bool {
+            for textField in allTextField {
+                if textField.text?.characters.count == 0 { return false }
+            }
+            return true
+        }
         
         if checkTextField() {
             print("fuck new")
@@ -101,34 +75,92 @@ class RegisterViewController: UIViewController {
             let error = "alert please fill all information."
             print("error: \(error)")
         }
-
     }
-    
-    func checkTextField() -> Bool {
-        for textField in allTextField {
-            if textField.text?.characters.count == 0 { return false }
-        }
-        return true
+
+    @IBAction func uploadImage(_ sender: Any) {
+        funkNew()
     }
     
     @IBAction func cancelDidTapped(_ sender: Any) {
-        
         self.dismiss(animated: true, completion: nil)
-        
     }
     
     @IBAction func maleAction(_ sender: Any) {
-        genderButtonToggle = !genderButtonToggle
+        genderButtonToggle = true
+        maleBt.backgroundColor = UIColor.gray
+        maleBt.setTitleColor(UIColor.black, for: .normal)
+        femaleBt.backgroundColor = UIColor.textfield
+        femaleBt.setTitleColor(UIColor.black, for: .normal)
     }
-    
 
     @IBAction func femaleAction(_ sender: Any) {
-        genderButtonToggle = !genderButtonToggle
+        genderButtonToggle = false
+        maleBt.backgroundColor = UIColor.gray
+        maleBt.setTitleColor(UIColor.black, for: .normal)
+        femaleBt.backgroundColor = UIColor.textfield
+        femaleBt.setTitleColor(UIColor.black, for: .normal)
+    }
+}
+
+extension RegisterViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    func openCamera() {
+        if UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = UIImagePickerControllerSourceType.camera
+            picker.mediaTypes = [kUTTypeImage as String]
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title:"Error", message:"No camera", preferredStyle:.alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true, completion:nil)
+        }
     }
     
+    func openGallary(){
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.allowsEditing = true
+        self.present(picker, animated: true, completion: nil)
+    }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
+        dismiss(animated: true, completion: nil)
+        print("picker cancel.")
+    }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        profileImage.image = info[UIImagePickerControllerEditedImage] as? UIImage
+        picker.dismiss(animated: true, completion: nil)
+    }
     
+    func profileImageSetting(){
+        profileImage.layer.cornerRadius = profileImage.frame.size.width/2
+        profileImage.clipsToBounds = true
+    }
+    
+    func funkNew() {
+        let title = "choose profile image"
+        
+        let alert = UIAlertController(title:title, message:nil, preferredStyle:.alert)
+        let camera = UIAlertAction(title: "Camera", style: .default,
+                                   handler: { action in
+                                    self.openCamera()
+        })
+        let album = UIAlertAction(title: "Album", style: .default,
+                                  handler: { action in
+                                    self.openGallary()
+        })
+        let cancle = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(camera)
+        alert.addAction(album)
+        alert.addAction(cancle)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension RegisterViewController {

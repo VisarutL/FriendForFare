@@ -34,6 +34,21 @@ extension UIColor {
     //        return appColor
     //    }
     
+    public class var textfield: UIColor {
+        let textfield = UIColor(red: 238 / 255, green: 238 / 255, blue: 238 / 255, alpha: 1.0)
+        return textfield
+    }
+    
+    public class var redBT: UIColor {
+        let cancelbt = UIColor(red: 223 / 255, green: 54 / 255, blue: 54 / 255, alpha: 1.0)
+        return cancelbt
+    }
+    
+    public class var greenBT: UIColor {
+        let greenColor = UIColor(red: 26 / 255, green: 183 / 255, blue: 137 / 255, alpha: 1.0)
+        return greenColor
+    }
+    
     public class var tabbarColor: UIColor {
         let tabbarColor = UIColor(red: 255 / 255, green: 205 / 255, blue: 0 / 255, alpha: 1.0)
         return tabbarColor

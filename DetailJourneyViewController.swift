@@ -37,10 +37,10 @@ class DetailJourneyViewController:UIViewController {
         switch joinButtonTogle!.lowercased() {
         case "myTrip".lowercased():
             actionButton.setTitle("LET'S GO", for: .normal)
-            actionButton.backgroundColor = UIColor.green
+            actionButton.backgroundColor = UIColor.redBT
         case "otherTrip".lowercased():
             actionButton.setTitle("CANCEL", for: .normal)
-            actionButton.backgroundColor = UIColor.red
+            actionButton.backgroundColor = UIColor.greenBT
         default:
             break
         }
