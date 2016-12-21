@@ -395,6 +395,16 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionButton" destination="g2S-XR-fSo" id="RoP-OX-gR8"/>
+                        <outlet property="countLabel" destination="jWc-IP-Dx5" id="4TI-0e-PkB"/>
+                        <outlet property="datetimeLabel" destination="LUQ-LZ-Zzs" id="R1y-os-rTM"/>
+                        <outlet property="detailTextView" destination="Zjn-7T-yYa" id="soq-dy-MUa"/>
+                        <outlet property="dropoffLabel" destination="GAy-bh-M0X" id="RZk-mL-drV"/>
+                        <outlet property="pickupLabel" destination="NG9-MH-qQr" id="GyW-0e-XHu"/>
+                        <outlet property="profile1ImageView" destination="cQD-Jd-cMM" id="IcG-2X-Uoq"/>
+                        <outlet property="profile2ImageView" destination="mcO-3g-I80" id="99I-Py-vaY"/>
+                        <outlet property="profile3ImageView" destination="TCc-We-iYF" id="HqO-uA-tFp"/>
+                        <outlet property="profile4ImageView" destination="qqa-du-zM9" id="VCW-cI-8A1"/>
                         <outlet property="tableview" destination="EO4-IL-u1l" id="g15-xs-7kL"/>
                     </connections>
                 </viewController>
@@ -452,6 +462,6 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eho-RL-WEo"/>
+        <segue reference="nS5-da-YIf"/>
     </inferredMetricsTieBreakers>
 </document>

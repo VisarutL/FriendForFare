@@ -67,7 +67,7 @@ extension FriendRequestListViewController {
     //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectData() {
-        Alamofire.request("http://localhost/friendforfare/put/index.php?function=friendrequestSelect").responseJSON { response in
+        Alamofire.request("http://localhost/friendforfare/get/index.php?function=friendrequestSelect").responseJSON { response in
             switch response.result {
             case .success:
                 

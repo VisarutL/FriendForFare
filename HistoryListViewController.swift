@@ -77,7 +77,7 @@ extension HistoryListViewController {
     //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectData() {
-        Alamofire.request("http://localhost/friendforfare/put/index.php?function=historyjourneySelect").responseJSON { response in
+        Alamofire.request("http://localhost/friendforfare/get/index.php?function=historyjourneySelect").responseJSON { response in
             switch response.result {
             case .success:
                 

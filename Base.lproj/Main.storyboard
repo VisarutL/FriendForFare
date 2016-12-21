@@ -107,7 +107,7 @@
                                 <rect key="frame" x="8" y="622" width="359" height="30"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TUj-8i-4jH">
-                                        <rect key="frame" x="61" y="0.0" width="215" height="28"/>
+                                        <rect key="frame" x="61" y="2" width="215" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Not registered yet? Please." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Fi-KR-Ssf">
@@ -243,7 +243,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="86N-yK-a3V" id="0jY-dA-odX">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -759,7 +759,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M9Z-md-bkS" id="ndT-8Z-ZYI">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1085,20 +1085,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic" translatesAutoresizingMaskIntoConstraints="NO" id="zUz-Zp-Ev6">
-                                <rect key="frame" x="138" y="84" width="100" height="100"/>
+                                <rect key="frame" x="137.5" y="84" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="9kd-vU-7MM"/>
                                     <constraint firstAttribute="height" constant="100" id="XuL-xk-4p3"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACT INFOMATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVv-P0-30f">
-                                <rect key="frame" x="8" y="232" width="175" height="19.5"/>
+                                <rect key="frame" x="8" y="229" width="175" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="bEW-TG-K3e">
-                                <rect key="frame" x="8" y="256.5" width="359" height="237"/>
+                                <rect key="frame" x="8" y="249.5" width="359" height="237"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBh-Ft-r2X">
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="45"/>
@@ -1171,11 +1171,17 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="174.5" height="45"/>
                                                 <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Male"/>
+                                                <connections>
+                                                    <action selector="maleAction:" destination="SkV-yv-UPB" eventType="touchUpInside" id="g1d-JD-g3x"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tp-br-F3R">
                                                 <rect key="frame" x="184.5" y="0.0" width="174.5" height="45"/>
                                                 <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Female"/>
+                                                <connections>
+                                                    <action selector="femaleAction:" destination="SkV-yv-UPB" eventType="touchUpInside" id="0Bk-rg-JbL"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1183,13 +1189,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INFOMATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afE-YY-Att">
-                                <rect key="frame" x="8" y="503.5" width="97" height="19.5"/>
+                                <rect key="frame" x="8" y="496.5" width="97" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="6s9-iy-Q7D">
-                                <rect key="frame" x="8" y="533" width="359" height="141"/>
+                                <rect key="frame" x="8" y="517" width="359" height="141"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S62-Ji-WjQ">
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="45"/>
@@ -1242,7 +1248,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ayr-5a-vdz">
-                                <rect key="frame" x="136" y="194" width="105" height="33"/>
+                                <rect key="frame" x="135.5" y="194" width="105" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Upload Photo">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1255,13 +1261,13 @@
                             <constraint firstItem="xVv-P0-30f" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="DGv-lp-g4n"/>
                             <constraint firstItem="bEW-TG-K3e" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="DiX-Yl-zJ1"/>
                             <constraint firstItem="afE-YY-Att" firstAttribute="top" secondItem="bEW-TG-K3e" secondAttribute="bottom" constant="10" id="PHr-uO-q56"/>
-                            <constraint firstItem="6s9-iy-Q7D" firstAttribute="top" secondItem="afE-YY-Att" secondAttribute="bottom" constant="10" id="U2M-ON-2fM"/>
+                            <constraint firstItem="6s9-iy-Q7D" firstAttribute="top" secondItem="afE-YY-Att" secondAttribute="bottom" constant="1" id="U2M-ON-2fM"/>
                             <constraint firstAttribute="trailing" secondItem="6s9-iy-Q7D" secondAttribute="trailing" constant="8" id="Y1L-Hw-Lz4"/>
                             <constraint firstItem="Ayr-5a-vdz" firstAttribute="top" secondItem="zUz-Zp-Ev6" secondAttribute="bottom" constant="10" id="Z5H-Sf-Nf9"/>
                             <constraint firstItem="zUz-Zp-Ev6" firstAttribute="centerX" secondItem="gOG-5a-JoC" secondAttribute="centerX" id="br1-hv-Lnn"/>
                             <constraint firstAttribute="trailing" secondItem="bEW-TG-K3e" secondAttribute="trailing" constant="8" id="gDc-za-GRL"/>
-                            <constraint firstItem="bEW-TG-K3e" firstAttribute="top" secondItem="xVv-P0-30f" secondAttribute="bottom" constant="5" id="hB0-Y7-YJo"/>
-                            <constraint firstItem="xVv-P0-30f" firstAttribute="top" secondItem="Ayr-5a-vdz" secondAttribute="bottom" constant="5" id="nrS-V4-q3Y"/>
+                            <constraint firstItem="bEW-TG-K3e" firstAttribute="top" secondItem="xVv-P0-30f" secondAttribute="bottom" constant="1" id="hB0-Y7-YJo"/>
+                            <constraint firstItem="xVv-P0-30f" firstAttribute="top" secondItem="Ayr-5a-vdz" secondAttribute="bottom" constant="2" id="nrS-V4-q3Y"/>
                             <constraint firstItem="afE-YY-Att" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="pV9-Dp-WqP"/>
                             <constraint firstItem="6s9-iy-Q7D" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="rbn-ib-h1e"/>
                             <constraint firstItem="zUz-Zp-Ev6" firstAttribute="top" secondItem="xAo-td-Ve5" secondAttribute="bottom" constant="20" id="wf4-hl-fAx"/>
@@ -1284,8 +1290,10 @@
                     <connections>
                         <outlet property="checkpasswordTextField" destination="dTD-H7-2BN" id="6En-us-lRH"/>
                         <outlet property="emailTextField" destination="fEh-03-etN" id="YNs-Ec-MtA"/>
+                        <outlet property="femaleBt" destination="0tp-br-F3R" id="pTr-cR-oKM"/>
                         <outlet property="fristNameTextField" destination="TPR-xT-6f4" id="rKh-Ur-hDV"/>
                         <outlet property="lastNameTextField" destination="Jyk-bi-ORt" id="7Om-6Z-rph"/>
+                        <outlet property="maleBt" destination="Ocp-Uj-UEn" id="Ntg-tD-CzQ"/>
                         <outlet property="passwordTextField" destination="OLQ-vs-3YP" id="OWo-S1-Nog"/>
                         <outlet property="telTextField" destination="5Hn-lo-erk" id="qOg-4u-CEZ"/>
                         <outlet property="usernameTextField" destination="1nq-wP-BCl" id="1tW-y0-V10"/>

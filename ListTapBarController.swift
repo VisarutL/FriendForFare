@@ -44,7 +44,8 @@ class ListTapBarController: ButtonBarPagerTabStripViewController {
             IndicatorInfo(title: "HISTORY"),
         ]
         
-        let child_0 = AllListViewController(style: .plain, itemInfo: itemInfo[0])
+        let child_0 = AllListViewController()
+        child_0.itemInfo = itemInfo[0]
         let child_1 = MyListViewController(style: .plain, itemInfo: itemInfo[1])
         let child_2 = HistoryListViewController(style: .plain, itemInfo: itemInfo[2])
         

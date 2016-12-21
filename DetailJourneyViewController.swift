@@ -10,15 +10,41 @@ import UIKit
 
 class DetailJourneyViewController:UIViewController {
     
+    @IBOutlet weak var pickupLabel: UILabel!
     @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var dropoffLabel: UILabel!
+    @IBOutlet weak var datetimeLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var detailTextView: UITextView!
+    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var profile1ImageView: UIImageView!
+    @IBOutlet weak var profile2ImageView: UIImageView!
+    @IBOutlet weak var profile3ImageView: UIImageView!
+    @IBOutlet weak var profile4ImageView: UIImageView!
+    
+    
     var closeBarButton = UIBarButtonItem()
     var myText:String?
+    var joinButtonTogle:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let myText = myText {
             title = myText
             print(myText)
         }
+        
+        switch joinButtonTogle!.lowercased() {
+        case "myTrip".lowercased():
+            actionButton.setTitle("LET'S GO", for: .normal)
+            actionButton.backgroundColor = UIColor.green
+        case "otherTrip".lowercased():
+            actionButton.setTitle("CANCEL", for: .normal)
+            actionButton.backgroundColor = UIColor.red
+        default:
+            break
+        }
+        
         viewSetting()
         tableViewSetting()
         setCloseButton()

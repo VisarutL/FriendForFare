@@ -19,6 +19,20 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var checkpasswordTextField: UITextField!
+    @IBOutlet weak var maleBt: UIButton!
+    @IBOutlet weak var femaleBt: UIButton!
+    
+    var allTextField:[UITextField] {
+        return [
+            fristNameTextField,
+            lastNameTextField,
+            emailTextField,
+            telTextField,
+            usernameTextField,
+            passwordTextField,
+            checkpasswordTextField
+        ]
+    }
     
     var fName:String?
     var lName:String?
@@ -28,29 +42,36 @@ class RegisterViewController: UIViewController {
     var password:String?
     var checkpassword:String?
     
+    var genderButtonToggle = true {
+        didSet {
+            if genderButtonToggle {
+                maleBt.backgroundColor = UIColor.cyan
+                maleBt.setTitleColor(UIColor.black, for: .normal)
+                femaleBt.backgroundColor = UIColor.gray
+                femaleBt.setTitleColor(UIColor.black, for: .normal)
+            } else {
+                maleBt.backgroundColor = UIColor.gray
+                maleBt.setTitleColor(UIColor.black, for: .normal)
+                femaleBt.backgroundColor = UIColor.red
+                femaleBt.setTitleColor(UIColor.black, for: .normal)
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        fristNameTextField.delegate = self
-        fristNameTextField.tag = 0
-        lastNameTextField.delegate = self
-        lastNameTextField.tag = 1
-        emailTextField.delegate = self
-        emailTextField.tag = 2
-        telTextField.delegate = self
-        telTextField.tag = 3
-        usernameTextField.delegate = self
-        usernameTextField.tag = 4
-        passwordTextField.delegate = self
-        passwordTextField.tag = 5
-        checkpasswordTextField.delegate = self
-        checkpasswordTextField.tag = 6
+        
         
         
         callService()
+        genderButtonToggle = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    func genderButtonSetting() {
+        maleBt.backgroundColor = UIColor.cyan
     }
     
     func callService(){
@@ -69,11 +90,53 @@ class RegisterViewController: UIViewController {
         return manager
     }
     
+    
+    
+    @IBAction func createAction(_ sender: Any) {
+        
+        if checkTextField() {
+            print("fuck new")
+            //        simulateRegister()
+        } else {
+            let error = "alert please fill all information."
+            print("error: \(error)")
+        }
+
+    }
+    
+    func checkTextField() -> Bool {
+        for textField in allTextField {
+            if textField.text?.characters.count == 0 { return false }
+        }
+        return true
+    }
+    
+    @IBAction func cancelDidTapped(_ sender: Any) {
+        
+        self.dismiss(animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func maleAction(_ sender: Any) {
+        genderButtonToggle = !genderButtonToggle
+    }
+    
+
+    @IBAction func femaleAction(_ sender: Any) {
+        genderButtonToggle = !genderButtonToggle
+    }
+    
+    
+    
+    
+}
+
+extension RegisterViewController {
     func selectUserService() {
         let parameters: Parameters = [
             "function": "selectUser"
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=testSelect"
+        let url = "http://localhost/friendforfare/get/index.php?function=selectUser"
         let manager = initManager()
         manager.request(url, method: .get, parameters: parameters, encoding:URLEncoding.default, headers:nil)
             .responseJSON(completionHandler: { response in
@@ -108,7 +171,7 @@ class RegisterViewController: UIViewController {
         let lname = lastNameTextField.text
         let email = emailTextField.text
         let tel = telTextField.text
-        let gender = "1"
+        let gender = genderButtonToggle == true ? "1" : "2"
         let username = usernameTextField.text
         let password = passwordTextField.text
         var parameter = Parameters()
@@ -170,14 +233,13 @@ class RegisterViewController: UIViewController {
     func uploadUserImage() {
         //mark: - set folder permition using command line
         //chmod -Rf 777 "FOLDER_PATH"
-        let icFacebook = "pic"
+        let icFacebook = "ic-facebook"
         let imageFile = UIImage(named: icFacebook)!
         let imageData = UIImageJPEGRepresentation(imageFile, 0.5)!
         let parameters: Parameters = [
-            "function": "uploadImage",
-            "userID": "2016120008"
+            "function": "uploadImage"
         ]
-        let url = "http://localhost/friendforfare/post/index.php?function=uploadImage"
+        let url = "http://localhost/friendforfare/post/index.php"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
@@ -198,67 +260,13 @@ class RegisterViewController: UIViewController {
                         debugPrint(response)
                         if let result = response.result.value {
                             let JSON = result as! NSDictionary
-                            //let imageLocation = JSON.object(forKey: "filepath") as? String
+                            let imageLocation = JSON.object(forKey: "filepath") as? String
                         }
                     }
                 case .failure(let encodingError):
                     print(encodingError)
                 }
-        }
-        )
+        })
     }
-    
-    
-    @IBAction func createAction(_ sender: Any) {
-//        if let fName = fName,
-//        let lName = lName {
-//            print("value: \(fName)")
-//            print("value: \(lName)")
-//            
-//        } else {
-//            print("fuck you")
-//        }
-        
-        simulateRegister()
-        
-    }
-    
-    @IBAction func cancelDidTapped(_ sender: Any) {
-        
-        self.dismiss(animated: true, completion: nil)
-        
-    }
-    
-    
 
-    
-    
-}
-
-extension RegisterViewController:UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let oldText:NSString = textField.text! as NSString
-        let newText:NSString = oldText.replacingCharacters(in: range, with: string) as NSString
-        print(newText)
-        
-        switch textField.tag {
-        case 0:
-            fName = newText as String
-        case 1:
-            lName = newText as String
-        case 2:
-            email = newText as String
-        case 3:
-            tel = newText as String
-        case 4:
-            username = newText as String
-        case 5:
-            password = newText as String
-        case 6:
-            checkpassword = newText as String
-        default:
-            break
-        }
-        return true
-    }
 }

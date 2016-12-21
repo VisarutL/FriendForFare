@@ -26,8 +26,6 @@ class MyListViewController: UITableViewController {
         fatalError("Error")
     }
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,14 +99,20 @@ class MyListViewController: UITableViewController {
         let storyboard = UIStoryboard(name: "ListTapBarDetail", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "DetailJourneyViewController") as! DetailJourneyViewController
         vc.myText = "Journey"
+        switch indexPath.section {
+        case 0:
+            vc.joinButtonTogle = "myTrip"
+        case 1:
+            vc.joinButtonTogle = "otherTrip"
+        default:
+            break
+        }
+
         let nvc = NavController(rootViewController: vc)
-        
         self.present(nvc, animated: true, completion: nil)
     }
 
 }
-
-
 
 extension MyListViewController:IndicatorInfoProvider {
     
