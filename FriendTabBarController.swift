@@ -173,8 +173,10 @@ extension FriendTabBarController {
         
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = .white
+            oldCell?.label.textColor = .gray
             newCell?.label.textColor = .black
+            oldCell?.label.font = UIFont.systemFont(ofSize: 14)
+            newCell?.label.font = UIFont.boldSystemFont(ofSize: 16)
         }
         
     }
@@ -188,7 +190,7 @@ extension FriendTabBarController {
     
     
     func setRequestRightButton() {
-        searchBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.searchAction))
+        searchBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.searchAction))
         self.navigationItem.rightBarButtonItems = [searchBarButton]
     }
 

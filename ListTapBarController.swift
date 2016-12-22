@@ -28,14 +28,14 @@ class ListTapBarController: ButtonBarPagerTabStripViewController {
         buttonBarSetting()
         super.viewDidLoad()
         layoutInitial()
-        setRightButton()
+//        setRightButton()
         
     }
 
     
-    func setRightButton() {
-        setRequestRightButton()
-    }
+//    func setRightButton() {
+//        setRequestRightButton()
+//    }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let itemInfo = [
@@ -67,14 +67,14 @@ extension ListTapBarController {
         self.requestFormDelegate?.requestFormDidClose()
     }
     
-    func searchAction() {
-        
-        let searchController = SearchFeedViewController(style: .plain)
-        let nvc = UINavigationController(rootViewController: searchController)
-        self.present(nvc, animated: true, completion: nil)
-        
-        
-    }
+//    func searchAction() {
+//        
+//        let searchController = SearchFeedViewController(style: .plain)
+//        let nvc = UINavigationController(rootViewController: searchController)
+//        self.present(nvc, animated: true, completion: nil)
+//        
+//        
+//    }
     
     func rejectAction() {
         rejectPopup()
@@ -174,8 +174,10 @@ extension ListTapBarController {
         
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = .white
+            oldCell?.label.textColor = .gray
             newCell?.label.textColor = .black
+            oldCell?.label.font = UIFont.systemFont(ofSize: 14)
+            newCell?.label.font = UIFont.boldSystemFont(ofSize: 16)
         }
         
     }
@@ -189,10 +191,10 @@ extension ListTapBarController {
     }
     
     
-    func setRequestRightButton() {
-        searchBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.searchAction))
-        self.navigationItem.rightBarButtonItems = [searchBarButton]
-    }
+//    func setRequestRightButton() {
+//        searchBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.searchAction))
+//        self.navigationItem.rightBarButtonItems = [searchBarButton]
+//    }
     
 
     

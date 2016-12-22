@@ -56,7 +56,12 @@ class FriendListViewController:UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        print("row \(indexPath.row)")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
+        vc.myText = "Friend"
+        vc.friend = friendList[indexPath.row] as! [String : Any]
+        let nvc = NavController(rootViewController: vc)
+        self.present(nvc, animated: true, completion: nil)
     }
     
 

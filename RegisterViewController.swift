@@ -39,6 +39,8 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         profileImageSetting()
+        genderButtonToggle = true
+        maleBt.backgroundColor = UIColor.gray
         callService()
     }
     
@@ -95,9 +97,9 @@ class RegisterViewController: UIViewController {
 
     @IBAction func femaleAction(_ sender: Any) {
         genderButtonToggle = false
-        maleBt.backgroundColor = UIColor.gray
+        maleBt.backgroundColor = UIColor.textfield
         maleBt.setTitleColor(UIColor.black, for: .normal)
-        femaleBt.backgroundColor = UIColor.textfield
+        femaleBt.backgroundColor = UIColor.gray
         femaleBt.setTitleColor(UIColor.black, for: .normal)
     }
 }
