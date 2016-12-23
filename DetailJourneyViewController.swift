@@ -43,7 +43,7 @@ class DetailJourneyViewController:UIViewController {
         switch joinButtonToggle!.lowercased() {
         case "myTrip".lowercased():
             actionButton.setTitle("LET'S GO", for: .normal)
-            actionButton.backgroundColor = UIColor.redBT
+            actionButton.backgroundColor = UIColor.greenBT
             pickupLabel.text = "PICK-UP : \(tripme["pick_journey"] as! String)"
             dropoffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
             datetimeLabel.text = "\(tripme["date_journey"] as! String) , \(tripme["time_journey"] as! String)"
@@ -53,7 +53,7 @@ class DetailJourneyViewController:UIViewController {
         case "otherTrip".lowercased():
             self.navigationItem.rightBarButtonItem = nil
             actionButton.setTitle("CANCEL", for: .normal)
-            actionButton.backgroundColor = UIColor.greenBT
+            actionButton.backgroundColor = UIColor.redBT
             pickupLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
             dropoffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
             datetimeLabel.text = "\(tripjoin["date_journey"] as! String) , \(tripjoin["time_journey"] as! String)"
@@ -154,8 +154,14 @@ extension DetailJourneyViewController:UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return numberOfRow[section]
+        if joinButtonToggle!.lowercased() == "myTrip".lowercased() {
+            print(tripme)
+            return 1
+        } else if joinButtonToggle!.lowercased() == "otherTrip".lowercased() {
+            print(tripjoin)
+            return 1
+        }
+        return section
     }
 }
 
