@@ -46,6 +46,7 @@ class JourneyViewController:UIViewController {
                 let vc = segue.destination as! MapPickUpViewController
                 vc.latitude = Double(trip["latitude_pick"] as! String)!
                 vc.longitude = Double(trip["longitude_pick"] as! String)!
+                vc.pick = (trip["pick_journey"] as! String)
                 
             default:
                 break

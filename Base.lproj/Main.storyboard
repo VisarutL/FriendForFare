@@ -106,18 +106,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q6D-u3-euX">
                                 <rect key="frame" x="8" y="622" width="359" height="30"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TUj-8i-4jH">
-                                        <rect key="frame" x="61" y="2" width="215" height="28"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TUj-8i-4jH">
+                                        <rect key="frame" x="72.5" y="0.0" width="214.5" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Not registered yet? Please." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Fi-KR-Ssf">
-                                                <rect key="frame" x="0.0" y="0.0" width="163.5" height="28"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not registered yet? Please." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Fi-KR-Ssf">
+                                                <rect key="frame" x="0.0" y="0.0" width="163.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FuB-4P-3jg">
-                                                <rect key="frame" x="163.5" y="0.0" width="51" height="28"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FuB-4P-3jg">
+                                                <rect key="frame" x="163.5" y="0.0" width="51" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <state key="normal" title="Regsiter">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -131,6 +130,9 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="JEJ-m6-p79"/>
+                                    <constraint firstItem="TUj-8i-4jH" firstAttribute="top" secondItem="q6D-u3-euX" secondAttribute="top" id="LLt-o5-cAg"/>
+                                    <constraint firstAttribute="bottom" secondItem="TUj-8i-4jH" secondAttribute="bottom" id="XCh-C8-q7r"/>
+                                    <constraint firstItem="TUj-8i-4jH" firstAttribute="centerX" secondItem="q6D-u3-euX" secondAttribute="centerX" id="e8t-lI-B2e"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -141,13 +143,13 @@
                             <constraint firstAttribute="trailing" secondItem="QbE-Pc-IOH" secondAttribute="trailing" constant="8" id="9Yr-5o-CJu"/>
                             <constraint firstAttribute="trailing" secondItem="kfB-Ji-S7a" secondAttribute="trailing" constant="8" id="CP4-KC-Kab"/>
                             <constraint firstItem="QUh-Bt-JcB" firstAttribute="centerX" secondItem="Iuc-35-uXf" secondAttribute="centerX" id="EQg-Nn-1T0"/>
+                            <constraint firstItem="q6D-u3-euX" firstAttribute="top" secondItem="kfB-Ji-S7a" secondAttribute="bottom" constant="10" id="G20-lu-YEG"/>
                             <constraint firstAttribute="trailing" secondItem="2hR-vl-033" secondAttribute="trailing" constant="8" id="GOS-iR-Pvp"/>
                             <constraint firstItem="cmV-HV-41v" firstAttribute="centerX" secondItem="Iuc-35-uXf" secondAttribute="centerX" id="KUK-AX-BbO"/>
                             <constraint firstItem="cmV-HV-41v" firstAttribute="top" secondItem="JVI-Za-Yem" secondAttribute="bottom" constant="80" id="M0a-vW-1Bp"/>
                             <constraint firstItem="3Pc-XQ-Ff5" firstAttribute="top" secondItem="QUh-Bt-JcB" secondAttribute="bottom" id="SEI-Fg-Qww"/>
                             <constraint firstItem="kfB-Ji-S7a" firstAttribute="top" secondItem="3Pc-XQ-Ff5" secondAttribute="bottom" constant="10" id="XX7-ls-xwo"/>
                             <constraint firstAttribute="trailing" secondItem="3Pc-XQ-Ff5" secondAttribute="trailing" constant="8" id="aaC-3x-o8a"/>
-                            <constraint firstItem="q6D-u3-euX" firstAttribute="top" secondItem="kfB-Ji-S7a" secondAttribute="bottom" constant="10" id="b04-3L-c67"/>
                             <constraint firstItem="NQW-cC-lq3" firstAttribute="leading" secondItem="Iuc-35-uXf" secondAttribute="leading" constant="8" id="dgs-6g-zFe"/>
                             <constraint firstAttribute="trailing" secondItem="q6D-u3-euX" secondAttribute="trailing" constant="8" id="iCR-eE-ziO"/>
                             <constraint firstItem="3Pc-XQ-Ff5" firstAttribute="leading" secondItem="Iuc-35-uXf" secondAttribute="leading" constant="8" id="jba-kF-M1v"/>

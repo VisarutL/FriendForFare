@@ -69,6 +69,7 @@ class MyListViewController: UITableViewController {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
 
+        
         switch indexPath.section {
         case 0:
             cell.pickUpLabel.text = "PICK-UP : \(indexPath.row), section : \(indexPath.section)"
