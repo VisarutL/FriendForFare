@@ -293,11 +293,13 @@
             </objects>
             <point key="canvasLocation" x="1846" y="62"/>
         </scene>
-        <!--Feed-->
+        <!--Nav Controller-->
         <scene sceneID="zpQ-Ll-0gB">
             <objects>
                 <navigationController storyboardIdentifier="NavController" automaticallyAdjustsScrollViewInsets="NO" id="ueU-Bc-rj3" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feed" id="tzx-Dr-N2t"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic-1" id="tzx-Dr-N2t">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -807,13 +809,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACT INFOMATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkr-45-Wbw">
-                                        <rect key="frame" x="8" y="232" width="175" height="19.5"/>
+                                        <rect key="frame" x="8" y="214" width="175" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="SAT-zn-kDj">
-                                        <rect key="frame" x="8" y="256.5" width="359" height="189"/>
+                                        <rect key="frame" x="8" y="238.5" width="359" height="189"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2AT-C0-tar">
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="45"/>
@@ -882,21 +884,25 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ox9-zD-kGx">
-                                        <rect key="frame" x="107" y="194" width="162" height="33"/>
+                                        <rect key="frame" x="138" y="84" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="8L1-uY-s8w"/>
+                                            <constraint firstAttribute="width" constant="100" id="wch-C7-Qtf"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Change Profile Photo">
+                                        <state key="normal">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Ox9-zD-kGx" firstAttribute="top" secondItem="6ak-kd-RYd" secondAttribute="bottom" constant="10" id="1dV-wm-Zie"/>
                                     <constraint firstItem="6ak-kd-RYd" firstAttribute="centerX" secondItem="jPB-lt-dtw" secondAttribute="centerX" id="3To-Pg-LYg"/>
                                     <constraint firstAttribute="trailing" secondItem="SAT-zn-kDj" secondAttribute="trailing" constant="8" id="7Zs-Bo-sVK"/>
+                                    <constraint firstItem="dkr-45-Wbw" firstAttribute="top" secondItem="Ox9-zD-kGx" secondAttribute="bottom" constant="30" id="Uhf-Ru-AFe"/>
                                     <constraint firstItem="6ak-kd-RYd" firstAttribute="top" secondItem="jPB-lt-dtw" secondAttribute="top" constant="84" id="cPp-kh-IYZ"/>
                                     <constraint firstItem="SAT-zn-kDj" firstAttribute="leading" secondItem="jPB-lt-dtw" secondAttribute="leading" constant="8" id="jVs-Jr-eCf"/>
-                                    <constraint firstItem="dkr-45-Wbw" firstAttribute="top" secondItem="Ox9-zD-kGx" secondAttribute="bottom" constant="5" id="oE0-xc-Yu0"/>
+                                    <constraint firstItem="Ox9-zD-kGx" firstAttribute="top" secondItem="jPB-lt-dtw" secondAttribute="top" constant="84" id="jwq-TM-b00"/>
                                     <constraint firstItem="Ox9-zD-kGx" firstAttribute="centerX" secondItem="6ak-kd-RYd" secondAttribute="centerX" id="sI5-2x-b2t"/>
                                     <constraint firstItem="SAT-zn-kDj" firstAttribute="top" secondItem="dkr-45-Wbw" secondAttribute="bottom" constant="5" id="yCd-v6-eLC"/>
                                     <constraint firstItem="dkr-45-Wbw" firstAttribute="leading" secondItem="jPB-lt-dtw" secondAttribute="leading" constant="8" id="zsn-Sq-aIU"/>
@@ -927,11 +933,13 @@
             </objects>
             <point key="canvasLocation" x="5551" y="1988"/>
         </scene>
-        <!--Post-->
+        <!--Navigation Controller-->
         <scene sceneID="616-Je-UDj">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overFullScreen" id="Osg-rv-7R5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Post" id="UOz-Nj-MPz"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic-2" id="UOz-Nj-MPz">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" alpha="0.94999999999999996" contentMode="scaleToFill" id="pDy-kK-hLc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -947,11 +955,13 @@
             </objects>
             <point key="canvasLocation" x="3158" y="359"/>
         </scene>
-        <!--Profile-->
+        <!--Navigation Controller-->
         <scene sceneID="e5c-Sw-32G">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vfl-dK-Hdn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="d4M-fr-bnH"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic-4" id="d4M-fr-bnH">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="xg1-Nc-p7D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -967,11 +977,13 @@
             </objects>
             <point key="canvasLocation" x="2812" y="1970"/>
         </scene>
-        <!--Friend-->
+        <!--Nav Controller-->
         <scene sceneID="z9P-U8-Jlb">
             <objects>
                 <navigationController storyboardIdentifier="FriendNavController" automaticallyAdjustsScrollViewInsets="NO" id="int-3C-FV7" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friend" id="4kh-Gy-YC0"/>
+                    <tabBarItem key="tabBarItem" title="" image="ic-3" id="4kh-Gy-YC0">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -1086,7 +1098,7 @@
                                 <rect key="frame" x="-8" y="-8" width="383" height="675"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </scrollView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic" translatesAutoresizingMaskIntoConstraints="NO" id="zUz-Zp-Ev6">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userprofile" translatesAutoresizingMaskIntoConstraints="NO" id="zUz-Zp-Ev6">
                                 <rect key="frame" x="138" y="94" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="9kd-vU-7MM"/>
@@ -1094,7 +1106,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACT INFOMATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVv-P0-30f">
-                                <rect key="frame" x="8" y="224" width="175" height="19.5"/>
+                                <rect key="frame" x="8" y="224" width="175" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1170,7 +1182,7 @@
                                         <rect key="frame" x="0.0" y="192" width="359" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocp-Uj-UEn">
-                                                <rect key="frame" x="0.0" y="0.0" width="174.5" height="45"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="175" height="45"/>
                                                 <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Male"/>
                                                 <connections>
@@ -1178,7 +1190,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tp-br-F3R">
-                                                <rect key="frame" x="184.5" y="0.0" width="174.5" height="45"/>
+                                                <rect key="frame" x="185" y="0.0" width="174" height="45"/>
                                                 <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Female"/>
                                                 <connections>
@@ -1191,13 +1203,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INFOMATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afE-YY-Att">
-                                <rect key="frame" x="8" y="491.5" width="97" height="19.5"/>
+                                <rect key="frame" x="8" y="492" width="97" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="6s9-iy-Q7D">
-                                <rect key="frame" x="8" y="512" width="359" height="141"/>
+                                <rect key="frame" x="8" y="513" width="359" height="141"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S62-Ji-WjQ">
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="45"/>
@@ -1249,9 +1261,11 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nL7-kc-K94">
-                                <rect key="frame" x="138" y="84" width="98" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nL7-kc-K94">
+                                <rect key="frame" x="138" y="94" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="qw4-WA-WcP"/>
+                                </constraints>
                                 <connections>
                                     <action selector="uploadImage:" destination="SkV-yv-UPB" eventType="touchUpInside" id="77E-O3-NLf"/>
                                 </connections>
@@ -1259,6 +1273,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="nL7-kc-K94" firstAttribute="centerX" secondItem="gOG-5a-JoC" secondAttribute="centerX" id="2xe-9n-yxU"/>
                             <constraint firstItem="xVv-P0-30f" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="DGv-lp-g4n"/>
                             <constraint firstItem="bEW-TG-K3e" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="DiX-Yl-zJ1"/>
                             <constraint firstItem="afE-YY-Att" firstAttribute="top" secondItem="bEW-TG-K3e" secondAttribute="bottom" constant="10" id="PHr-uO-q56"/>
@@ -1267,7 +1282,9 @@
                             <constraint firstItem="zUz-Zp-Ev6" firstAttribute="centerX" secondItem="gOG-5a-JoC" secondAttribute="centerX" id="br1-hv-Lnn"/>
                             <constraint firstAttribute="trailing" secondItem="bEW-TG-K3e" secondAttribute="trailing" constant="8" id="gDc-za-GRL"/>
                             <constraint firstItem="bEW-TG-K3e" firstAttribute="top" secondItem="xVv-P0-30f" secondAttribute="bottom" constant="1" id="hB0-Y7-YJo"/>
+                            <constraint firstItem="xVv-P0-30f" firstAttribute="top" secondItem="nL7-kc-K94" secondAttribute="bottom" constant="30" id="maU-85-abx"/>
                             <constraint firstItem="afE-YY-Att" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="pV9-Dp-WqP"/>
+                            <constraint firstItem="nL7-kc-K94" firstAttribute="top" secondItem="xAo-td-Ve5" secondAttribute="bottom" constant="30" id="qSQ-gF-ciN"/>
                             <constraint firstItem="6s9-iy-Q7D" firstAttribute="leading" secondItem="gOG-5a-JoC" secondAttribute="leading" constant="8" id="rbn-ib-h1e"/>
                             <constraint firstItem="zUz-Zp-Ev6" firstAttribute="top" secondItem="xAo-td-Ve5" secondAttribute="bottom" constant="30" id="wf4-hl-fAx"/>
                             <constraint firstItem="xVv-P0-30f" firstAttribute="top" secondItem="zUz-Zp-Ev6" secondAttribute="bottom" constant="30" id="wxb-Ie-XLc"/>
@@ -1440,7 +1457,12 @@
     </scenes>
     <resources>
         <image name="Map" width="375" height="180"/>
+        <image name="ic-1" width="30" height="30"/>
+        <image name="ic-2" width="30" height="30"/>
+        <image name="ic-3" width="30" height="30"/>
+        <image name="ic-4" width="30" height="30"/>
         <image name="logo" width="512" height="512"/>
         <image name="pic" width="410" height="410"/>
+        <image name="userprofile" width="504" height="504"/>
     </resources>
 </document>

@@ -182,7 +182,7 @@ extension FriendTabBarController {
     }
     
     func layoutInitial() {
-        title = "Friend"
+//        title = "Friend"
         containerView.isScrollEnabled = false
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)

@@ -393,6 +393,9 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                         <barButtonItem key="leftBarButtonItem" title="Back" style="plain" id="RLD-Bb-wIU">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="lp4-Qo-hOp">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="actionButton" destination="g2S-XR-fSo" id="RoP-OX-gR8"/>
@@ -442,7 +445,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kYU-Yn-VOa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6306.3999999999996" y="360.2698650674663"/>
+            <point key="canvasLocation" x="6247" y="652"/>
         </scene>
         <!--Nav Controller-->
         <scene sceneID="V5w-Th-iNu">

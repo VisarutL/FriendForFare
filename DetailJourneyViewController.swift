@@ -22,6 +22,9 @@ class DetailJourneyViewController:UIViewController {
     @IBOutlet weak var profile3ImageView: UIImageView!
     @IBOutlet weak var profile4ImageView: UIImageView!
     
+    var tripme = [String: Any]()
+    var tripjoin = [String: Any]()
+    
     
     var closeBarButton = UIBarButtonItem()
     var myText:String?
@@ -34,13 +37,26 @@ class DetailJourneyViewController:UIViewController {
             print(myText)
         }
         
+        
         switch joinButtonTogle!.lowercased() {
         case "myTrip".lowercased():
             actionButton.setTitle("LET'S GO", for: .normal)
             actionButton.backgroundColor = UIColor.redBT
+            pickupLabel.text = "PICK-UP : \(tripme["pick_journey"] as! String)"
+            dropoffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
+            datetimeLabel.text = "\(tripme["date_journey"] as! String) , \(tripme["time_journey"] as! String)"
+            countLabel.text = "\(tripme["count_journey"] as! String)/4"
+            detailTextView.text = "\(tripme["detail_journey"] as! String)"
+
         case "otherTrip".lowercased():
             actionButton.setTitle("CANCEL", for: .normal)
             actionButton.backgroundColor = UIColor.greenBT
+            pickupLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
+            dropoffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
+            datetimeLabel.text = "\(tripjoin["date_journey"] as! String) , \(tripjoin["time_journey"] as! String)"
+            countLabel.text = "\(tripjoin["count_journey"] as! String)/4"
+            detailTextView.text = "\(tripjoin["detail_journey"] as! String)"
+
         default:
             break
         }
@@ -59,8 +75,19 @@ class DetailJourneyViewController:UIViewController {
             switch identifier {
             case "showMapPickup":
                 let vc = segue.destination as! MapPickUpViewController
-                vc.latitude = 12
-                vc.longitude = 13
+                switch joinButtonTogle!.lowercased() {
+                case "myTrip".lowercased():
+                    vc.latitude = Double(tripme["latitude_pick"] as! String)!
+                    vc.longitude = Double(tripme["longitude_pick"] as! String)!
+                    vc.pick = (tripme["pick_journey"] as! String)
+                case "otherTrip".lowercased():
+                    vc.latitude = Double(tripjoin["latitude_pick"] as! String)!
+                    vc.longitude = Double(tripjoin["longitude_pick"] as! String)!
+                    vc.pick = (tripjoin["pick_journey"] as! String)
+                default:
+                    break
+                }
+
                 
             default:
                 break
@@ -105,8 +132,8 @@ extension DetailJourneyViewController:UITableViewDataSource {
 
         
         
-        cell.textLabel?.text = "Username: \(indexPath.row)"
-        cell.detailTextLabel?.text = "Comment: \(indexPath.row)"
+        cell.textLabel?.text = "Username"
+        cell.detailTextLabel?.text = "Comment"
         return cell
     }
     

@@ -89,7 +89,7 @@ class RegisterViewController: UIViewController {
     
     @IBAction func maleAction(_ sender: Any) {
         genderButtonToggle = true
-        maleBt.backgroundColor = UIColor.gray
+        maleBt.backgroundColor = UIColor.tabbarColor
         maleBt.setTitleColor(UIColor.black, for: .normal)
         femaleBt.backgroundColor = UIColor.textfield
         femaleBt.setTitleColor(UIColor.black, for: .normal)
@@ -99,7 +99,7 @@ class RegisterViewController: UIViewController {
         genderButtonToggle = false
         maleBt.backgroundColor = UIColor.textfield
         maleBt.setTitleColor(UIColor.black, for: .normal)
-        femaleBt.backgroundColor = UIColor.gray
+        femaleBt.backgroundColor = UIColor.tabbarColor
         femaleBt.setTitleColor(UIColor.black, for: .normal)
     }
 }

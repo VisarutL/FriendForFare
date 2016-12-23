@@ -65,6 +65,7 @@ class SearchFeedViewController: UITableViewController  {
 extension SearchFeedViewController {
     func viewSetting() {
         navigationController?.navigationBar.backgroundColor = UIColor.tabbarColor
+        
 //        navigationController?.isNavigationBarHidden = true
         searchController.delegate = self
         searchController.isActive = true
@@ -73,10 +74,11 @@ extension SearchFeedViewController {
         searchController.definesPresentationContext = true
         searchController.extendedLayoutIncludesOpaqueBars = true
         searchController.obscuresBackgroundDuringPresentation = true
+        searchController.navigationItem.rightBarButtonItem?.tintColor = UIColor.black
         
         
         // Setup the Scope Bar
-        searchController.searchBar.scopeButtonTitles = ["All", "Chocolate", "Hard", "Other"]
+//        searchController.searchBar.scopeButtonTitles = ["All", "Chocolate", "Hard", "Other"]
         tableView.tableHeaderView = searchController.searchBar
         
         candies = [
@@ -104,8 +106,8 @@ extension SearchFeedViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
+//        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filterContentForSearchText(searchController.searchBar.text!)
     }
     
 
@@ -120,7 +122,6 @@ extension SearchFeedViewController: UISearchControllerDelegate {
     
     func willPresentSearchController(_ searchController: UISearchController) {
         navigationController?.navigationBar.isTranslucent = true
-        
         print("show")
     }
     
@@ -134,6 +135,7 @@ extension SearchFeedViewController:UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
