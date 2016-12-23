@@ -80,7 +80,7 @@ class RegisterViewController: UIViewController {
     }
 
     @IBAction func uploadImage(_ sender: Any) {
-        funkNew()
+        uploadimage()
     }
     
     @IBAction func cancelDidTapped(_ sender: Any) {
@@ -145,8 +145,8 @@ extension RegisterViewController:UIImagePickerControllerDelegate,UINavigationCon
         profileImage.clipsToBounds = true
     }
     
-    func funkNew() {
-        let title = "choose profile image"
+    func uploadimage() {
+        let title = "Choose Profile Image"
         
         let alert = UIAlertController(title:title, message:nil, preferredStyle:.alert)
         let camera = UIAlertAction(title: "Camera", style: .default,

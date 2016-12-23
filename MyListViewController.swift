@@ -123,10 +123,10 @@ class MyListViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             vc.tripme = tripmyList[indexPath.row] as! [String : Any]
-            vc.joinButtonTogle = "myTrip"
+            vc.joinButtonToggle = "myTrip"
         case 1:
             vc.tripjoin = tripmyjoinList[indexPath.row] as! [String : Any]
-            vc.joinButtonTogle = "otherTrip"
+            vc.joinButtonToggle = "otherTrip"
         default:
             break
         }
