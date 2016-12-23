@@ -143,7 +143,7 @@ extension AllListViewController {
 //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectData() {
-        Alamofire.request("http://localhost/friendforfare/get/index.php?function=journeySelect").responseJSON { response in
+        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeySelect").responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {

@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import MobileCoreServices
+
 class RegisterViewController: UIViewController {
     
     @IBOutlet weak var fristNameTextField: UITextField!
@@ -40,7 +41,7 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
         profileImageSetting()
         genderButtonToggle = true
-        maleBt.backgroundColor = UIColor.gray
+        maleBt.backgroundColor = UIColor.tabbarColor
         callService()
     }
     
@@ -49,8 +50,7 @@ class RegisterViewController: UIViewController {
     }
     
     func callService(){
-        //        selectUserService()
-        uploadUserImage()
+        
     }
     
     func initManager() -> SessionManager {
@@ -72,7 +72,8 @@ class RegisterViewController: UIViewController {
         
         if checkTextField() {
             print("fuck new")
-            //        simulateRegister()
+            uploadUserImage()
+            simulateRegister()
         } else {
             let error = "alert please fill all information."
             print("error: \(error)")
@@ -166,40 +167,6 @@ extension RegisterViewController:UIImagePickerControllerDelegate,UINavigationCon
 }
 
 extension RegisterViewController {
-    func selectUserService() {
-        let parameters: Parameters = [
-            "function": "selectUser"
-        ]
-        let url = "http://localhost/friendforfare/get/index.php?function=selectUser"
-        let manager = initManager()
-        manager.request(url, method: .get, parameters: parameters, encoding:URLEncoding.default, headers:nil)
-            .responseJSON(completionHandler: { response in
-                manager.session.invalidateAndCancel()
-                //debugPrint(response)
-                switch response.result {
-                case .success:
-                    guard let JSON = response.result.value as! [String : Any]? else {
-                        print("error: cannnot cast result value to JSON or nil.")
-                        return
-                    }
-                    
-                    let status = JSON["status"] as! String
-                    if  status == "404" {
-                        print("error: \(JSON["message"] as! String)")
-                        return
-                    }
-                    
-                    //status 202
-                    print(JSON["user"]!)
-                    
-                case .failure(let error):
-                    //alert
-                    print(error.localizedDescription)
-                }
-                
-            })
-    }
-    
     func simulateRegister() {
         let fname = fristNameTextField.text
         let lname = lastNameTextField.text
@@ -214,7 +181,7 @@ extension RegisterViewController {
         parameter.updateValue(email!, forKey: "email_user")
         parameter.updateValue(tel!, forKey: "tel_user")
         parameter.updateValue(gender, forKey: "gender_user")
-        parameter.updateValue(username!, forKey: "uesrname_user")
+        parameter.updateValue(username!, forKey: "username_user")
         parameter.updateValue(password!, forKey: "password_user")
         insertUserService(parameter: parameter)
     }
@@ -225,7 +192,6 @@ extension RegisterViewController {
             "function": "insertUser",
             "parameter": parameter
         ]
-        
         //        let oldParameters: Parameters = [
         //            "function": "insertUser",
         //            "parameter": [
@@ -235,12 +201,12 @@ extension RegisterViewController {
         //            ]
         //        ]
         
-        let url = "http://localhost/friendforfare/post/index.php?function=insertUser"
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=insertUser"
         let manager = initManager()
-        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+        manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                //debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     guard let JSON = response.result.value as! [String : Any]? else {
@@ -273,7 +239,7 @@ extension RegisterViewController {
         let parameters: Parameters = [
             "function": "uploadImage"
         ]
-        let url = "http://localhost/friendforfare/post/index.php"
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=uploadImage"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 

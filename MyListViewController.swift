@@ -141,7 +141,7 @@ extension MyListViewController {
     //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectData() {
-        Alamofire.request("http://localhost/friendforfare/get/index.php?function=journeymylistSelect").responseJSON { response in
+        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeymylistSelect").responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
@@ -164,7 +164,7 @@ extension MyListViewController {
     //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectmyjoinData() {
-        Alamofire.request("http://localhost/friendforfare/get/index.php?function=journeymyjoinedSelect").responseJSON { response in
+        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeymyjoinedSelect").responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {

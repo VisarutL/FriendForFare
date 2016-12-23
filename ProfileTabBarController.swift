@@ -94,7 +94,7 @@ extension ProfileTabBarController {
     //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectData() {
-        Alamofire.request("http://localhost/friendforfare/get/index.php?function=profileSelect").responseJSON { response in
+        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=profileSelect").responseJSON { response in
             switch response.result {
             case .success:
                 

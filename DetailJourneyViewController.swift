@@ -25,7 +25,7 @@ class DetailJourneyViewController:UIViewController {
     
     var tripme = [String: Any]()
     var tripjoin = [String: Any]()
-    let numberOfRow = [1,1]
+//    let numberOfRow = [1,1]
     
     
     var closeBarButton = UIBarButtonItem()
