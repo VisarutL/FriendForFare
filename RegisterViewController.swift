@@ -164,6 +164,7 @@ extension RegisterViewController:UIImagePickerControllerDelegate,UINavigationCon
         alert.addAction(cancle)
         self.present(alert, animated: true, completion: nil)
     }
+
 }
 
 extension RegisterViewController {
@@ -201,7 +202,7 @@ extension RegisterViewController {
         //            ]
         //        ]
         
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=insertUser"
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -233,9 +234,8 @@ extension RegisterViewController {
     func uploadUserImage() {
         //mark: - set folder permition using command line
         //chmod -Rf 777 "FOLDER_PATH"
-        let icFacebook = "ic-facebook"
-        let imageFile = UIImage(named: icFacebook)!
-        let imageData = UIImageJPEGRepresentation(imageFile, 0.5)!
+        let imageFile = profileImage.image
+        let imageData = UIImageJPEGRepresentation(imageFile!, 0.5)!
         let parameters: Parameters = [
             "function": "uploadImage"
         ]
@@ -243,7 +243,7 @@ extension RegisterViewController {
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
-                multipartFormData.append(imageData, withName: "image", fileName: "\(icFacebook).jpg", mimeType: "image/jpg")
+                multipartFormData.append(imageData, withName: "image", fileName: "\(imageData).jpg", mimeType: "image/jpg")
                 for (key, value) in parameters {
                     
                     multipartFormData.append((value as! String).data(using: String.Encoding.utf8)!, withName: key)
@@ -267,6 +267,10 @@ extension RegisterViewController {
                     print(encodingError)
                 }
         })
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
 }

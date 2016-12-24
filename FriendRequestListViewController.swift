@@ -86,6 +86,9 @@ extension FriendRequestListViewController {
             }
         }
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 extension FriendRequestListViewController:FriendRequestViewCellDelegate {
