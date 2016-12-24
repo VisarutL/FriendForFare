@@ -202,7 +202,7 @@ extension RegisterViewController {
         //            ]
         //        ]
         
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php"
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=insertUser"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
