@@ -32,6 +32,14 @@ class FriendRequestListViewController:UITableViewController {
         tableView.register(UINib(nibName: friendRequestViewCell, bundle: nil), forCellReuseIdentifier: friendRequestViewCelldentifier)
     }
     
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
@@ -43,11 +51,15 @@ class FriendRequestListViewController:UITableViewController {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         cell.delegate = self
-        
+        cell.indexPath = indexPath as NSIndexPath
+        if friendrequestList.count == 0 {
+            cell.nameLabel.text = "name"
+            cell.usernameLabel.text = "username"
+        } else {
         let friendrequest = friendrequestList[indexPath.row]
-        cell.nameLabel.text = "\(friendrequest["fname_user"]!) \(friendrequest["lname_user"]!)"
-        cell.usernameLabel.text = "\(friendrequest["username_user"]!)"
-        
+            cell.nameLabel.text = "\(friendrequest["fname_user"]!) \(friendrequest["lname_user"]!)"
+            cell.usernameLabel.text = "\(friendrequest["username_user"]!)"
+        }
         return cell
         
         
@@ -93,13 +105,15 @@ extension FriendRequestListViewController {
 
 extension FriendRequestListViewController:FriendRequestViewCellDelegate {
     func friendRequestViewCellDidConfirm(index:NSIndexPath) {
-        let index = String(describing: index)
-        print(index)
+        let user = friendrequestList[index.row]
+        let userID = user["id_user"] as? String
+        updateFriendRequest(userID: userID!,status:"1",index: index)
     }
     
     func friendRequestViewCellDidDelete(index:NSIndexPath) {
-        let index = String(describing: index)
-        print(index)
+        let user = friendrequestList[index.row]
+        let userID = user["id_user"] as? String
+        updateFriendRequest(userID: userID!,status:"2",index: index)
     }
 }
 
@@ -109,5 +123,49 @@ extension FriendRequestListViewController:IndicatorInfoProvider {
         return itemInfo
     }
     
+}
+
+extension FriendRequestListViewController {
+    func updateFriendRequest(userID:String,status:String,index:NSIndexPath) {
+        
+        let parameters: Parameters = [
+            "function": "updateFriendRequest",
+            "userid" : userID,
+            "status" : status
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/update/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
+                    
+                    guard let JSON = response.result.value as! [String : Any]? else {
+                        print("error: cannnot cast result value to JSON or nil.")
+                        return
+                    }
+                    
+                    let status = JSON["status"] as! String
+                    if  status == "404" {
+                        print("error: \(JSON["message"] as! String)")
+                        return
+                    }
+                    
+                    //status 202
+                    print(JSON)
+                    let row = index.row
+                    self.friendrequestList.remove(at: row)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        //alert
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+
 }
 

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Alamofire
 class DetailJourneyViewController:UIViewController {
     
     @IBOutlet weak var pickupLabel: UILabel!
@@ -23,51 +23,33 @@ class DetailJourneyViewController:UIViewController {
     @IBOutlet weak var profile3ImageView: UIImageView!
     @IBOutlet weak var profile4ImageView: UIImageView!
     
-    var tripme = [String: Any]()
-    var tripjoin = [String: Any]()
+    var tripDetail = [String: Any]()
 //    let numberOfRow = [1,1]
     
     
     var closeBarButton = UIBarButtonItem()
     var myText:String?
     var joinButtonToggle:String?
+    var commentlist = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let myText = myText {
-            title = myText
-            print(myText)
-        }
         
-        
-        switch joinButtonToggle!.lowercased() {
-        case "myTrip".lowercased():
-            actionButton.setTitle("LET'S GO", for: .normal)
-            actionButton.backgroundColor = UIColor.greenBT
-            pickupLabel.text = "PICK-UP : \(tripme["pick_journey"] as! String)"
-            dropoffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
-            datetimeLabel.text = "\(tripme["date_journey"] as! String) , \(tripme["time_journey"] as! String)"
-            countLabel.text = "\(tripme["count_journey"] as! String)/4"
-            detailTextView.text = "\(tripme["detail_journey"] as! String)"
-
-        case "otherTrip".lowercased():
-            self.navigationItem.rightBarButtonItem = nil
-            actionButton.setTitle("CANCEL", for: .normal)
-            actionButton.backgroundColor = UIColor.redBT
-            pickupLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
-            dropoffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
-            datetimeLabel.text = "\(tripjoin["date_journey"] as! String) , \(tripjoin["time_journey"] as! String)"
-            countLabel.text = "\(tripjoin["count_journey"] as! String)/4"
-            detailTextView.text = "\(tripjoin["detail_journey"] as! String)"
-
-        default:
-            break
-        }
         
         viewSetting()
         tableViewSetting()
         setCloseButton()
+        selectData()
     }
+    
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -79,13 +61,13 @@ class DetailJourneyViewController:UIViewController {
                 let vc = segue.destination as! MapPickUpViewController
                 switch joinButtonToggle!.lowercased() {
                 case "myTrip".lowercased():
-                    vc.latitude = Double(tripme["latitude_pick"] as! String)!
-                    vc.longitude = Double(tripme["longitude_pick"] as! String)!
-                    vc.pick = (tripme["pick_journey"] as! String)
+                    vc.latitude = Double(tripDetail["latitude_pick"] as! String)!
+                    vc.longitude = Double(tripDetail["longitude_pick"] as! String)!
+                    vc.pick = (tripDetail["pick_journey"] as! String)
                 case "otherTrip".lowercased():
-                    vc.latitude = Double(tripjoin["latitude_pick"] as! String)!
-                    vc.longitude = Double(tripjoin["longitude_pick"] as! String)!
-                    vc.pick = (tripjoin["pick_journey"] as! String)
+                    vc.latitude = Double(tripDetail["latitude_pick"] as! String)!
+                    vc.longitude = Double(tripDetail["longitude_pick"] as! String)!
+                    vc.pick = (tripDetail["pick_journey"] as! String)
                 default:
                     break
                 }
@@ -102,6 +84,32 @@ class DetailJourneyViewController:UIViewController {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.backgroundColor = UIColor.tabbarColor
         view.backgroundColor = UIColor.white
+        
+        if let myText = myText {
+            title = myText
+            print(myText)
+        }
+        
+        switch joinButtonToggle!.lowercased() {
+        case "myTrip".lowercased():
+            actionButton.setTitle("LET'S GO", for: .normal)
+            actionButton.backgroundColor = UIColor.greenBT
+            
+            
+        case "otherTrip".lowercased():
+            self.navigationItem.rightBarButtonItem = nil
+            actionButton.setTitle("CANCEL", for: .normal)
+            actionButton.backgroundColor = UIColor.redBT
+            
+        default:
+            break
+        }
+        
+        pickupLabel.text = "PICK-UP : \(tripDetail["pick_journey"] as! String)"
+        dropoffLabel.text = "DROP-OFF : \(tripDetail["drop_journey"] as! String)"
+        datetimeLabel.text = "\(tripDetail["date_journey"] as! String) , \(tripDetail["time_journey"] as! String)"
+        countLabel.text = "\(tripDetail["count_journey"] as! String)/4"
+        detailTextView.text = "\(tripDetail["detail_journey"] as! String)"
     }
     
     func setCloseButton() {
@@ -136,32 +144,58 @@ extension DetailJourneyViewController:UITableViewDataSource {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
-
-        switch joinButtonToggle!.lowercased() {
-            case "myTrip".lowercased():
-//                let tripme = self.tripme[indexPath.row]
-                cell.textLabel?.text = (tripme["username_user"] as! String)
-                cell.detailTextLabel?.text = "\(tripme["datetime_forum"] as! String) , \(tripme["comment_forum"] as! String)"
-            case "otherTrip".lowercased():
-//                let tripjoin = self.tripjoin[indexPath.row]
-                cell.textLabel?.text = (tripjoin["username_user"] as! String)
-                cell.detailTextLabel?.text = "\(tripjoin["datetime_forum"] as! String) , \(tripjoin["comment_forum"] as! String)"
-            default:
-            break
+        
+        if commentlist.count > 0 {
+            let comment = commentlist[indexPath.row]
+            cell.textLabel?.text = (comment["username_user"] as! String)
+            cell.detailTextLabel?.text = "\(comment["datetime_forum"] as! String) , \(comment["comment_forum"] as! String)"
+        } else {
+        let comment = commentlist[indexPath.row]
+        cell.textLabel?.text = "name"
+        cell.detailTextLabel?.text = "detail"
         }
+        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if joinButtonToggle!.lowercased() == "myTrip".lowercased() {
-            print(tripme)
-            return 1
-        } else if joinButtonToggle!.lowercased() == "otherTrip".lowercased() {
-            print(tripjoin)
-            return 1
-        }
-        return section
+        return commentlist.count
     }
+}
+extension DetailJourneyViewController {
+    
+    func selectData() {
+        let idtrip = (tripDetail["id_journey"] as! String)
+        let parameters: Parameters = [
+            "function": "commentjourneySelect",
+            "journeyid" : idtrip
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=commentjourneySelect"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    
+                    
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.commentlist.append(item as! NSDictionary)
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.tableview.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+    
 }
 

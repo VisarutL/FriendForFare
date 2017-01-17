@@ -17,6 +17,7 @@ class FriendListViewController:UITableViewController {
     var friendList = [NSDictionary]()
     
     var itemInfo = IndicatorInfo(title: "New")
+    var deleteID:Int?
     
     init(style: UITableViewStyle, itemInfo: IndicatorInfo) {
         self.itemInfo = itemInfo
@@ -33,6 +34,15 @@ class FriendListViewController:UITableViewController {
         selectData()
     }
     
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
+    }
+
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
@@ -43,10 +53,16 @@ class FriendListViewController:UITableViewController {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
+        if friendList.count == 0
+        {
+            cell.nameLabel.text = "name"
+            cell.usernameLabel.text = "username"
+        }
+        else {
         let friend = friendList[indexPath.row]
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
-        
+        }
         return cell
     }
 
@@ -77,16 +93,18 @@ extension FriendListViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let planetToDelete = String(describing: indexPath.row)
-            confirmDelete(item: planetToDelete)
+            let friend = friendList[indexPath.row]
+            let username = friend["username_user"] as! String
+            self.deleteID = indexPath.row
+            confirmDelete(name: username)
         }
     }
     
-    func confirmDelete(item: String) {
-        let alert = UIAlertController(title: "Delete item", message: "Are you sure you want to permanently delete \(item)?", preferredStyle: .actionSheet)
+    func confirmDelete(name: String) {
+        let alert = UIAlertController(title: "Delete Friend", message: "Are you sure to reject request \(name)?", preferredStyle: .actionSheet)
         
-        let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeletePlanet)
-        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeletePlanet)
+        let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDelete)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDelete)
         
         alert.addAction(DeleteAction)
         alert.addAction(CancelAction)
@@ -99,21 +117,56 @@ extension FriendListViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func handleDeletePlanet(alertAction: UIAlertAction!) -> Void {
-            tableView.beginUpdates()
-            
-//            planets.removeAtIndex(indexPath.row)
-//
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-//            
-//            deletePlanetIndexPath = nil
-//            
-            tableView.endUpdates()
+    func handleDelete(alertAction: UIAlertAction!) -> Void {
+        deleteFriend()
     }
     
-    func cancelDeletePlanet(alertAction: UIAlertAction!) {
-//        deletePlanetIndexPath = nil
+    func cancelDelete(alertAction: UIAlertAction!) {
+        self.deleteID = nil
     }
+    
+    func deleteFriend() {
+        guard let deleteID = deleteID else { return }
+        let friend = friendList[deleteID]
+        let id = friend["user_id_friend"] as! String
+        let parameters: Parameters = [
+            "function": "deleteFriend",
+            "userid" : id
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/delete/index.php?function=deleteFriend"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
+                    
+                    guard let JSON = response.result.value as! [String : Any]? else {
+                        print("error: cannnot cast result value to JSON or nil.")
+                        return
+                    }
+                    
+                    let status = JSON["status"] as! String
+                    if  status == "404" {
+                        print("error: \(JSON["message"] as! String)")
+                        return
+                    }
+                    
+                    //status 202
+                    print(JSON)
+                    self.friendList.remove(at: deleteID)
+                    self.deleteID = nil
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        //alert
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+
 }
 
 extension FriendListViewController {

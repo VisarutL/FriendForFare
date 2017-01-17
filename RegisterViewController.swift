@@ -71,9 +71,8 @@ class RegisterViewController: UIViewController {
         }
         
         if checkTextField() {
-            print("fuck new")
             uploadUserImage()
-            simulateRegister()
+            
         } else {
             let error = "alert please fill all information."
             print("error: \(error)")
@@ -168,7 +167,7 @@ extension RegisterViewController:UIImagePickerControllerDelegate,UINavigationCon
 }
 
 extension RegisterViewController {
-    func simulateRegister() {
+    func simulateRegister(uid:String) {
         let fname = fristNameTextField.text
         let lname = lastNameTextField.text
         let email = emailTextField.text
@@ -184,6 +183,7 @@ extension RegisterViewController {
         parameter.updateValue(gender, forKey: "gender_user")
         parameter.updateValue(username!, forKey: "username_user")
         parameter.updateValue(password!, forKey: "password_user")
+        parameter.updateValue(uid, forKey: "pic_user")
         insertUserService(parameter: parameter)
     }
     
@@ -221,6 +221,8 @@ extension RegisterViewController {
                         return
                     }
                     
+                    self.dismiss(animated: true, completion: nil)
+                    
                     //status 202
                     print(JSON)
                 case .failure(let error):
@@ -251,16 +253,19 @@ extension RegisterViewController {
         },
             to: url,
             encodingCompletion: { encodingResult in
-                debugPrint(encodingResult)
+//                debugPrint(encodingResult)
                 
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
                         
-                        debugPrint(response)
+//                        debugPrint(response)
                         if let result = response.result.value {
                             let JSON = result as! NSDictionary
                             let imageLocation = JSON.object(forKey: "filepath") as? String
+                            
+                            let uniqid = JSON["uniqid"] as! String
+                            self.simulateRegister(uid:uniqid)
                         }
                     }
                 case .failure(let encodingError):
