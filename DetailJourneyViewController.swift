@@ -193,8 +193,8 @@ extension DetailJourneyViewController {
                     }
                 case .failure(let error):
                     print(error)
-                }
-            })
+            }
+        })
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ReviewViewController:UITableViewController {
     
@@ -14,14 +15,25 @@ class ReviewViewController:UITableViewController {
     let reviewCell = "ReviewViewCell"
     var myText:String?
     var trip = [String: Any]()
+    var reviewList = [NSDictionary]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let myText = myText {
             title = myText
             print(myText)
         }
+        selectData()
         
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewCelldentifier)
+    }
+    
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,15 +53,58 @@ class ReviewViewController:UITableViewController {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
-
+        
+        let review = reviewList[indexPath.row]
+        cell.usernameLabel.text = (review["fname_user"] as! String)
+        let rate = trip["id_journey"] as! String
+        cell.setRateImage(rate: Int(rate)!)
+        
         return cell
+        
+        
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return reviewList.count
     }
     @IBAction func actionCancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+extension ReviewViewController {
+    
+    func selectData() {
+        let idtrip = (trip["id_journey"] as! String)
+        let parameters: Parameters = [
+            "function": "reviewJourneySelect",
+            "journeyid" : idtrip
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=reviewJourneySelect"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    
+                    
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.reviewList.append(item as! NSDictionary)
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.tableView!.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+    
 }
