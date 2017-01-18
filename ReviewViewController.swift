@@ -47,7 +47,7 @@ class ReviewViewController:UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     @IBAction func actionCancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)

@@ -45,7 +45,18 @@ class ProfileTabBarController:UITableViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        let navVC = segue.destination as? UINavigationController
+        let vc = navVC?.viewControllers.first as! EditProfileViewController
+        vc.fname = (profile[0]["fname_user"] as! String)
+        vc.lname = (profile[0]["lname_user"] as! String)
+        vc.tel = (profile[0]["tel_user"] as! String)
+        vc.email = (profile[0]["email_user"] as! String)
+        vc.picuser = (profile[0]["pic_user"] as! String)
+        vc.userid = (profile[0]["id_user"] as! String)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

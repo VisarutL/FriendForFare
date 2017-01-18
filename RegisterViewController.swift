@@ -42,15 +42,10 @@ class RegisterViewController: UIViewController {
         profileImageSetting()
         genderButtonToggle = true
         maleBt.backgroundColor = UIColor.tabbarColor
-        callService()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    }
-    
-    func callService(){
-        
     }
     
     func initManager() -> SessionManager {
