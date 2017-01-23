@@ -55,7 +55,7 @@ extension FriendRequestViewCell {
         layer.cornerRadius = self.profileImage.bounds.size.height / 2
         layer.borderWidth = 2
         layer.borderColor = UIColor.white.cgColor
-        self.profileImage.backgroundColor = UIColor.lightGray
+        self.profileImage.backgroundColor = UIColor.backgroundImage
         //        self.profileImage.image = UIImage(named: "ic_defalut_user_160_white")
     }
     

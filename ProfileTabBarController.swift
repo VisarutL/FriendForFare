@@ -105,7 +105,11 @@ class ProfileTabBarController:UITableViewController{
             let path = "http://worawaluns.in.th/friendforfare/images/"
             let url = NSURL(string:"\(path)\(profile[0]["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
-            cell.profileImage.image = UIImage(data:data as! Data)
+            if data == nil {
+                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+            } else {
+                cell.profileImage.image = UIImage(data:data as! Data)
+            }
         }
 
         cell.setRateImage(rate: userRate)

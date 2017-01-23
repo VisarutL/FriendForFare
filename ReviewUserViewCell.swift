@@ -38,7 +38,7 @@ class ReviewUserViewCell:UITableViewCell {
         self.genderImageview.layer.cornerRadius = self.genderImageview.bounds.size.height / 2
         self.genderImageview.layer.borderWidth = 2
         self.genderImageview.layer.borderColor = UIColor.white.cgColor
-        self.genderImageview.backgroundColor = UIColor.lightGray
+        self.genderImageview.backgroundColor = UIColor.backgroundImage
         //        self.profileImage.image = UIImage(named: "ic_defalut_user_160_white")
     }
     

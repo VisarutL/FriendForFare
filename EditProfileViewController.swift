@@ -192,8 +192,6 @@ extension EditProfileViewController {
                 }
         })
     }
-
-    
 }
 
 extension EditProfileViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate {

@@ -162,6 +162,7 @@ extension RegisterViewController:UIImagePickerControllerDelegate,UINavigationCon
 }
 
 extension RegisterViewController {
+    
     func simulateRegister(uid:String) {
         let fname = fristNameTextField.text
         let lname = lastNameTextField.text

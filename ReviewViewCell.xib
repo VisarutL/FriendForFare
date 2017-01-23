@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,41 +26,21 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="OXH-6d-MhV">
-                        <rect key="frame" x="94" y="62" width="273" height="79.5"/>
+                        <rect key="frame" x="94" y="79.5" width="273" height="45"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCN-Cc-MMV">
+                                <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0f6-Z5-tyG">
-                                <rect key="frame" x="0.0" y="0.0" width="39.5" height="19.5"/>
+                                <rect key="frame" x="0.0" y="25.5" width="39.5" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rate-4-half" translatesAutoresizingMaskIntoConstraints="NO" id="xiP-yu-hUk">
-                                <rect key="frame" x="0.0" y="24.5" width="100" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="0je-Tn-5zK"/>
-                                    <constraint firstAttribute="height" constant="25" id="Tu0-pV-DyN"/>
-                                </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZF-u2-bjD">
-                                <rect key="frame" x="0.0" y="54.5" width="265" height="25"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wtp-uu-6oZ">
-                                        <rect key="frame" x="4" y="2" width="232" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="zHN-vc-mA8"/>
-                                </constraints>
-                            </view>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="hZF-u2-bjD" secondAttribute="trailing" constant="8" id="SyV-fw-ve5"/>
-                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -72,15 +52,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="comentTextField" destination="Wtp-uu-6oZ" id="E3c-3c-kGq"/>
+                <outlet property="fullnameLabel" destination="rCN-Cc-MMV" id="QGI-Ca-iJX"/>
                 <outlet property="profileImage" destination="4Iz-el-qS2" id="etR-JP-yDX"/>
-                <outlet property="rateImage" destination="xiP-yu-hUk" id="OgT-Gd-9Jo"/>
                 <outlet property="usernameLabel" destination="0f6-Z5-tyG" id="H0y-dM-0tO"/>
             </connections>
             <point key="canvasLocation" x="-66.5" y="-22"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="rate-4-half" width="287" height="47"/>
-    </resources>
 </document>

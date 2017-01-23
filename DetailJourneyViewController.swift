@@ -150,9 +150,9 @@ extension DetailJourneyViewController:UITableViewDataSource {
             cell.textLabel?.text = (comment["username_user"] as! String)
             cell.detailTextLabel?.text = "\(comment["datetime_forum"] as! String) , \(comment["comment_forum"] as! String)"
         } else {
-        let comment = commentlist[indexPath.row]
-        cell.textLabel?.text = "name"
-        cell.detailTextLabel?.text = "detail"
+            let comment = commentlist[indexPath.row]
+            cell.textLabel?.text = "name"
+            cell.detailTextLabel?.text = "detail"
         }
         
         

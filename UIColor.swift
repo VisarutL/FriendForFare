@@ -34,6 +34,16 @@ extension UIColor {
     //        return appColor
     //    }
     
+    public class var borderImage: UIColor {
+    let borderImage = UIColor(red: 240 / 255, green: 240 / 255, blue: 240 / 255, alpha: 0.0)
+    return borderImage
+    }
+    
+    public class var backgroundImage: UIColor {
+        let backgroundImage = UIColor(red: 240 / 255, green: 240 / 255, blue: 240 / 255, alpha: 1.0)
+        return backgroundImage
+    }
+    
     public class var textfield: UIColor {
         let textfield = UIColor(red: 238 / 255, green: 238 / 255, blue: 238 / 255, alpha: 1.0)
         return textfield

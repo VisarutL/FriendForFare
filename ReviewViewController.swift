@@ -55,9 +55,16 @@ class ReviewViewController:UITableViewController {
         cell.layoutMargins = UIEdgeInsets.zero
         
         let review = reviewList[indexPath.row]
-        cell.usernameLabel.text = (review["fname_user"] as! String)
-        let rate = trip["id_journey"] as! String
-        cell.setRateImage(rate: Int(rate)!)
+        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let url = NSURL(string:"\(path)\(review["pic_user"]!)")
+        let data = NSData(contentsOf:url! as URL)
+        if data == nil {
+            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+        } else {
+            cell.profileImage.image = UIImage(data:data as! Data)
+        }
+        cell.fullnameLabel.text = "\(review["fname_user"]!) \(review["lname_user"]!)"
+        cell.usernameLabel.text = "\(review["username_user"]!)"
         
         return cell
         
@@ -68,6 +75,18 @@ class ReviewViewController:UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reviewList.count
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ReviewUserViewController") as! ReviewUserViewController
+        vc.myText = "ReviewUser"
+        vc.review = reviewList[indexPath.row] as! [String : Any]
+        let nvc = NavController(rootViewController: vc)
+        self.present(nvc, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func actionCancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
