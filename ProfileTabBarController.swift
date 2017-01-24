@@ -35,12 +35,20 @@ class ProfileTabBarController:UITableViewController{
         
     }
     
+    deinit {
+        print("deinit: ProfileTabBarController")
+    }
+    
     func initManager() -> SessionManager {
-        let configuration = URLSessionConfiguration.ephemeral
+//        let configuration = URLSessionConfiguration.ephemeral
+//        configuration.timeoutIntervalForRequest = 10
+//        configuration.timeoutIntervalForResource = 10
+//        let manager = Alamofire.SessionManager(configuration: configuration)
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = nil
         configuration.timeoutIntervalForRequest = 10
         configuration.timeoutIntervalForResource = 10
-        let manager = Alamofire.SessionManager(configuration: configuration)
-        return manager
+        return Alamofire.SessionManager(configuration: configuration)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +59,7 @@ class ProfileTabBarController:UITableViewController{
         
         let navVC = segue.destination as? UINavigationController
         let vc = navVC?.viewControllers.first as! EditProfileViewController
+        vc.delegate = self
         vc.fname = (profile[0]["fname_user"] as! String)
         vc.lname = (profile[0]["lname_user"] as! String)
         vc.tel = (profile[0]["tel_user"] as! String)
@@ -72,6 +81,7 @@ class ProfileTabBarController:UITableViewController{
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
+        
         
         let reviewprofile = self.reviewprofile[indexPath.row]
         cell.comemtLabel.text = "\(reviewprofile["comment_review"]!)"
@@ -111,7 +121,8 @@ class ProfileTabBarController:UITableViewController{
                 cell.profileImage.image = UIImage(data:data as! Data)
             }
         }
-
+        
+        cell.delegate = self
         cell.setRateImage(rate: userRate)
         
         return cell
@@ -130,32 +141,61 @@ class ProfileTabBarController:UITableViewController{
     }
 }
 
+extension ProfileTabBarController:EditProfileViewDelegate {
+    func editProfileViewDidFinish() {
+        profile = [NSDictionary]()
+        reviewprofile = [NSDictionary]()
+        selectData()
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+extension ProfileTabBarController:ProfileViewDelegate {
+    func profileViewDidLogout(){
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "LoginVC")
+        present(vc, animated: true, completion: nil)
+    }
+}
+
 extension ProfileTabBarController {
 
     
     func selectData() {
-        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=profileSelect").responseJSON { response in
-            switch response.result {
-            case .success:
-                
-                if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
-                    for item in JSON as! NSArray {
-                        self.profile.append(item as! NSDictionary)
-                    }
+        let parameters: Parameters = [
+            "function": "profileSelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=profileSelect"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
                     
-                    DispatchQueue.main.async {
-                        let id = self.profile[0]["id_user"]
-                        self.reviewData(id: id as! String)
+                    
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.profile.append(item as! NSDictionary)
+                            
+                        }
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        self.reviewData(id:appDelegate.userID)
+                        
                     }
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
-            }
-        }
+            })
     }
-    
-    func reviewData(id:String) {
+
+
+
+    func reviewData(id:Int) {
         let parameters: Parameters = [
             "function": "reviewprofileSelect",
             "userid" : id
@@ -165,7 +205,7 @@ extension ProfileTabBarController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                //                debugPrint(response)
+                                debugPrint(response)
                 switch response.result {
                 case .success:
                     
@@ -185,4 +225,5 @@ extension ProfileTabBarController {
                 }
             })
         }
-    }
+
+}

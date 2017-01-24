@@ -46,11 +46,10 @@ class FeedViewCell:UITableViewCell {
 //    }
     
     func setProfileImage() {
-        self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
-        self.profileImage.layer.borderWidth = 2
-        self.profileImage.layer.borderColor = UIColor.white.cgColor
-        self.profileImage.backgroundColor = UIColor.backgroundImage
-//        self.profileImage.image = UIImage(named: "ic_defalut_user_160_white")
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
     }
 
 }

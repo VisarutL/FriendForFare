@@ -68,7 +68,7 @@ extension FriendTabBarController {
     
     func searchAction() {
         
-        let searchController = SearchFeedViewController(style: .plain)
+        let searchController = SearchFriendViewController()
         let nvc = UINavigationController(rootViewController: searchController)
         self.present(nvc, animated: true, completion: nil)
         

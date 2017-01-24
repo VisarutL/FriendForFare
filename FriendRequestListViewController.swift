@@ -17,6 +17,9 @@ class FriendRequestListViewController:UITableViewController {
     var itemInfo = IndicatorInfo(title: "New")
     var friendrequestList = [NSDictionary]()
     
+    var dateFormatter = DateFormatter()
+    var fristTime = true
+    
     init(style: UITableViewStyle, itemInfo: IndicatorInfo) {
         self.itemInfo = itemInfo
         super.init(style: style)
@@ -28,8 +31,9 @@ class FriendRequestListViewController:UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectData();
         tableView.register(UINib(nibName: friendRequestViewCell, bundle: nil), forCellReuseIdentifier: friendRequestViewCelldentifier)
+        setPullToRefresh()
+        handleRefresh()
     }
     
     func initManager() -> SessionManager {
@@ -59,6 +63,15 @@ class FriendRequestListViewController:UITableViewController {
         let friendrequest = friendrequestList[indexPath.row]
             cell.nameLabel.text = "\(friendrequest["fname_user"]!) \(friendrequest["lname_user"]!)"
             cell.usernameLabel.text = "\(friendrequest["username_user"]!)"
+            
+            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let url = NSURL(string:"\(path)\(friendrequest["pic_user"]!)")
+            let data = NSData(contentsOf:url! as URL)
+            if data == nil {
+                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+            } else {
+                cell.profileImage.image = UIImage(data:data as! Data)
+            }
         }
         return cell
         
@@ -71,12 +84,28 @@ class FriendRequestListViewController:UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("row \(indexPath.row)")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
+        vc.myText = "FriendRequest"
+        vc.friend = friendrequestList[indexPath.row] as! [String : Any]
+        let nvc = NavController(rootViewController: vc)
+        self.present(nvc, animated: true, completion: nil)
     }
 }
 
 extension FriendRequestListViewController {
-    //    (completionHandler:@escaping (_ r:[Region]?
+    
+    func handleRefresh() {
+        
+        if fristTime {
+            
+            fristTime = false
+            self.friendrequestList = [NSDictionary]()
+            selectData()
+            
+        }
+        
+    }
     
     func selectData() {
         Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=friendrequestSelect").responseJSON { response in
@@ -88,10 +117,21 @@ extension FriendRequestListViewController {
                     for friendrequest in JSON as! NSArray {
                         self.friendrequestList.append(friendrequest as! NSDictionary)
                     }
+                }
+                let now = NSDate()
+                let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                
+                DispatchQueue.main.async {
+                    self.fristTime = true
                     
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                    if let refreshControl = self.refreshControl {
+                        if refreshControl.isRefreshing {
+                            refreshControl.endRefreshing()
+                        }
                     }
+                    
+                    self.tableView?.reloadData()
                 }
             case .failure(let error):
                 print(error)
@@ -100,6 +140,21 @@ extension FriendRequestListViewController {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    func setPullToRefresh() {
+        self.tableView.delegate = self
+        self.dateFormatter.dateStyle = DateFormatter.Style.short
+        self.dateFormatter.timeStyle = DateFormatter.Style.long
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        //        self.refreshControl?.backgroundColor = UIColor.tabbarColor
+        //        self.refreshControl?.tintColor = UIColor.white
+        
+        let selector = #selector(self.handleRefresh)
+        self.refreshControl?.addTarget(self,
+                                       action: selector,
+                                       for: UIControlEvents.valueChanged)
     }
 }
 

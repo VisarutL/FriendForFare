@@ -11,7 +11,7 @@ import UIKit
 class ReviewUserViewCell:UITableViewCell {
     
     
-    @IBOutlet weak var genderImageview: UIImageView!
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var comemtLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var rateImage: UIImageView!
@@ -35,11 +35,10 @@ class ReviewUserViewCell:UITableViewCell {
     }
     
     func setProfileImage() {
-        self.genderImageview.layer.cornerRadius = self.genderImageview.bounds.size.height / 2
-        self.genderImageview.layer.borderWidth = 2
-        self.genderImageview.layer.borderColor = UIColor.white.cgColor
-        self.genderImageview.backgroundColor = UIColor.backgroundImage
-        //        self.profileImage.image = UIImage(named: "ic_defalut_user_160_white")
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
     }
     
     func setRateImage(rate:Int) {

@@ -10,6 +10,10 @@ import UIKit
 import Alamofire
 import MobileCoreServices
 
+protocol EditProfileViewDelegate:class {
+    func editProfileViewDidFinish()
+}
+
 class EditProfileViewController: UIViewController {
     
     var fname = String()
@@ -37,6 +41,8 @@ class EditProfileViewController: UIViewController {
     }
     
     var picker = UIImagePickerController()
+    
+    weak var delegate:EditProfileViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,7 +145,7 @@ extension EditProfileViewController {
                         return
                     }
                     
-                    self.dismiss(animated: true, completion: nil)
+                    self.delegate?.editProfileViewDidFinish()
                     
                     //status 202
                     print(JSON)
@@ -178,10 +184,10 @@ extension EditProfileViewController {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
                         
-                        //                        debugPrint(response)
+//                        debugPrint(response)
                         if let result = response.result.value {
                             let JSON = result as! NSDictionary
-                            let imageLocation = JSON.object(forKey: "filepath") as? String
+//                            let imageLocation = JSON.object(forKey: "filepath") as? String
                             
                             let uniqid = JSON["uniqid"] as! String
                             self.simulateEdit(uid:uniqid)

@@ -16,16 +16,19 @@ class ReviewViewController:UITableViewController {
     var myText:String?
     var trip = [String: Any]()
     var reviewList = [NSDictionary]()
+    var dateFormatter = DateFormatter()
+    var fristTime = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setPullToRefresh()
+        handleRefresh()
         if let myText = myText {
             title = myText
             print(myText)
         }
-        selectData()
         
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewCelldentifier)
+        
     }
     
     func initManager() -> SessionManager {
@@ -94,6 +97,18 @@ class ReviewViewController:UITableViewController {
 
 extension ReviewViewController {
     
+    func handleRefresh() {
+        
+        if fristTime {
+            
+            fristTime = false
+            self.reviewList = [NSDictionary]()
+            selectData()
+            
+        }
+        
+    }
+    
     func selectData() {
         let idtrip = (trip["id_journey"] as! String)
         let parameters: Parameters = [
@@ -116,14 +131,45 @@ extension ReviewViewController {
                             self.reviewList.append(item as! NSDictionary)
                         }
                         
-                        DispatchQueue.main.async {
-                            self.tableView!.reloadData()
+                    }
+                    let now = NSDate()
+                    let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                    self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                    
+                    DispatchQueue.main.async {
+                        self.fristTime = true
+                        
+                        if let refreshControl = self.refreshControl {
+                            if refreshControl.isRefreshing {
+                                refreshControl.endRefreshing()
+                            }
                         }
+                        
+                        self.tableView?.reloadData()
                     }
                 case .failure(let error):
                     print(error)
                 }
-            })
+        })
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    func setPullToRefresh() {
+        self.tableView.delegate = self
+        self.dateFormatter.dateStyle = DateFormatter.Style.short
+        self.dateFormatter.timeStyle = DateFormatter.Style.long
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        //        self.refreshControl?.backgroundColor = UIColor.tabbarColor
+        //        self.refreshControl?.tintColor = UIColor.white
+        
+        let selector = #selector(self.handleRefresh)
+        self.refreshControl?.addTarget(self,
+                                       action: selector,
+                                       for: UIControlEvents.valueChanged)
+    }
+
     
 }

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="353"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="89q-Nq-6XO" id="cnS-cR-OxO">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="352.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="352"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5ZK-os-qpf">
@@ -62,23 +62,36 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQG-DA-TtH">
-                        <rect key="frame" x="0.0" y="260" width="375" height="20"/>
+                        <rect key="frame" x="0.0" y="259.5" width="375" height="20"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="vfb-ov-ZGh"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulS-6k-amB">
+                        <rect key="frame" x="218" y="110" width="30" height="30"/>
+                        <color key="backgroundColor" red="0.83529411760000005" green="0.1215686275" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="d6E-Nr-pt1"/>
+                            <constraint firstAttribute="width" constant="30" id="e0p-SN-sCl"/>
+                        </constraints>
+                        <connections>
+                            <action selector="logoutAction:" destination="89q-Nq-6XO" eventType="touchUpInside" id="jky-H2-F8t"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="BR9-Eu-EOb" firstAttribute="top" secondItem="5ZK-os-qpf" secondAttribute="bottom" constant="10" id="Aet-eS-OSk"/>
                     <constraint firstItem="aoR-J9-WfD" firstAttribute="leading" secondItem="cnS-cR-OxO" secondAttribute="leading" id="BtL-wp-Nsw"/>
+                    <constraint firstItem="ulS-6k-amB" firstAttribute="bottom" secondItem="IQr-Fi-S1r" secondAttribute="bottom" id="Gff-F7-tas"/>
                     <constraint firstItem="vdO-nE-yyx" firstAttribute="centerX" secondItem="cnS-cR-OxO" secondAttribute="centerX" id="KWI-DV-W6V"/>
                     <constraint firstAttribute="trailing" secondItem="aoR-J9-WfD" secondAttribute="trailing" id="LFh-W5-Uc9"/>
                     <constraint firstAttribute="trailing" secondItem="yQG-DA-TtH" secondAttribute="trailing" id="NwL-EO-4kB"/>
                     <constraint firstItem="IQr-Fi-S1r" firstAttribute="centerX" secondItem="cnS-cR-OxO" secondAttribute="centerX" id="R5G-ZU-jBd"/>
                     <constraint firstItem="yQG-DA-TtH" firstAttribute="centerX" secondItem="cnS-cR-OxO" secondAttribute="centerX" id="SNh-j0-il5"/>
                     <constraint firstAttribute="trailing" secondItem="5ZK-os-qpf" secondAttribute="trailing" constant="8" id="XMs-PI-Os0"/>
+                    <constraint firstItem="ulS-6k-amB" firstAttribute="trailing" secondItem="IQr-Fi-S1r" secondAttribute="trailing" id="Ygc-BB-Awy"/>
                     <constraint firstItem="yQG-DA-TtH" firstAttribute="top" secondItem="BR9-Eu-EOb" secondAttribute="bottom" constant="20" id="Z5c-Fq-nQX"/>
                     <constraint firstItem="vdO-nE-yyx" firstAttribute="top" secondItem="IQr-Fi-S1r" secondAttribute="bottom" constant="10" id="dOx-1V-qIb"/>
                     <constraint firstAttribute="bottom" secondItem="aoR-J9-WfD" secondAttribute="bottom" id="fw8-VP-oW5"/>
@@ -92,6 +105,7 @@
             <connections>
                 <outlet property="emailLabel" destination="kcb-SZ-VFB" id="mKf-dm-s9q"/>
                 <outlet property="fullnameLabel" destination="vdO-nE-yyx" id="Atr-6u-6JZ"/>
+                <outlet property="logoutButton" destination="ulS-6k-amB" id="3cV-jh-KbB"/>
                 <outlet property="profileImage" destination="IQr-Fi-S1r" id="c7y-rO-SG9"/>
                 <outlet property="rateImage" destination="BR9-Eu-EOb" id="KxL-AY-cH1"/>
                 <outlet property="telLabel" destination="UuT-6g-tXP" id="g3v-o5-5Kr"/>

@@ -18,6 +18,9 @@ class MyListViewController: UITableViewController {
     var tripmyList = [NSDictionary]()
     var tripmyjoinList = [NSDictionary]()
     
+    var dateFormatter = DateFormatter()
+    var fristTime = true
+    
     let numberOfRow = [2,2]
     
     var itemInfo = IndicatorInfo(title: "New")
@@ -34,8 +37,8 @@ class MyListViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: feedViewCell, bundle: nil), forCellReuseIdentifier: feedViewCelldentifier)
-        selectData()
-        selectmyjoinData()
+        setPullToRefresh()
+        handleRefresh()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -85,12 +88,30 @@ class MyListViewController: UITableViewController {
             cell.dropOffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
             cell.amountLabel.text = "\(tripme["count_journey"] as! String)/4"
             cell.dateTmeLabel.text = "\(tripme["datatime_journey"] as! String)"
+            
+            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let url = NSURL(string:"\(path)\(tripme["pic_user"]!)")
+            let data = NSData(contentsOf:url! as URL)
+            if data == nil {
+                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+            } else {
+                cell.profileImage.image = UIImage(data:data as! Data)
+            }
         case 1:
             let tripjoin = tripmyjoinList[indexPath.row]
             cell.pickUpLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
             cell.amountLabel.text = "\(tripjoin["count_journey"] as! String)/4"
             cell.dateTmeLabel.text = "\(tripjoin["datatime_journey"] as! String)"
+            
+            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let url = NSURL(string:"\(path)\(tripjoin["pic_user"]!)")
+            let data = NSData(contentsOf:url! as URL)
+            if data == nil {
+                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+            } else {
+                cell.profileImage.image = UIImage(data:data as! Data)
+            }
         default:
             break
         }
@@ -138,7 +159,20 @@ class MyListViewController: UITableViewController {
 }
 
 extension MyListViewController {
-    //    (completionHandler:@escaping (_ r:[Region]?
+    
+    func handleRefresh() {
+        
+        if fristTime {
+            
+            fristTime = false
+            self.tripmyList = [NSDictionary]()
+            self.tripmyjoinList = [NSDictionary]()
+            selectData()
+            selectmyjoinData()
+            
+        }
+        
+    }
     
     func selectData() {
         Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeymylistSelect").responseJSON { response in
@@ -149,19 +183,27 @@ extension MyListViewController {
                     for trip in JSON as! NSArray {
                         self.tripmyList.append(trip as! NSDictionary)
                     }
-                    DispatchQueue.main.async {
-                        self.tableView!.reloadData()
+                }
+                let now = NSDate()
+                let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                
+                DispatchQueue.main.async {
+                    self.fristTime = true
+                    
+                    if let refreshControl = self.refreshControl {
+                        if refreshControl.isRefreshing {
+                            refreshControl.endRefreshing()
+                        }
                     }
+                    
+                    self.tableView?.reloadData()
                 }
             case .failure(let error):
                 print(error)
             }
         }
     }
-}
-
-extension MyListViewController {
-    //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectmyjoinData() {
         Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeymyjoinedSelect").responseJSON { response in
@@ -172,15 +214,46 @@ extension MyListViewController {
                     for tripjoin in JSON as! NSArray {
                         self.tripmyjoinList.append(tripjoin as! NSDictionary)
                     }
-                    DispatchQueue.main.async {
-                        self.tableView!.reloadData()
+                }
+                let now = NSDate()
+                let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                
+                DispatchQueue.main.async {
+                    self.fristTime = true
+                    
+                    if let refreshControl = self.refreshControl {
+                        if refreshControl.isRefreshing {
+                            refreshControl.endRefreshing()
+                        }
                     }
+                    
+                    self.tableView?.reloadData()
                 }
             case .failure(let error):
                 print(error)
             }
         }
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    func setPullToRefresh() {
+        self.tableView.delegate = self
+        self.dateFormatter.dateStyle = DateFormatter.Style.short
+        self.dateFormatter.timeStyle = DateFormatter.Style.long
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        //        self.refreshControl?.backgroundColor = UIColor.tabbarColor
+        //        self.refreshControl?.tintColor = UIColor.white
+        
+        let selector = #selector(self.handleRefresh)
+        self.refreshControl?.addTarget(self,
+                                       action: selector,
+                                       for: UIControlEvents.valueChanged)
+    }
+
 }
 
 extension MyListViewController:IndicatorInfoProvider {

@@ -12,17 +12,10 @@ import FBSDKLoginKit
 
 class ViewController: UIViewController,FBSDKLoginButtonDelegate {
 
-
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     @IBOutlet weak var fbloginButton: FBSDKLoginButton!
-    @IBAction func loginButton(_ sender: Any) {
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let nvc = storyBoard.instantiateViewController(withIdentifier: "NavController") as! UINavigationController
-        let vc = nvc.topViewController as! ListTapBarController
-        vc.requestFormDelegate = self
-        self.present(nvc, animated: true, completion: nil)
-
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -35,6 +28,14 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func loginAction(_ sender: Any) {
+        appDelegate.userID = 1
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let nvc = storyBoard.instantiateViewController(withIdentifier: "NavTabBarController") as! TabBarViewController
+        self.present(nvc, animated: true, completion: nil)
+
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!)

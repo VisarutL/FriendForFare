@@ -28,6 +28,7 @@ class JourneyViewController:UIViewController {
         }
         viewSetting()
         setCloseButton()
+        
         pickupLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
         dropoffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
         datetimeLabel.text = "\(trip["date_journey"] as! String) , \(trip["time_journey"] as! String)"

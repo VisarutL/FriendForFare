@@ -16,6 +16,9 @@ class FriendListViewController:UITableViewController {
     let friendViewCell = "FriendViewCell"
     var friendList = [NSDictionary]()
     
+    var dateFormatter = DateFormatter()
+    var fristTime = true
+    
     var itemInfo = IndicatorInfo(title: "New")
     var deleteID:Int?
     
@@ -31,7 +34,9 @@ class FriendListViewController:UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: friendViewCell, bundle: nil), forCellReuseIdentifier: friendViewCelldentifier)
-        selectData()
+        setPullToRefresh()
+        handleRefresh()
+
     }
     
     func initManager() -> SessionManager {
@@ -62,6 +67,15 @@ class FriendListViewController:UITableViewController {
         let friend = friendList[indexPath.row]
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
+            
+            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
+            let data = NSData(contentsOf:url! as URL)
+            if data == nil {
+                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+            } else {
+                cell.profileImage.image = UIImage(data:data as! Data)
+            }
         }
         return cell
     }
@@ -170,7 +184,23 @@ extension FriendListViewController {
 }
 
 extension FriendListViewController {
-    //    (completionHandler:@escaping (_ r:[Region]?
+    
+    func handleRefresh() {
+        
+        if fristTime {
+            
+            fristTime = false
+            self.friendList = [NSDictionary]()
+            selectData()
+            
+        }
+        
+    }
+    
+//    func loadData() {
+//        selectData()
+//        
+//    }
     
     func selectData() {
         Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=friendSelect").responseJSON { response in
@@ -183,9 +213,21 @@ extension FriendListViewController {
                         self.friendList.append(friend as! NSDictionary)
                     }
                     
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                }
+                let now = NSDate()
+                let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                
+                DispatchQueue.main.async {
+                    self.fristTime = true
+                    
+                    if let refreshControl = self.refreshControl {
+                        if refreshControl.isRefreshing {
+                            refreshControl.endRefreshing()
+                        }
                     }
+                    
+                    self.tableView?.reloadData()
                 }
             case .failure(let error):
                 print(error)
@@ -195,6 +237,22 @@ extension FriendListViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    func setPullToRefresh() {
+        self.tableView.delegate = self
+        self.dateFormatter.dateStyle = DateFormatter.Style.short
+        self.dateFormatter.timeStyle = DateFormatter.Style.long
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+//        self.refreshControl?.backgroundColor = UIColor.tabbarColor
+//        self.refreshControl?.tintColor = UIColor.white
+        
+        let selector = #selector(self.handleRefresh)
+        self.refreshControl?.addTarget(self,
+                                       action: selector,
+                                       for: UIControlEvents.valueChanged)
+    }
+    
 }
 
 extension FriendListViewController:IndicatorInfoProvider {

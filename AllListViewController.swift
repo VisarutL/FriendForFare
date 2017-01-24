@@ -14,30 +14,31 @@ class AllListViewController: UIViewController {
     
     let feedViewCelldentifier = "Cell"
     let feedViewCell = "FeedViewCell"
+    var sectionTitles = ["Nearby", "Friend"]
     
     var searchBar:UISearchBar?
     var tableView:UITableView?
+    var refreshControl = UIRefreshControl()
+    var dateFormatter = DateFormatter()
     
     var tripList = [NSDictionary]()
+    var tripfriendList = [NSDictionary]()
     var filteredTripList = [NSDictionary]()
+    var filteredfriendTripList = [NSDictionary]()
     
+    let cpGroup = DispatchGroup()
     var itemInfo:IndicatorInfo?
+    var fristTime = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initSearchBar()
         initTableView()
-        selectData()
+        setPullToRefresh()
+        refresh()
         
     }
-    
-    
-    
-    
-    
-    
-    
 }
 
 extension AllListViewController:UITableViewDelegate {
@@ -46,7 +47,16 @@ extension AllListViewController:UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredTripList.count
+        var rows = Int()
+        switch section {
+        case 0:
+            rows = filteredTripList.count
+        case 1:
+            rows = filteredfriendTripList.count
+        default:
+            break
+        }
+        return rows
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -54,7 +64,14 @@ extension AllListViewController:UITableViewDelegate {
         let storyboard = UIStoryboard(name: "ListTapBarDetail", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "JourneyViewController") as! JourneyViewController
         vc.myText = "Journey"
-        vc.trip = tripList[indexPath.row] as! [String : Any]
+        switch indexPath.section {
+        case 0:
+            vc.trip = filteredTripList[indexPath.row] as! [String : Any]
+        case 1:
+            vc.trip = filteredfriendTripList[indexPath.row] as! [String : Any]
+        default:
+            break
+        }
         let nvc = NavController(rootViewController: vc)
         self.present(nvc, animated: true, completion: nil)
         
@@ -69,14 +86,61 @@ extension AllListViewController:UITableViewDataSource {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
-        let trip = filteredTripList[indexPath.row]
+        var trip = NSDictionary()
+        
+        switch indexPath.section {
+        case 0:
+            trip = filteredTripList[indexPath.row]
+        case 1:
+            trip = filteredfriendTripList[indexPath.row]
+        default:
+            break
+        }
+        
         cell.pickUpLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
         cell.dropOffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
         cell.amountLabel.text = "\(trip["count_journey"] as! String)/4"
-        cell.dateTmeLabel.text = "\(trip["datatime_journey"] as! String)"
+        cell.dateTmeLabel.text = "\(trip["time_journey"] as! String)"
+        
+        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
+        let data = NSData(contentsOf:url! as URL)
+        if data == nil {
+            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+        } else {
+            cell.profileImage.image = UIImage(data:data as! Data)
+        }
+
         
         return cell
         
+        
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitles[section]
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 20))
+        headerView.backgroundColor = UIColor.tabbarColor
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = sectionTitles[section]
+        headerView.addSubview(label)
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20).isActive = true
+        label.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        return headerView
         
     }
 }
@@ -127,8 +191,14 @@ extension AllListViewController:UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.characters.count == 0 {
             filteredTripList = tripList
+            filteredfriendTripList = tripfriendList
         } else {
             filteredTripList = tripList.filter({( list : NSDictionary) -> Bool in
+                let name = list["drop_journey"] as! String
+                let filterText = name.lowercased()
+                return filterText.contains(searchText.lowercased())
+            })
+            filteredfriendTripList = tripfriendList.filter({( list : NSDictionary) -> Bool in
                 let name = list["drop_journey"] as! String
                 let filterText = name.lowercased()
                 return filterText.contains(searchText.lowercased())
@@ -142,28 +212,92 @@ extension AllListViewController:UISearchBarDelegate {
 extension AllListViewController {
 //    (completionHandler:@escaping (_ r:[Region]?
     
+    func refresh() {
+        
+        if fristTime {
+            
+            fristTime = false
+            self.filteredTripList = [NSDictionary]()
+            self.tripList = [NSDictionary]()
+            self.filteredfriendTripList = [NSDictionary]()
+            self.tripfriendList = [NSDictionary]()
+            cpGroup.enter()
+            selectData()
+            cpGroup.enter()
+            selectFriendData()
+            cpGroup.notify(queue: DispatchQueue.main, execute: {
+                self.fristTime = true
+                if self.refreshControl.isRefreshing {
+                    self.refreshControl.endRefreshing()
+                }
+                self.tableView?.reloadData()
+            })
+        }
+        
+    }
+    
     func selectData() {
         Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeySelect").responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
 //                    print("JSON: \(JSON)")
+                    
                     for trip in JSON as! NSArray {
                         self.tripList.append(trip as! NSDictionary)
                         self.filteredTripList = self.tripList
                     }
-                    DispatchQueue.main.async {
-                        self.tableView!.reloadData()
-                    }
+                    
+                    let now = NSDate()
+                    let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                    self.refreshControl.attributedTitle = NSAttributedString(string: updateString)
+                    
                 }
+                
+                self.cpGroup.leave()
             case .failure(let error):
                 print(error)
+                self.cpGroup.leave()
             }
         }
     }
+    
+    func selectFriendData() {
+        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeyFriendSelect").responseJSON { response in
+            switch response.result {
+            case .success:
+                if let JSON = response.result.value {
+                    //                    print("JSON: \(JSON)")
+                    
+                    for trip in JSON as! NSArray {
+                        self.tripfriendList.append(trip as! NSDictionary)
+                        self.filteredfriendTripList = self.tripfriendList
+                    }
+                    
+                    let now = NSDate()
+                    let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                    self.refreshControl.attributedTitle = NSAttributedString(string: updateString)
+                }
+                self.cpGroup.leave()
+            case .failure(let error):
+                print(error)
+                self.cpGroup.leave()
+            }
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    func setPullToRefresh() {
+        self.dateFormatter.dateStyle = DateFormatter.Style.short
+        self.dateFormatter.timeStyle = DateFormatter.Style.long
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+        self.tableView?.insertSubview(refreshControl, at: 0)
+    }
+    
 }
 
 extension AllListViewController:IndicatorInfoProvider {

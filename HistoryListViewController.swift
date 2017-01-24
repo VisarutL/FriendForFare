@@ -16,6 +16,8 @@ class HistoryListViewController: UITableViewController {
     let feedViewCell = "FeedViewCell"
     var itemInfo = IndicatorInfo(title: "New")
     var tripList = [NSDictionary]()
+    var dateFormatter = DateFormatter()
+    var fristTime = true
     
     init(style: UITableViewStyle, itemInfo: IndicatorInfo) {
         self.itemInfo = itemInfo
@@ -30,7 +32,8 @@ class HistoryListViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: feedViewCell, bundle: nil), forCellReuseIdentifier: feedViewCelldentifier)
-        selectData()
+        setPullToRefresh()
+        handleRefresh()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -50,6 +53,16 @@ class HistoryListViewController: UITableViewController {
         cell.dropOffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
         cell.amountLabel.text = "\(trip["count_journey"] as! String)/4"
         cell.dateTmeLabel.text = "\(trip["datatime_journey"] as! String)"
+        
+        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
+        let data = NSData(contentsOf:url! as URL)
+        if data == nil {
+            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+        } else {
+            cell.profileImage.image = UIImage(data:data as! Data)
+        }
+
 
         
         return cell
@@ -74,7 +87,18 @@ class HistoryListViewController: UITableViewController {
 }
 
 extension HistoryListViewController {
-    //    (completionHandler:@escaping (_ r:[Region]?
+    
+    func handleRefresh() {
+        
+        if fristTime {
+            
+            fristTime = false
+            self.tripList = [NSDictionary]()
+            selectData()
+            
+        }
+        
+    }
     
     func selectData() {
         Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=historyjourneySelect").responseJSON { response in
@@ -87,20 +111,48 @@ extension HistoryListViewController {
                         self.tripList.append(trip as! NSDictionary)
                     }
                     
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                }
+                let now = NSDate()
+                let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                
+                DispatchQueue.main.async {
+                    self.fristTime = true
+                    
+                    if let refreshControl = self.refreshControl {
+                        if refreshControl.isRefreshing {
+                            refreshControl.endRefreshing()
+                        }
                     }
                     
+                    self.tableView?.reloadData()
                 }
-                
             case .failure(let error):
                 print(error)
             }
         }
+
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    func setPullToRefresh() {
+        self.tableView.delegate = self
+        self.dateFormatter.dateStyle = DateFormatter.Style.short
+        self.dateFormatter.timeStyle = DateFormatter.Style.long
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        //        self.refreshControl?.backgroundColor = UIColor.tabbarColor
+        //        self.refreshControl?.tintColor = UIColor.white
         
+        let selector = #selector(self.handleRefresh)
+        self.refreshControl?.addTarget(self,
+                                       action: selector,
+                                       for: UIControlEvents.valueChanged)
     }
 }
+
 
 
 extension HistoryListViewController:IndicatorInfoProvider {

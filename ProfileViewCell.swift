@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProfileViewDelegate:class {
+    func profileViewDidLogout()
+}
+
 class ProfileViewCell:UITableViewCell {
     
     @IBOutlet weak var profileImage: UIImageView!
@@ -15,7 +19,10 @@ class ProfileViewCell:UITableViewCell {
     @IBOutlet weak var telLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var rateImage: UIImageView!
+    @IBOutlet weak var logoutButton: UIButton!
     
+    weak var delegate:ProfileViewDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setProfileImage()
@@ -24,13 +31,20 @@ class ProfileViewCell:UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         setProfileImage()
+        fullnameLabel.text = "full name."
+        telLabel.text = "telephone."
+        emailLabel.text = "mail."
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        setLogoutButton()
         setProfileImage()
         
+    }
+    
+    @IBAction func logoutAction(_ sender: Any) {
+        delegate?.profileViewDidLogout()
     }
     
     
@@ -46,15 +60,16 @@ class ProfileViewCell:UITableViewCell {
         }
         rateImage.image = UIImage(named: imageName)
     }
+    
+    func setLogoutButton() {
+        self.logoutButton.layer.cornerRadius = self.logoutButton.bounds.size.height / 2
+        self.logoutButton.clipsToBounds = true
+    }
+    
     func setProfileImage() {
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
-            self.profileImage.layer.borderWidth = 2
-            self.profileImage.layer.borderColor = UIColor.white.cgColor
             self.profileImage.clipsToBounds = true
         }
-        
-//        self.profileImage.backgroundColor = UIColor.lightGray
-        //        self.profileImage.image = UIImage(named: "ic_defalut_user_160_white")
     }
 }

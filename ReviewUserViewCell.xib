@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -59,7 +59,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="comemtLabel" destination="9tg-r7-zBn" id="gFU-d4-Cz7"/>
-                <outlet property="genderImageview" destination="hg9-12-iuy" id="hpo-BB-A87"/>
+                <outlet property="profileImage" destination="hg9-12-iuy" id="FHe-72-1R9"/>
                 <outlet property="rateImage" destination="5nS-FH-v2K" id="Jj7-Su-Ivb"/>
                 <outlet property="timeLabel" destination="vp1-X3-5FS" id="S6u-Wa-Un7"/>
             </connections>
