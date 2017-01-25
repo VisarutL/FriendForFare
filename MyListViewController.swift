@@ -86,7 +86,7 @@ class MyListViewController: UITableViewController {
             let tripme = tripmyList[indexPath.row]
             cell.pickUpLabel.text = "PICK-UP : \(tripme["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
-            cell.amountLabel.text = "\(tripme["count_journey"] as! String)/4"
+            cell.amountLabel.text = "0/\(tripme["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripme["datatime_journey"] as! String)"
             
             let path = "http://worawaluns.in.th/friendforfare/images/"
@@ -101,7 +101,7 @@ class MyListViewController: UITableViewController {
             let tripjoin = tripmyjoinList[indexPath.row]
             cell.pickUpLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
-            cell.amountLabel.text = "\(tripjoin["count_journey"] as! String)/4"
+            cell.amountLabel.text = "0/\(tripjoin["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripjoin["datatime_journey"] as! String)"
             
             let path = "http://worawaluns.in.th/friendforfare/images/"

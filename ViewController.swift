@@ -19,7 +19,7 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        configureFacebook()
+        configureFacebook()
         if (FBSDKAccessToken.current() != nil) {
             // User is logged in, do work such as go to next view controller.
         }
@@ -56,11 +56,11 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
         loginManager.logOut()
     }
     
-//    func configureFacebook()
-//    {
-//        fbloginButton.readPermissions = ["public_profile", "email", "user_friends"];
-//        fbloginButton.delegate = self
-//    }
+    func configureFacebook()
+    {
+        fbloginButton.readPermissions = ["public_profile", "email", "user_friends"];
+        fbloginButton.delegate = self
+    }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

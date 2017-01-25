@@ -99,7 +99,7 @@ extension AllListViewController:UITableViewDataSource {
         
         cell.pickUpLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
         cell.dropOffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
-        cell.amountLabel.text = "\(trip["count_journey"] as! String)/4"
+        cell.amountLabel.text = "0/\(trip["count_journey"] as! String)"
         cell.dateTmeLabel.text = "\(trip["time_journey"] as! String)"
         
         let path = "http://worawaluns.in.th/friendforfare/images/"

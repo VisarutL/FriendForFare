@@ -7,27 +7,48 @@
 //
 
 import UIKit
+import Alamofire
 
 class SearchFriendViewController: UIViewController  {
     
-    var friendViewCell = "FriendViewCell"
-    var candies = [NSDictionary]()
-    var filteredCandies = [NSDictionary]()
+    var searchBar = UISearchBar()
+    var tableView = UITableView()
+    var closeBarButton = UIBarButtonItem()
     
-    var searchBar:UISearchBar?
-    var tableView:UITableView?
+    var friendViewCell = "FriendViewCell"
+    var userList = [NSDictionary]()
+    var filteredUserList = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        title = "Search Friend"
         initSearchBar()
         initTableView()
+        setCloseButton()
+        selectData()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+    }
+    
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = nil
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        return Alamofire.SessionManager(configuration: configuration)
+    }
+    
+    func setCloseButton() {
+        closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
+        self.navigationItem.leftBarButtonItem = closeBarButton
+    }
+    
+    func closeAction() {
+        dismiss(animated: true, completion: nil)
     }
     
 }
@@ -38,7 +59,7 @@ extension SearchFriendViewController:UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredCandies.count
+        return filteredUserList.count
     }
     
 }
@@ -49,27 +70,42 @@ extension SearchFriendViewController:UITableViewDataSource {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
+        
+        let friend = filteredUserList[indexPath.row]
+        cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
+        cell.usernameLabel.text = "\(friend["username_user"]!)"
+        
+        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
+        let data = NSData(contentsOf:url! as URL)
+        if data == nil {
+            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+        } else {
+            cell.profileImage.image = UIImage(data:data as! Data)
+        }
+        
         return cell
     }
 }
 
 extension SearchFriendViewController {
     func initSearchBar() {
-        searchBar = UISearchBar()
-        searchBar!.delegate = self
-        searchBar!.translatesAutoresizingMaskIntoConstraints = false
-        searchBar!.sizeToFit()
-        searchBar!.placeholder = "Search by Friend"
-        searchBar!.barTintColor = UIColor.tabbarColor
-        searchBar!.tintColor = UIColor.black
-        searchBar!.scopeButtonTitles = nil
-        //        searchBar!.scopeButtonTitles = ["All","Male","Female"]
         
-        view.addSubview(searchBar!)
-        let top = searchBar!.topAnchor.constraint(equalTo: view.topAnchor)
-        let lead = searchBar!.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0)
-        let trailing = searchBar!.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
-        //        let height = searchBar!.heightAnchor.constraint(equalToConstant: 44)
+        searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Search by username"
+        searchBar.barTintColor = UIColor.tabbarColor
+        searchBar.tintColor = UIColor.black
+        searchBar.scopeButtonTitles = nil
+        //        searchBar.scopeButtonTitles = ["All","Male","Female"]
+        
+        view.addSubview(searchBar)
+        let top = searchBar.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor)
+        let lead = searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0)
+        let trailing = searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+        //        let height = searchBar.heightAnchor.constraint(equalToConstant: 44)
         NSLayoutConstraint.activate([top,lead, trailing])
     }
     
@@ -84,7 +120,7 @@ extension SearchFriendViewController {
         view.addSubview(tableView)
         let lead = tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0)
         let trail = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        let top = tableView.topAnchor.constraint(equalTo: searchBar!.bottomAnchor)
+        let top = tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor)
         let bottom = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         NSLayoutConstraint.activate([lead, trail,top,bottom])
         
@@ -98,17 +134,49 @@ extension SearchFriendViewController:UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.characters.count == 0 {
-            filteredCandies = candies
+            filteredUserList = [NSDictionary]()
         } else {
-            filteredCandies = candies.filter({( list : NSDictionary) -> Bool in
-                let name = list["drop_journey"] as! String
+            filteredUserList = userList.filter({( list : NSDictionary) -> Bool in
+                let name = list["fname_user"] as! String
                 let filterText = name.lowercased()
                 return filterText.contains(searchText.lowercased())
             })
         }
-        self.tableView!.reloadData()
+        self.tableView.reloadData()
         
     }
+}
+
+extension SearchFriendViewController {
+    
+    func selectData() {
+        let parameters: Parameters = [
+            "function": "serachFriendSelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=serachFriendSelect"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
+                    
+                    
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.userList.append(item as! NSDictionary)
+                            
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+
+    
 }
 
 

@@ -993,6 +993,7 @@
                     <connections>
                         <outlet property="buttonBarView" destination="rRZ-ti-PFI" id="tZ7-uh-mgu"/>
                         <outlet property="containerView" destination="sJh-VG-0GG" id="Yel-6n-JYs"/>
+                        <segue destination="hSW-bc-sds" kind="presentation" id="xTn-E1-a4B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oOi-E4-C0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1349,7 +1350,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wkl-6d-yZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6342" y="1208"/>
+            <point key="canvasLocation" x="6129" y="1173"/>
         </scene>
         <!--Profile-->
         <scene sceneID="WZy-at-fLE">
@@ -1369,7 +1370,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xsd-Dd-d7e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5457" y="1208"/>
+            <point key="canvasLocation" x="5244" y="1173"/>
         </scene>
         <!--Nav Controller-->
         <scene sceneID="d1J-tz-pDC">

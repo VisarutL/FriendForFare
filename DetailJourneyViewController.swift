@@ -18,15 +18,13 @@ class DetailJourneyViewController:UIViewController {
     @IBOutlet weak var detailTextView: UITextView!
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    
     @IBOutlet weak var profile1ImageView: UIImageView!
     @IBOutlet weak var profile2ImageView: UIImageView!
     @IBOutlet weak var profile3ImageView: UIImageView!
     @IBOutlet weak var profile4ImageView: UIImageView!
     
     var tripDetail = [String: Any]()
-//    let numberOfRow = [1,1]
-    
-    
     var closeBarButton = UIBarButtonItem()
     var myText:String?
     var joinButtonToggle:String?
@@ -40,6 +38,7 @@ class DetailJourneyViewController:UIViewController {
         tableViewSetting()
         setCloseButton()
         selectData()
+        
     }
     
     func initManager() -> SessionManager {
@@ -195,6 +194,15 @@ extension DetailJourneyViewController {
                     print(error)
             }
         })
+    }
+    
+    func loadImage() {
+        var profieImages:[UIImageView] = [profile1ImageView,profile2ImageView,profile3ImageView,profile4ImageView]
+        var profileImageNames = ["test","test","test","test"]
+        for i in 0...3 {
+            let url = "http:\(profileImageNames[i])"
+            profieImages[i].image = UIImage(named: url)
+        }
     }
     
 }

@@ -68,8 +68,8 @@ extension FriendTabBarController {
     
     func searchAction() {
         
-        let searchController = SearchFriendViewController()
-        let nvc = UINavigationController(rootViewController: searchController)
+        let vc = SearchFriendViewController()
+        let nvc = UINavigationController(rootViewController: vc)
         self.present(nvc, animated: true, completion: nil)
         
         
@@ -119,7 +119,7 @@ extension FriendTabBarController {
         let cancle = UIAlertAction(title: "cancle", style: .cancel, handler: nil)
         let action = UIAlertAction(title: "reject", style: .default) {
             _ in
-            if let field = alert.textFields {
+            if let _ = alert.textFields {
                 //                let rejectRemark = field[0].text
                 //                let requestID = "New"
                 //                let statusID = "lorem"

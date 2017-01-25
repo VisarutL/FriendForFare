@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ReviewUserViewController:ViewController {
+class ReviewUserViewController:UIViewController {
     
     
     @IBOutlet weak var profileImage: UIImageView!

@@ -21,16 +21,20 @@ class ProfileViewCell:UITableViewCell {
     @IBOutlet weak var rateImage: UIImageView!
     @IBOutlet weak var logoutButton: UIButton!
     
+    var showLogout = false
+    
     weak var delegate:ProfileViewDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        setLogoutHidden()
         setProfileImage()
+        setLogoutButton()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        setProfileImage()
+//        setProfileImage()
         fullnameLabel.text = "full name."
         telLabel.text = "telephone."
         emailLabel.text = "mail."
@@ -38,8 +42,10 @@ class ProfileViewCell:UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setLogoutButton()
-        setProfileImage()
+        if showLogout {
+            logoutButton.isUserInteractionEnabled = true
+            logoutButton.isHidden = false
+        }
         
     }
     
@@ -71,5 +77,10 @@ class ProfileViewCell:UITableViewCell {
             self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
             self.profileImage.clipsToBounds = true
         }
+    }
+    
+    func setLogoutHidden() {
+        logoutButton.isUserInteractionEnabled = false
+        logoutButton.isHidden = true
     }
 }

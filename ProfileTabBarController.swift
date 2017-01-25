@@ -40,10 +40,6 @@ class ProfileTabBarController:UITableViewController{
     }
     
     func initManager() -> SessionManager {
-//        let configuration = URLSessionConfiguration.ephemeral
-//        configuration.timeoutIntervalForRequest = 10
-//        configuration.timeoutIntervalForResource = 10
-//        let manager = Alamofire.SessionManager(configuration: configuration)
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = nil
         configuration.timeoutIntervalForRequest = 10
@@ -84,10 +80,24 @@ class ProfileTabBarController:UITableViewController{
         
         
         let reviewprofile = self.reviewprofile[indexPath.row]
-        cell.comemtLabel.text = "\(reviewprofile["comment_review"]!)"
-        cell.timeLabel.text = "\(reviewprofile["datetime_review"]!)"
-        let rate = reviewprofile["rate_review"] as! String
-        cell.setRateImage(rate: Int(rate)!)
+        if reviewprofile.count == 0 {
+            
+        } else {
+            cell.comemtLabel.text = "\(reviewprofile["comment_review"]!)"
+            cell.timeLabel.text = "\(reviewprofile["datetime_review"]!)"
+            let rate = reviewprofile["rate_review"] as! String
+            cell.setRateImage(rate: Int(rate)!)
+            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let url = NSURL(string:"\(path)\(reviewprofile["pic_user"]!)")
+            let data = NSData(contentsOf:url! as URL)
+            if data == nil {
+                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+            } else {
+                cell.profileImage.image = UIImage(data:data as! Data)
+            }
+
+        }
+        
         
         return cell
 
@@ -121,7 +131,7 @@ class ProfileTabBarController:UITableViewController{
                 cell.profileImage.image = UIImage(data:data as! Data)
             }
         }
-        
+        cell.showLogout = true
         cell.delegate = self
         cell.setRateImage(rate: userRate)
         

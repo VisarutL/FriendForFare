@@ -58,25 +58,19 @@ class FriendListViewController:UITableViewController {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
-        if friendList.count == 0
-        {
-            cell.nameLabel.text = "name"
-            cell.usernameLabel.text = "username"
-        }
-        else {
         let friend = friendList[indexPath.row]
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
             
-            let path = "http://worawaluns.in.th/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
-            let data = NSData(contentsOf:url! as URL)
-            if data == nil {
-                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-            } else {
-                cell.profileImage.image = UIImage(data:data as! Data)
-            }
+        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
+        let data = NSData(contentsOf:url! as URL)
+        if data == nil {
+            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+        } else {
+            cell.profileImage.image = UIImage(data:data as! Data)
         }
+        
         return cell
     }
 

@@ -22,7 +22,7 @@ class FeedViewCell:UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        setProfileImage()
     }
     
     override func prepareForReuse() {
@@ -32,18 +32,9 @@ class FeedViewCell:UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        setProfileImage()
+        
         
     }
-//    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        
-//    }
-//    
-//    required init(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//        
-//    }
     
     func setProfileImage() {
         DispatchQueue.main.async {
