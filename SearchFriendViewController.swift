@@ -15,7 +15,7 @@ class SearchFriendViewController: UIViewController  {
     var tableView = UITableView()
     var closeBarButton = UIBarButtonItem()
     
-    var friendViewCell = "FriendViewCell"
+    var searchFriendViewCell = "SearchFriendViewCell"
     var userList = [NSDictionary]()
     var filteredUserList = [NSDictionary]()
     
@@ -61,12 +61,11 @@ extension SearchFriendViewController:UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredUserList.count
     }
-    
 }
 
 extension SearchFriendViewController:UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: friendViewCell, for: indexPath) as! FriendViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: searchFriendViewCell, for: indexPath) as! SearchFriendViewCell
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
@@ -78,14 +77,30 @@ extension SearchFriendViewController:UITableViewDataSource {
         let path = "http://worawaluns.in.th/friendforfare/images/"
         let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-        } else {
-            cell.profileImage.image = UIImage(data:data as! Data)
-        }
+        let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
+        cell.profileImage.image = image
+        cell.delegate = self
+        cell.indexPath = indexPath as NSIndexPath
         
         return cell
     }
+}
+
+extension SearchFriendViewController:SearchFriendViewCellDelegate {
+    func searchFriendViewCellDidAdd(index: NSIndexPath) {
+        let addUser = filteredUserList[index.row]
+        if let i = userList.index(of: addUser) {
+            userList.remove(at: i)
+            filteredUserList.remove(at:index.row)
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
+        
+    }
+    
 }
 
 extension SearchFriendViewController {
@@ -124,7 +139,7 @@ extension SearchFriendViewController {
         let bottom = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         NSLayoutConstraint.activate([lead, trail,top,bottom])
         
-        tableView.register(UINib(nibName: friendViewCell, bundle: nil), forCellReuseIdentifier: friendViewCell)
+        tableView.register(UINib(nibName: searchFriendViewCell, bundle: nil), forCellReuseIdentifier: searchFriendViewCell)
         
     }
 

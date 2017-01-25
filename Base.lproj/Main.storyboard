@@ -475,17 +475,17 @@
         <!--Create Journey-->
         <scene sceneID="2by-rI-hcw">
             <objects>
-                <viewController id="IId-Ke-NPc" customClass="PostTabBarController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostTabBarController" id="IId-Ke-NPc" customClass="PostTabBarController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cne-pt-9tA"/>
                         <viewControllerLayoutGuide type="bottom" id="4sC-eA-enq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sSS-PQ-PPg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7t-z0-Q6P" userLabel="Pick">
-                                <rect key="frame" x="0.0" y="64" width="375" height="84"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="84"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PICK UP :" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hhh-IB-icf">
                                         <rect key="frame" x="88.5" y="8" width="278.5" height="30"/>
@@ -529,7 +529,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sMs-4k-Lq2" userLabel="Detail">
-                                <rect key="frame" x="0.0" y="323" width="375" height="250"/>
+                                <rect key="frame" x="0.0" y="372" width="375" height="250"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Persons" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nC-Hc-QZ9">
                                         <rect key="frame" x="0.0" y="8" width="375" height="20.5"/>
@@ -632,7 +632,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VZc-UL-P38">
-                                <rect key="frame" x="0.0" y="573" width="375" height="45"/>
+                                <rect key="frame" x="0.0" y="622" width="375" height="45"/>
                                 <color key="backgroundColor" red="0.14114794999738689" green="0.14645432692307692" blue="0.1401537339659078" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="ttj-Az-cB3"/>
@@ -643,7 +643,7 @@
                                 </state>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Map" translatesAutoresizingMaskIntoConstraints="NO" id="Eml-ob-IVC">
-                                <rect key="frame" x="0.0" y="148" width="375" height="175"/>
+                                <rect key="frame" x="0.0" y="104" width="375" height="268"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -671,7 +671,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hf6-E9-ygC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4096.8000000000002" y="358.4707646176912"/>
+            <point key="canvasLocation" x="4612" y="373"/>
         </scene>
         <!--Profile-->
         <scene sceneID="jHZ-lk-Tjn">
@@ -883,9 +883,6 @@
                         <color key="barTintColor" red="0.99607843137254903" green="0.77254901960784317" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="IId-Ke-NPc" kind="relationship" relationship="rootViewController" id="31g-lP-HCC"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dIX-vg-6dv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -167,9 +167,22 @@ extension FriendRequestListViewController:FriendRequestViewCellDelegate {
     
     func friendRequestViewCellDidDelete(index:NSIndexPath) {
         let user = friendrequestList[index.row]
-        let userID = user["id_user"] as? String
-        updateFriendRequest(userID: userID!,status:"2",index: index)
+        let userID = user["id_user"] as? String ?? "1"
+        
+        let alertController = UIAlertController(title: "", message: "Are you sure to remove.", preferredStyle: UIAlertControllerStyle.alert)
+        let cancel = UIAlertAction(title: "Cancle", style: .cancel, handler: nil)
+        
+        // Replace UIAlertActionStyle.Default by UIAlertActionStyle.default
+        let ok = UIAlertAction(title: "OK", style: .default,handler: {
+            _ in
+            self.updateFriendRequest(userID: userID,status:"2",index: index)
+        })
+        
+        alertController.addAction(cancel)
+        alertController.addAction(ok)
+        self.present(alertController, animated: true, completion: nil)
     }
+
 }
 
 extension FriendRequestListViewController:IndicatorInfoProvider {

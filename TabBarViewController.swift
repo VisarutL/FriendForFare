@@ -9,32 +9,47 @@
 import UIKit
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
+    
+    var reserveIndex = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         self.tabBar.barTintColor = UIColor.tabbarColor
         
     }
+    
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print(tabBarController.selectedIndex)
-        
+        if tabBarController.selectedIndex == 1 {
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyBoard.instantiateViewController(withIdentifier: "PostTabBarController") as! PostTabBarController
+            vc.delegate = self
+            let nvc = UINavigationController(rootViewController: vc)
+            present(nvc, animated: true, completion: nil)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //        self.tabBar.barTintColor = .yellow
-//        let item1 = Item1ViewController()
-//        let icon1 = UITabBarItem(title: "Title", image: UIImage(named: "someImage.png"), selectedImage: UIImage(named: "otherImage.png"))
-//        item1.tabBarItem = icon1
-//        let controllers = [item1]  //array of the root view controllers displayed by the tab bar interface
-//        self.viewControllers = controllers
 
     }
     
-    //Delegate methods
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        print("Should select viewController: \(viewController.title) ?")
-        return true;
+        reserveIndex = tabBarController.selectedIndex
+        return (tabBarController.selectedViewController != viewController);
+    }
+
+}
+
+extension TabBarViewController:PostTabBarDelegate {
+    func postTabBarDidClose() {
+        self.selectedIndex = reserveIndex
+        DispatchQueue.main.async {
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
 }
+
 

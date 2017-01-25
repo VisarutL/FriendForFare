@@ -46,15 +46,32 @@
                             <constraint firstAttribute="height" constant="32" id="RVp-ha-675"/>
                         </constraints>
                     </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqb-EL-3wC">
+                        <rect key="frame" x="613" y="78" width="100" height="40"/>
+                        <color key="backgroundColor" red="0.1215686275" green="0.67450980390000004" blue="0.46274509800000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="bhY-vz-eeb"/>
+                            <constraint firstAttribute="width" constant="100" id="yju-JE-HCc"/>
+                        </constraints>
+                        <state key="normal" title="ADD">
+                            <color key="titleColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                        </state>
+                        <connections>
+                            <action selector="addFriendAction:" destination="YfJ-Og-MZe" eventType="touchUpInside" id="gpk-Jw-mXt"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="hqb-EL-3wC" secondAttribute="trailing" constant="20" id="EeR-9t-RYa"/>
                     <constraint firstItem="Dl5-K4-heY" firstAttribute="leading" secondItem="BgL-RD-Yv0" secondAttribute="trailing" constant="20" id="It1-wG-o7d"/>
+                    <constraint firstItem="hqb-EL-3wC" firstAttribute="centerY" secondItem="YUd-Df-Xmn" secondAttribute="centerY" id="JdZ-nn-ZOv"/>
                     <constraint firstItem="BgL-RD-Yv0" firstAttribute="leading" secondItem="YUd-Df-Xmn" secondAttribute="leading" constant="20" id="PG1-0s-AHi"/>
                     <constraint firstItem="Dl5-K4-heY" firstAttribute="centerY" secondItem="BgL-RD-Yv0" secondAttribute="centerY" id="fO4-ox-UrS"/>
                     <constraint firstItem="BgL-RD-Yv0" firstAttribute="centerY" secondItem="YUd-Df-Xmn" secondAttribute="centerY" id="gZ1-7L-igp"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="addFriendButton" destination="hqb-EL-3wC" id="Sbd-HP-inA"/>
                 <outlet property="nameLabel" destination="BDe-aa-Ha4" id="z2b-qB-w6z"/>
                 <outlet property="profileImage" destination="BgL-RD-Yv0" id="msT-Ov-DRe"/>
                 <outlet property="usernameLabel" destination="4tK-tI-ytE" id="h8P-9z-sb3"/>
