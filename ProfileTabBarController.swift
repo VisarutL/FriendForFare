@@ -98,7 +98,6 @@ class ProfileTabBarController:UITableViewController{
 
         }
         
-        
         return cell
 
     }

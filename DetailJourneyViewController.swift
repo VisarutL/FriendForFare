@@ -34,7 +34,7 @@ class DetailJourneyViewController:UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        setProfileImage()
         viewSetting()
         tableViewSetting()
         setCloseButton()
@@ -53,6 +53,7 @@ class DetailJourneyViewController:UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        countLabel.text = "\(userjoinedList.count)/\(tripDetail["count_journey"] as! String)"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -72,8 +73,16 @@ class DetailJourneyViewController:UIViewController {
                 default:
                     break
                 }
-
-                
+            case "editPost":
+                let vcc = segue.destination as! EditJourneyViewController
+                switch joinButtonToggle!.lowercased() {
+                case "myTrip".lowercased():
+                    vcc.idjourney = Int(tripDetail["id_journey"] as! String)!
+                case "otherTrip".lowercased():
+                    vcc.idjourney = Int(tripDetail["id_journey"] as! String)!
+                default:
+                    break
+                }
             default:
                 break
             }
@@ -111,6 +120,8 @@ class DetailJourneyViewController:UIViewController {
         datetimeLabel.text = "\(tripDetail["date_journey"] as! String) , \(tripDetail["time_journey"] as! String)"
         countLabel.text = "0/\(tripDetail["count_journey"] as! String)"
         detailTextView.text = "\(tripDetail["detail_journey"] as! String)"
+        let idtrip = "\(tripDetail["id_journey"] as! String)"
+        userJoined(idjourney: idtrip)
     }
     
     func setCloseButton() {
@@ -122,15 +133,37 @@ class DetailJourneyViewController:UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func setProfileImage() {
+        DispatchQueue.main.async {
+            self.profile1ImageView.layer.cornerRadius = self.profile1ImageView.bounds.size.height / 2
+            self.profile1ImageView.clipsToBounds = true
+            self.profile2ImageView.layer.cornerRadius = self.profile2ImageView.bounds.size.height / 2
+            self.profile2ImageView.clipsToBounds = true
+            self.profile3ImageView.layer.cornerRadius = self.profile3ImageView.bounds.size.height / 2
+            self.profile3ImageView.clipsToBounds = true
+            self.profile4ImageView.layer.cornerRadius = self.profile4ImageView.bounds.size.height / 2
+            self.profile4ImageView.clipsToBounds = true
+        }
+    }
+    
     func tableViewSetting() {
         tableview.delegate = self
         tableview.dataSource = self
     }
     
-    
-    
-    
-
+    func loadImage() {
+        var profileImages:[UIImageView] = [profile1ImageView,profile2ImageView,profile3ImageView,profile4ImageView]
+        guard userjoinedList.count != 0 else { return }
+        let count = userjoinedList.count - 1
+        for i in 0...count {
+            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
+            let url = NSURL(string:"\(path)\(imageName)")
+            let data = NSData(contentsOf:url as! URL)
+            let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
+            profileImages[i].image = image
+        }
+    }
 }
 
 extension DetailJourneyViewController:UITableViewDelegate {
@@ -164,6 +197,7 @@ extension DetailJourneyViewController:UITableViewDataSource {
         return commentlist.count
     }
 }
+
 extension DetailJourneyViewController {
     
     func selectData() {
@@ -198,17 +232,17 @@ extension DetailJourneyViewController {
         })
     }
     
-    func userJoinedData(idjourney:String) {
+    func userJoined(idjourney:String) {
         let parameters: Parameters = [
             "function": "userJoined",
             "idjourney": idjourney
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=userJoined"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
                     
@@ -218,23 +252,12 @@ extension DetailJourneyViewController {
                         for item in JSON as! NSArray {
                             self.userjoinedList.append(item as! NSDictionary)
                         }
+                        self.loadImage()
                     }
                 case .failure(let error):
                     print(error)
                 }
             })
-    }
-    func loadImage() {
-        
-        var profileImages:[UIImageView] = [profile1ImageView,profile2ImageView,profile3ImageView,profile4ImageView]
-        var profileImageNames = ["","","",""]
-        for i in 0...3 {
-            let path = "http://worawaluns.in.th/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(profileImageNames[i])")
-            let data = NSData(contentsOf:url as! URL)
-            let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
-            profileImages[i].image = image
-        }
     }
     
 }

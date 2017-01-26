@@ -34,6 +34,7 @@ class JourneyViewController:UIViewController {
             title = myText
             print(myText)
         }
+        setProfileImage()
         let idtrip = "\(trip["id_journey"] as! String)"
         selectData(idjourney: idtrip)
         viewSetting()
@@ -41,14 +42,13 @@ class JourneyViewController:UIViewController {
         pickupLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
         dropoffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
         datetimeLabel.text = "\(trip["date_journey"] as! String) , \(trip["time_journey"] as! String)"
-        countLabel.text = "0/\(trip["count_journey"] as! String)"
+        countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
         detailTextView.text = "\(trip["detail_journey"] as! String)"
-        print(userjoinedList)
-        loadImage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
     }
     
     func initManager() -> SessionManager {
@@ -91,22 +91,32 @@ class JourneyViewController:UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func setProfileImage() {
+        DispatchQueue.main.async {
+            self.imageProfile1.layer.cornerRadius = self.imageProfile1.bounds.size.height / 2
+            self.imageProfile1.clipsToBounds = true
+            self.imageProfile2.layer.cornerRadius = self.imageProfile1.bounds.size.height / 2
+            self.imageProfile2.clipsToBounds = true
+            self.imageProfile3.layer.cornerRadius = self.imageProfile1.bounds.size.height / 2
+            self.imageProfile3.clipsToBounds = true
+            self.imageProfile4.layer.cornerRadius = self.imageProfile1.bounds.size.height / 2
+            self.imageProfile4.clipsToBounds = true
+        }
+    }
+    
     func loadImage() {
-        
         var profileImages:[UIImageView] = [imageProfile1,imageProfile2,imageProfile3,imageProfile4]
-        let row = userjoinedList.count
-            print(row)
-
-        var profileImageNames = ["","","",""]
-        for i in 0...3 {
+        guard userjoinedList.count != 0 else { return }
+        let count = userjoinedList.count - 1
+        for i in 0...count {
             let path = "http://worawaluns.in.th/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(profileImageNames[i])")
+            let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
+            let url = NSURL(string:"\(path)\(imageName)")
             let data = NSData(contentsOf:url as! URL)
             let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
             profileImages[i].image = image
         }
     }
-
 }
 
 extension JourneyViewController {
@@ -130,12 +140,12 @@ extension JourneyViewController {
                         print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.userjoinedList.append(item as! NSDictionary)
-                            
                         }
+                        self.loadImage()
                     }
                 case .failure(let error):
                     print(error)
-                }
-            })
+            }
+        })
     }
 }
