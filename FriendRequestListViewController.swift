@@ -108,9 +108,17 @@ extension FriendRequestListViewController {
     }
     
     func selectData() {
-        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=friendrequestSelect").responseJSON { response in
-            switch response.result {
-            case .success:
+        let parameters: Parameters = [
+            "function": "friendrequestSelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
                 
                 if let JSON = response.result.value {
                     //                    print("JSON: \(JSON)")
@@ -136,7 +144,7 @@ extension FriendRequestListViewController {
             case .failure(let error):
                 print(error)
             }
-        }
+        })
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

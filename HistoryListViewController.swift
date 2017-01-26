@@ -36,6 +36,14 @@ class HistoryListViewController: UITableViewController {
         handleRefresh()
     }
     
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
@@ -101,9 +109,18 @@ extension HistoryListViewController {
     }
     
     func selectData() {
-        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=historyjourneySelect").responseJSON { response in
-            switch response.result {
-            case .success:
+        let parameters: Parameters = [
+            "function": "historyjourneySelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
+
                 
                 if let JSON = response.result.value {
                     //                    print("JSON: \(JSON)")
@@ -130,8 +147,7 @@ extension HistoryListViewController {
             case .failure(let error):
                 print(error)
             }
-        }
-
+        })
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

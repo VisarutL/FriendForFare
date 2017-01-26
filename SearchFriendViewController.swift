@@ -92,7 +92,8 @@ extension SearchFriendViewController:SearchFriendViewCellDelegate {
         if let i = userList.index(of: addUser) {
             userList.remove(at: i)
             filteredUserList.remove(at:index.row)
-            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            addFriendData(id: appDelegate.userID, idfriend: "\(addUser["id_user"] as! String)")
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -104,8 +105,8 @@ extension SearchFriendViewController:SearchFriendViewCellDelegate {
 }
 
 extension SearchFriendViewController {
+    
     func initSearchBar() {
-        
         searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -190,6 +191,50 @@ extension SearchFriendViewController {
                 }
             })
     }
+    
+    func addFriendData(id:Int,idfriend:String) {
+        let userid = id
+        let useridfriend = idfriend
+        var parameter = Parameters()
+        parameter.updateValue(userid, forKey: "user_id")
+        parameter.updateValue(useridfriend, forKey: "user_id_friend")
+        insertUserService(parameter: parameter)
+    }
+    
+    func insertUserService(parameter:Parameters)  {
+        
+        let parameters: Parameters = [
+            "function": "addFriendData",
+            "parameter": parameter
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=addFriendData"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    guard let JSON = response.result.value as! [String : Any]? else {
+                        print("error: cannnot cast result value to JSON or nil.")
+                        return
+                    }
+                    
+                    let status = JSON["status"] as! String
+                    if  status == "404" {
+                        print("error: \(JSON["message"] as! String)")
+                        return
+                    }
+                    //status 202
+                    print(JSON)
+                case .failure(let error):
+                    //alert
+                    print(error.localizedDescription)
+                }
+            })
+        
+    }
+
 
     
 }

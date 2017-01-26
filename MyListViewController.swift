@@ -41,6 +41,14 @@ class MyListViewController: UITableViewController {
         handleRefresh()
     }
     
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -77,10 +85,7 @@ class MyListViewController: UITableViewController {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
-
         
-
-
         switch indexPath.section {
         case 0:
             let tripme = tripmyList[indexPath.row]
@@ -175,9 +180,17 @@ extension MyListViewController {
     }
     
     func selectData() {
-        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeymylistSelect").responseJSON { response in
-            switch response.result {
-            case .success:
+        let parameters: Parameters = [
+            "function": "journeymylistSelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
                 if let JSON = response.result.value {
                     //                    print("JSON: \(JSON)")
                     for trip in JSON as! NSArray {
@@ -202,13 +215,21 @@ extension MyListViewController {
             case .failure(let error):
                 print(error)
             }
-        }
+        })
     }
     
     func selectmyjoinData() {
-        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeymyjoinedSelect").responseJSON { response in
-            switch response.result {
-            case .success:
+        let parameters: Parameters = [
+            "function": "journeymyjoinedSelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
                 if let JSON = response.result.value {
                     //                    print("JSON: \(JSON)")
                     for tripjoin in JSON as! NSArray {
@@ -233,7 +254,7 @@ extension MyListViewController {
             case .failure(let error):
                 print(error)
             }
-        }
+        })
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

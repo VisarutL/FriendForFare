@@ -105,20 +105,20 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hO5-il-cDP">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="hO5-il-cDP">
                                         <rect key="frame" x="8" y="34" width="359" height="60"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IE1-uL-ac6">
-                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="60"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="znZ-XA-oSS">
-                                                <rect key="frame" x="92.5" y="0.0" width="82" height="60"/>
+                                                <rect key="frame" x="100" y="0.0" width="59.5" height="60"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wff-AY-i5T">
-                                                <rect key="frame" x="184.5" y="0.0" width="82.5" height="60"/>
+                                                <rect key="frame" x="199.5" y="0.0" width="60" height="60"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7R8-DX-fZG">
-                                                <rect key="frame" x="277" y="0.0" width="82" height="60"/>
+                                                <rect key="frame" x="299.5" y="0.0" width="59.5" height="60"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -190,6 +190,10 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                         <outlet property="datetimeLabel" destination="k9B-MO-914" id="flG-Yz-S9K"/>
                         <outlet property="detailTextView" destination="H4Z-Qd-2OW" id="CWb-5q-6oQ"/>
                         <outlet property="dropoffLabel" destination="WrH-CU-h4n" id="nLv-li-TKW"/>
+                        <outlet property="imageProfile1" destination="IE1-uL-ac6" id="Adf-Gg-fYt"/>
+                        <outlet property="imageProfile2" destination="znZ-XA-oSS" id="0Hf-BU-xfN"/>
+                        <outlet property="imageProfile3" destination="Wff-AY-i5T" id="zxA-AF-Xla"/>
+                        <outlet property="imageProfile4" destination="7R8-DX-fZG" id="ZFh-Pt-Vf6"/>
                         <outlet property="pickupLabel" destination="iYS-va-8mg" id="6vt-qm-W5D"/>
                     </connections>
                 </viewController>
@@ -415,28 +419,28 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Oaf-KS-n62">
-                                        <rect key="frame" x="8" y="34" width="359" height="40"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="Oaf-KS-n62">
+                                        <rect key="frame" x="8" y="34" width="359" height="60"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cQD-Jd-cMM">
-                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="40"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mcO-3g-I80">
-                                                <rect key="frame" x="92.5" y="0.0" width="82" height="40"/>
+                                                <rect key="frame" x="100" y="0.0" width="59.5" height="60"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TCc-We-iYF">
-                                                <rect key="frame" x="184.5" y="0.0" width="82.5" height="40"/>
+                                                <rect key="frame" x="199.5" y="0.0" width="60" height="60"/>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qqa-du-zM9">
-                                                <rect key="frame" x="277" y="0.0" width="82" height="40"/>
+                                                <rect key="frame" x="299.5" y="0.0" width="59.5" height="60"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="t33-mQ-joK"/>
+                                            <constraint firstAttribute="height" constant="60" id="t33-mQ-joK"/>
                                         </constraints>
                                     </stackView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zjn-7T-yYa">
-                                        <rect key="frame" x="8" y="82" width="359" height="60"/>
+                                        <rect key="frame" x="8" y="102" width="359" height="40"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <string key="text">Tel. 0932857443
 adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -818,6 +822,6 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
         <image name="rate-0" width="287" height="47"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eho-RL-WEo"/>
+        <segue reference="nS5-da-YIf"/>
     </inferredMetricsTieBreakers>
 </document>

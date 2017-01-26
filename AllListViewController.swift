@@ -39,6 +39,14 @@ class AllListViewController: UIViewController {
         refresh()
         
     }
+    
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
+    }
 }
 
 extension AllListViewController:UITableViewDelegate {
@@ -237,9 +245,17 @@ extension AllListViewController {
     }
     
     func selectData() {
-        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeySelect").responseJSON { response in
-            switch response.result {
-            case .success:
+        let parameters: Parameters = [
+            "function": "journeySelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
                 if let JSON = response.result.value {
 //                    print("JSON: \(JSON)")
                     
@@ -259,14 +275,21 @@ extension AllListViewController {
                 print(error)
                 self.cpGroup.leave()
             }
-        }
+        })
     }
     
     func selectFriendData() {
-        Alamofire.request("http://worawaluns.in.th/friendforfare/get/index.php?function=journeyFriendSelect").responseJSON { response in
-            switch response.result {
-            case .success:
-                if let JSON = response.result.value {
+        let parameters: Parameters = [
+            "function": "journeyFriendSelect"
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:                if let JSON = response.result.value {
                     //                    print("JSON: \(JSON)")
                     
                     for trip in JSON as! NSArray {
@@ -283,9 +306,8 @@ extension AllListViewController {
                 print(error)
                 self.cpGroup.leave()
             }
-        }
+        })
     }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -299,7 +321,6 @@ extension AllListViewController {
     }
     
 }
-
 extension AllListViewController:IndicatorInfoProvider {
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {

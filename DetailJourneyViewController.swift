@@ -29,6 +29,7 @@ class DetailJourneyViewController:UIViewController {
     var myText:String?
     var joinButtonToggle:String?
     var commentlist = [NSDictionary]()
+    var userjoinedList = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class DetailJourneyViewController:UIViewController {
         tableViewSetting()
         setCloseButton()
         selectData()
+        loadImage()
         
     }
     
@@ -107,7 +109,7 @@ class DetailJourneyViewController:UIViewController {
         pickupLabel.text = "PICK-UP : \(tripDetail["pick_journey"] as! String)"
         dropoffLabel.text = "DROP-OFF : \(tripDetail["drop_journey"] as! String)"
         datetimeLabel.text = "\(tripDetail["date_journey"] as! String) , \(tripDetail["time_journey"] as! String)"
-        countLabel.text = "\(tripDetail["count_journey"] as! String)/4"
+        countLabel.text = "0/\(tripDetail["count_journey"] as! String)"
         detailTextView.text = "\(tripDetail["detail_journey"] as! String)"
     }
     
@@ -196,12 +198,42 @@ extension DetailJourneyViewController {
         })
     }
     
+    func userJoinedData(idjourney:String) {
+        let parameters: Parameters = [
+            "function": "userJoined",
+            "idjourney": idjourney
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
+                    
+                    
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.userjoinedList.append(item as! NSDictionary)
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
     func loadImage() {
-        var profieImages:[UIImageView] = [profile1ImageView,profile2ImageView,profile3ImageView,profile4ImageView]
-        var profileImageNames = ["test","test","test","test"]
+        
+        var profileImages:[UIImageView] = [profile1ImageView,profile2ImageView,profile3ImageView,profile4ImageView]
+        var profileImageNames = ["","","",""]
         for i in 0...3 {
-            let url = "http:\(profileImageNames[i])"
-            profieImages[i].image = UIImage(named: url)
+            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let url = NSURL(string:"\(path)\(profileImageNames[i])")
+            let data = NSData(contentsOf:url as! URL)
+            let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
+            profileImages[i].image = image
         }
     }
     
