@@ -28,7 +28,7 @@ class PostTabBarController:UIViewController {
     @IBOutlet weak var fourButton: UIButton!
     
     @IBOutlet weak var postButton: UIButton!
-    
+    @IBOutlet weak var dateTextField: UITextField!
     var count = 1
 
     var allTextField:[UITextField] {
@@ -74,6 +74,28 @@ class PostTabBarController:UIViewController {
             print("error: \(error)")
         }
 
+    }
+    
+    @IBAction func textFieldEditing(_ sender: UITextField) {
+        let datePickerView:UIDatePicker = UIDatePicker()
+        
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        
+        sender.inputView = datePickerView
+        
+        datePickerView.addTarget(self, action: #selector(PostTabBarController.datePickerValueChanged), for: UIControlEvents.valueChanged)
+    }
+    
+    func datePickerValueChanged(sender:UIDatePicker) {
+        
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateStyle = .medium
+        
+        dateFormatter.timeStyle = .none
+        
+        dateTextField.text = dateFormatter.string(from: sender.date)
+        
     }
     
     @IBAction func selectCount(_ sender: Any) {

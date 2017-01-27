@@ -91,6 +91,10 @@ class ReviewUserViewController:UIViewController {
         }
         rateImage.image = UIImage(named: imageName)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 extension ReviewUserViewController {
