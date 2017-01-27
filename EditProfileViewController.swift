@@ -97,6 +97,10 @@ class EditProfileViewController: UIViewController {
         uploadimage()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
 }
 
 extension EditProfileViewController {
@@ -114,10 +118,6 @@ extension EditProfileViewController {
         parameter.updateValue(tel!, forKey: "tel_user")
         parameter.updateValue(uid, forKey: "pic_user")
         updateProfile(parameter: parameter)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
     
     func updateProfile(parameter:Parameters)  {
