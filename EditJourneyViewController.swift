@@ -16,6 +16,8 @@ class EditJourneyViewController: UIViewController {
     @IBOutlet weak var threeButton: UIButton!
     @IBOutlet weak var fourButton: UIButton!
     @IBOutlet weak var detailTextField: UITextField!
+    @IBOutlet weak var dateTextField: UITextField!
+    @IBOutlet weak var timeTextField: UITextField!
     
     var count = 1
     var idjourney = Int()
@@ -44,6 +46,40 @@ class EditJourneyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    
+    @IBAction func dateAction(_ sender: UITextField) {
+        let datePickerView:UIDatePicker = UIDatePicker()
+        
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        sender.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(PostTabBarController.datePickerValueChanged), for: UIControlEvents.valueChanged)
+    }
+    
+    func datePickerValueChanged(sender:UIDatePicker) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateTextField.text = dateFormatter.string(from: sender.date)
+        
+    }
+    
+    @IBAction func timeAction(_ sender: UITextField) {
+        let timePickerView:UIDatePicker = UIDatePicker()
+        
+        timePickerView.datePickerMode = UIDatePickerMode.time
+        timePickerView.locale = NSLocale(localeIdentifier: "en_GB") as Locale
+        sender.inputView = timePickerView
+        timePickerView.addTarget(self, action: #selector(PostTabBarController.timePickerValueChanged), for: UIControlEvents.valueChanged)
+    }
+    
+    func timePickerValueChanged(sender:UIDatePicker) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        timeTextField.text = dateFormatter.string(from: sender.date)
+        
     }
     
     @IBAction func selectCount(_ sender: Any) {
@@ -119,7 +155,6 @@ class EditJourneyViewController: UIViewController {
     }
     
     @IBAction func deleteAction(_ sender: Any) {
-        
         deletePost()
     }
     
@@ -142,8 +177,12 @@ extension EditJourneyViewController {
         let detail = detailTextField.text
         let idtrip = idjourney
         let countjourney = count
+        let date = dateTextField.text
+        let time = timeTextField.text
         var parameter = Parameters()
         parameter.updateValue(countjourney, forKey: "count_journey")
+        parameter.updateValue(date!, forKey: "date_journey")
+        parameter.updateValue(time!, forKey: "time_journey")
         parameter.updateValue(detail!, forKey: "detail_journey")
         parameter.updateValue(idtrip, forKey: "id_journey")
         insertUserService(parameter: parameter)
