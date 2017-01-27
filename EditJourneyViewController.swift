@@ -69,7 +69,7 @@ class EditJourneyViewController: UIViewController {
         let timePickerView:UIDatePicker = UIDatePicker()
         
         timePickerView.datePickerMode = UIDatePickerMode.time
-        timePickerView.locale = NSLocale(localeIdentifier: "en_GB") as Locale
+        timePickerView.locale = NSLocale(localeIdentifier: "NL") as Locale
         sender.inputView = timePickerView
         timePickerView.addTarget(self, action: #selector(PostTabBarController.timePickerValueChanged), for: UIControlEvents.valueChanged)
     }
