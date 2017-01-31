@@ -27,6 +27,7 @@ class JourneyViewController:UIViewController {
     @IBOutlet weak var imageProfile2: UIImageView!
     @IBOutlet weak var imageProfile3: UIImageView!
     @IBOutlet weak var imageProfile4: UIImageView!
+    @IBOutlet weak var joinButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,6 +118,13 @@ class JourneyViewController:UIViewController {
             profileImages[i].image = image
         }
     }
+    
+    @IBAction func joinAction(_ sender: Any) {
+        let idjour = "\(trip["id_journey"] as! String)"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        joinJourney(id:appDelegate.userID,idjour:idjour )
+    }
+    
 }
 
 extension JourneyViewController {
@@ -147,5 +155,48 @@ extension JourneyViewController {
                     print(error)
             }
         })
+    }
+    
+    func joinJourney(id:Int,idjour:String) {
+        let userid = id
+        let idjourney = idjour
+        var parameter = Parameters()
+        parameter.updateValue(userid, forKey: "user_id")
+        parameter.updateValue(idjourney, forKey: "id_journey")
+        insertUserService(parameter: parameter)
+    }
+    
+    func insertUserService(parameter:Parameters)  {
+        
+        let parameters: Parameters = [
+            "function": "joinJourney",
+            "parameter": parameter
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=joinJourney"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
+                    guard let JSON = response.result.value as! [String : Any]? else {
+                        print("error: cannnot cast result value to JSON or nil.")
+                        return
+                    }
+                    
+                    let status = JSON["status"] as! String
+                    if  status == "404" {
+                        print("error: \(JSON["message"] as! String)")
+                        return
+                    }
+                    //status 202
+                    print(JSON)
+                case .failure(let error):
+                    //alert
+                    print(error.localizedDescription)
+                }
+            })
+        
     }
 }

@@ -161,7 +161,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Ykq-Bc-B6I" kind="show" id="USz-o0-UY5"/>
+                                    <action selector="joinAction:" destination="4rX-Ng-B93" eventType="touchUpInside" id="AMW-GZ-UCv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -194,6 +194,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                         <outlet property="imageProfile2" destination="znZ-XA-oSS" id="0Hf-BU-xfN"/>
                         <outlet property="imageProfile3" destination="Wff-AY-i5T" id="zxA-AF-Xla"/>
                         <outlet property="imageProfile4" destination="7R8-DX-fZG" id="ZFh-Pt-Vf6"/>
+                        <outlet property="joinButton" destination="z38-fM-m1Y" id="IAI-Jq-EXF"/>
                         <outlet property="pickupLabel" destination="iYS-va-8mg" id="6vt-qm-W5D"/>
                     </connections>
                 </viewController>
@@ -858,6 +859,6 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
         <image name="rate-0" width="287" height="47"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nS5-da-YIf"/>
+        <segue reference="eho-RL-WEo"/>
     </inferredMetricsTieBreakers>
 </document>

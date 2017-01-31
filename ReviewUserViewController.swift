@@ -139,7 +139,7 @@ extension ReviewUserViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    let iduserreview = JSON["iduesrreview"] as! String
+                    let iduserreview = JSON["iduserreview"] as! String
                     self.updateStatus(statusreview: 1,iduser: iduserreview)
                     //status 202
                     print(JSON)

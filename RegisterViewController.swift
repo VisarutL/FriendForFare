@@ -97,6 +97,10 @@ class RegisterViewController: UIViewController {
         femaleBt.backgroundColor = UIColor.tabbarColor
         femaleBt.setTitleColor(UIColor.black, for: .normal)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 extension RegisterViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate {
@@ -268,10 +272,6 @@ extension RegisterViewController {
                     print(encodingError)
                 }
         })
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
 
 }
