@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MobileCoreServices
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var fristNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -22,6 +22,9 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var maleBt: UIButton!
     @IBOutlet weak var femaleBt: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
+    
+    var activeField: UITextField?
+    @IBOutlet weak var scrollView: UIScrollView!
     var allTextField:[UITextField] {
         return [
             fristNameTextField,
@@ -42,11 +45,19 @@ class RegisterViewController: UIViewController {
         profileImageSetting()
         genderButtonToggle = true
         maleBt.backgroundColor = UIColor.tabbarColor
+        
+        
+        
+        allTextField.forEach({ $0.delegate = self })
+        registerForKeyboardNotifications()
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        deregisterFromKeyboardNotifications()
     }
+    
     
     func initManager() -> SessionManager {
         let configuration = URLSessionConfiguration.ephemeral
@@ -274,4 +285,71 @@ extension RegisterViewController {
         })
     }
 
+}
+
+//mark: - keyboard
+extension RegisterViewController {
+    
+    func registerForKeyboardNotifications() {
+        //Adding notifies on keyboard appearing
+        print("registerForKeyboardNotifications")
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func deregisterFromKeyboardNotifications() {
+        print("deregisterFromKeyboardNotifications")
+        //Removing notifies on keyboard appearing
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func keyboardWasShown(_ notification: Notification) {
+        print("keyboardWasShown")
+        self.scrollView.isScrollEnabled = true
+        let info : NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(64, 0.0, keyboardSize!.height+40, 0.0)
+        
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        
+        var aRect : CGRect = self.view.frame
+        aRect.size.height -= keyboardSize!.height+40
+        if let _ = activeField{
+            if (!aRect.contains(activeField!.frame.origin)){
+                self.scrollView.scrollRectToVisible(activeField!.frame, animated: true)
+            }
+        }
+    }
+    
+    func keyboardWillBeHidden(_ notification: Notification){
+        print("keyboardWillBeHidden")
+        let info : NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(64, 0.0, -keyboardSize!.height, 0.0)
+        
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        self.view.endEditing(true)
+        self.scrollView.isScrollEnabled = false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        print("textFieldDidBeginEditing")
+        textField.textColor = UIColor.black
+//        #selector(self.closeAction)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapView))
+        self.view.addGestureRecognizer(tapRecognizer)
+        activeField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField){
+        print("textFieldDidEndEditing")
+        activeField = nil
+    }
+    
+    func didTapView() {
+        self.view.endEditing(true)
+    }
 }

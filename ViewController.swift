@@ -23,6 +23,7 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
         if (FBSDKAccessToken.current() != nil) {
             // User is logged in, do work such as go to next view controller.
         }
+    
     }
 
     override func didReceiveMemoryWarning() {

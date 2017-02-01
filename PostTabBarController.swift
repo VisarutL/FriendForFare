@@ -8,19 +8,24 @@
 
 import UIKit
 import Alamofire
-
+import MapKit
 
 protocol PostTabBarDelegate:class {
     func postTabBarDidClose()
 }
+
 class PostTabBarController:UIViewController {
-    
+
     var closeBarButton = UIBarButtonItem()
+    @IBOutlet weak var mapView: MKMapView!
+    
+    var selectedPin: MKPlacemark?
+    let locationManager = CLLocationManager()
     weak var delegate:PostTabBarDelegate?
     
-    
-    @IBOutlet weak var pickupTextField: UITextField!
-    @IBOutlet weak var dropoffTextField: UITextField!
+
+    @IBOutlet weak var pickupButton: UIButton!
+    @IBOutlet weak var dropoffButton: UIButton!
     @IBOutlet weak var detailTextField: UITextField!
     @IBOutlet weak var oneButton: UIButton!
     @IBOutlet weak var twoButton: UIButton!
@@ -30,13 +35,10 @@ class PostTabBarController:UIViewController {
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var timeTextField: UITextField!
-    
     var count = 1
 
     var allTextField:[UITextField] {
         return [
-            pickupTextField,
-            dropoffTextField,
             detailTextField,
             dateTextField,
             timeTextField
@@ -45,7 +47,10 @@ class PostTabBarController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
         setCloseButton()
+        
         oneButton.backgroundColor = UIColor.tabbarColor
         oneButton.setTitleColor(UIColor.black, for: .normal)
         oneButton.addTarget(self, action: #selector(selectCount), for: .touchUpInside)
@@ -56,11 +61,39 @@ class PostTabBarController:UIViewController {
         twoButton.tag = 2
         threeButton.tag = 3
         fourButton.tag = 4
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
+    
+    @IBAction func pickupAction(_ sender: Any) {
+
+        let vc = PickSearchLocationController()
+        let nvc = UINavigationController(rootViewController: vc)
+        vc.locationHandle = "pickup"
+        vc.mapView = mapView
+        vc.handleMapSearchDelegate = self
+        present(nvc, animated: true, completion: nil)
+    }
+    
+    @IBAction func dropoffAction(_ sender: Any) {
+        
+        let vc = PickSearchLocationController()
+        let nvc = UINavigationController(rootViewController: vc)
+        vc.locationHandle = "dropoff"
+        vc.mapView = mapView
+        vc.handleMapSearchDelegate = self
+        present(nvc, animated: true, completion: nil)
+    }
+    
     
     @IBAction func postAction(_ sender: Any) {
         
@@ -120,46 +153,30 @@ class PostTabBarController:UIViewController {
         
         if ((button as AnyObject).tag == 1) {
             oneButton.backgroundColor = UIColor.tabbarColor
-            oneButton.setTitleColor(UIColor.black, for: .normal)
             twoButton.backgroundColor = UIColor.textfield
-            twoButton.setTitleColor(UIColor.black, for: .normal)
             threeButton.backgroundColor = UIColor.textfield
-            threeButton.setTitleColor(UIColor.black, for: .normal)
             fourButton.backgroundColor = UIColor.textfield
-            fourButton.setTitleColor(UIColor.black, for: .normal)
             count = 1
             print(count)
         } else if ((button as AnyObject).tag == 2) {
             oneButton.backgroundColor = UIColor.textfield
-            oneButton.setTitleColor(UIColor.black, for: .normal)
             twoButton.backgroundColor = UIColor.tabbarColor
-            twoButton.setTitleColor(UIColor.black, for: .normal)
             threeButton.backgroundColor = UIColor.textfield
-            threeButton.setTitleColor(UIColor.black, for: .normal)
             fourButton.backgroundColor = UIColor.textfield
-            fourButton.setTitleColor(UIColor.black, for: .normal)
             count = 2
             print(count)
         } else if ((button as AnyObject).tag == 3) {
             oneButton.backgroundColor = UIColor.textfield
-            oneButton.setTitleColor(UIColor.black, for: .normal)
             twoButton.backgroundColor = UIColor.textfield
-            twoButton.setTitleColor(UIColor.black, for: .normal)
             threeButton.backgroundColor = UIColor.tabbarColor
-            threeButton.setTitleColor(UIColor.black, for: .normal)
             fourButton.backgroundColor = UIColor.textfield
-            fourButton.setTitleColor(UIColor.black, for: .normal)
             count = 3
             print(count)
         } else if ((button as AnyObject).tag == 4) {
             oneButton.backgroundColor = UIColor.textfield
-            oneButton.setTitleColor(UIColor.black, for: .normal)
             twoButton.backgroundColor = UIColor.textfield
-            twoButton.setTitleColor(UIColor.black, for: .normal)
             threeButton.backgroundColor = UIColor.textfield
-            threeButton.setTitleColor(UIColor.black, for: .normal)
             fourButton.backgroundColor = UIColor.tabbarColor
-            fourButton.setTitleColor(UIColor.black, for: .normal)
             count = 4
             print(count)
         }
@@ -184,25 +201,130 @@ class PostTabBarController:UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }   
+    
+}
+
+extension PostTabBarController: HandleMapSearch {
+    
+    func dropPinZoomIn(_ placemark: MKPlacemark,locationFor:String){
+        // cache the pin
+        selectedPin = placemark
+        // clear existing pins
+        
+        switch locationFor {
+        case "pickup":
+            //set pickup variable
+            let latitudepickup = placemark.coordinate.latitude
+            let longitudepickup = placemark.coordinate.longitude
+            let pickupname = placemark.name
+            pickupButton.setTitle(pickupname, for: .normal)
+            
+            print("pickupname \(pickupname)")
+            print("latitude \(latitudepickup)")
+            print("longitude \(longitudepickup)")
+            mapView.removeAnnotations(mapView.annotations)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = placemark.coordinate
+            annotation.title = placemark.name
+    
+            if let city = placemark.locality,
+                let state = placemark.administrativeArea {
+                annotation.subtitle = "\(city) \(state)"
+            }
+    
+            mapView.addAnnotation(annotation)
+            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let region = MKCoordinateRegionMake(placemark.coordinate, span)
+            
+        mapView.setRegion(region, animated: true)
+        case "dropoff":
+            
+            let latitudedropoff = placemark.coordinate.latitude
+            let longitudedropoff = placemark.coordinate.longitude
+            let dropoffname = placemark.name
+            dropoffButton.setTitle(dropoffname, for: .normal)
+            
+            print("pickupname \(dropoffname)")
+            print("latitude \(latitudedropoff)")
+            print("longitude \(longitudedropoff)")
+            
+        //set pickup variable
+        default:
+            break
+        }
+        
+        
+        
+
     }
     
 }
+
+extension PostTabBarController:CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else { return }
+        let span = MKCoordinateSpanMake(0.01, 0.01)
+        let region = MKCoordinateRegion(center: location.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error:: \(error)")
+    }
+    
+//    func getDirections(){
+//        guard let selectedPin = selectedPin else { return }
+//        let mapItem = MKMapItem(placemark: selectedPin)
+//        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+//        mapItem.openInMaps(launchOptions: launchOptions)
+//    }
+}
+
+extension PostTabBarController : MKMapViewDelegate {
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
+//        
+//        guard !(annotation is MKUserLocation) else { return nil }
+//        let reuseId = "pin"
+//        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+//        if pinView == nil {
+//            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+//        }
+//        pinView?.pinTintColor = UIColor.orange
+//        pinView?.canShowCallout = true
+//        let smallSquare = CGSize(width: 30, height: 30)
+//        let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
+//        button.setBackgroundImage(UIImage(named: "car"), for: UIControlState())
+//        button.addTarget(self, action: #selector(self.getDirections), for: .touchUpInside)
+//        pinView?.leftCalloutAccessoryView = button
+//        
+//        return pinView
+//    }
+}
+
 
 
 extension PostTabBarController {
     
     func addData() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let pickup = pickupTextField.text
-        let dropoff = dropoffTextField.text
+//        let pickup = pickupname
+//        let dropoff = dropoffname
         let detail = detailTextField.text
         let countjourney = count
         let date = dateTextField.text
         let time = timeTextField.text
         let userid = appDelegate.userID
         var parameter = Parameters()
-        parameter.updateValue(pickup!, forKey: "pick_journey")
-        parameter.updateValue(dropoff!, forKey: "drop_journey")
+//        parameter.updateValue(pickup!, forKey: "pick_journey")
+//        parameter.updateValue(dropoff!, forKey: "drop_journey")
         parameter.updateValue(countjourney, forKey: "count_journey")
         parameter.updateValue(date!, forKey: "date_journey")
         parameter.updateValue(time!, forKey: "time_journey")

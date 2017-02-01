@@ -23,8 +23,11 @@ class AllListViewController: UIViewController {
     
     var tripList = [NSDictionary]()
     var tripfriendList = [NSDictionary]()
+    
     var filteredTripList = [NSDictionary]()
     var filteredfriendTripList = [NSDictionary]()
+    
+    var hiddingSection = [false,false]
     
     let cpGroup = DispatchGroup()
     var itemInfo:IndicatorInfo?
@@ -58,7 +61,7 @@ extension AllListViewController:UITableViewDelegate {
         var rows = Int()
         switch section {
         case 0:
-            rows = filteredTripList.count
+            rows = hiddingSection[section] ? 0 : filteredTripList.count
         case 1:
             rows = filteredfriendTripList.count
         default:
