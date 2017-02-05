@@ -25,7 +25,8 @@ class SearchFriendViewController: UIViewController  {
         initSearchBar()
         initTableView()
         setCloseButton()
-        selectData()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        selectData(iduser: appDelegate.userID)
         
     }
     
@@ -165,9 +166,10 @@ extension SearchFriendViewController:UISearchBarDelegate {
 
 extension SearchFriendViewController {
     
-    func selectData() {
+    func selectData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "serachFriendSelect"
+            "function": "serachFriendSelect",
+            "iduser": iduser
         ]
         let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=serachFriendSelect"
         let manager = initManager()

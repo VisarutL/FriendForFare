@@ -172,16 +172,18 @@ extension MyListViewController {
             fristTime = false
             self.tripmyList = [NSDictionary]()
             self.tripmyjoinList = [NSDictionary]()
-            selectData()
-            selectmyjoinData()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            selectData(iduser: appDelegate.userID)
+            selectmyjoinData(iduser: appDelegate.userID)
             
         }
         
     }
     
-    func selectData() {
+    func selectData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "journeymylistSelect"
+            "function": "journeymylistSelect",
+            "iduser": iduser
         ]
         let url = "http://worawaluns.in.th/friendforfare/get/index.php"
         let manager = initManager()
@@ -218,9 +220,10 @@ extension MyListViewController {
         })
     }
     
-    func selectmyjoinData() {
+    func selectmyjoinData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "journeymyjoinedSelect"
+            "function": "journeymyjoinedSelect",
+            "iduser": iduser
         ]
         let url = "http://worawaluns.in.th/friendforfare/get/index.php"
         let manager = initManager()

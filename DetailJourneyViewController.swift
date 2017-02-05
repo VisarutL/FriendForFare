@@ -23,6 +23,7 @@ class DetailJourneyViewController:UIViewController {
     @IBOutlet weak var profile2ImageView: UIImageView!
     @IBOutlet weak var profile3ImageView: UIImageView!
     @IBOutlet weak var profile4ImageView: UIImageView!
+    @IBOutlet weak var commentTextField: UITextField!
     
     var tripDetail = [String: Any]()
     var closeBarButton = UIBarButtonItem()
@@ -30,6 +31,12 @@ class DetailJourneyViewController:UIViewController {
     var joinButtonToggle:String?
     var commentlist = [NSDictionary]()
     var userjoinedList = [NSDictionary]()
+    
+    var allTextField:[UITextField] {
+        return [
+            commentTextField
+        ]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,6 +171,24 @@ class DetailJourneyViewController:UIViewController {
             profileImages[i].image = image
         }
     }
+    
+    @IBAction func postAction(_ sender: Any) {
+        func checkTextField() -> Bool {
+            for textField in allTextField {
+                if textField.text?.characters.count == 0 { return false }
+            }
+            return true
+        }
+        
+        if checkTextField() {
+            let idtrip = "\(tripDetail["id_journey"] as! String)"
+            postcommentData(idjourney:idtrip)
+        } else {
+            let error = "alert please fill all information."
+            print("error: \(error)")
+        }
+    }
+    
 }
 
 extension DetailJourneyViewController:UITableViewDelegate {
@@ -256,6 +281,51 @@ extension DetailJourneyViewController {
                     }
                 case .failure(let error):
                     print(error)
+                }
+            })
+    }
+    
+    func postcommentData(idjourney:String) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let comment = commentTextField.text
+        let idjourney = idjourney
+        let userid = appDelegate.userID
+        var parameter = Parameters()
+        parameter.updateValue(comment!, forKey: "comment_forum")
+        parameter.updateValue(idjourney, forKey: "journey_id_forum")
+        parameter.updateValue(userid, forKey: "user_id")
+        insertUserService(parameter: parameter)
+    }
+    func insertUserService(parameter:Parameters)  {
+        
+        let parameters: Parameters = [
+            "function": "insertcommentPost",
+            "parameter": parameter
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=insertcommentPost"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                debugPrint(response)
+                switch response.result {
+                case .success:
+                    guard let JSON = response.result.value as! [String : Any]? else {
+                        print("error: cannnot cast result value to JSON or nil.")
+                        return
+                    }
+                    
+                    let status = JSON["status"] as! String
+                    if  status == "404" {
+                        print("error: \(JSON["message"] as! String)")
+                        return
+                    }
+                    
+                    //status 202
+                    print(JSON)
+                case .failure(let error):
+                    //alert
+                    print(error.localizedDescription)
                 }
             })
     }

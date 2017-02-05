@@ -100,10 +100,11 @@ class ReviewUserViewController:UIViewController {
 extension ReviewUserViewController {
     
     func simulateRegister() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let rate = 4
         let comment = commentTextField.text
         let iduserreview = review["id_user"]
-        let iduser = 1
+        let iduser = appDelegate.userID
         let journeyid = review["journey_id"]
         var parameter = Parameters()
         parameter.updateValue(rate, forKey: "rate_review")

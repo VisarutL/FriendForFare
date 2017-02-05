@@ -233,9 +233,10 @@ extension AllListViewController {
             self.filteredfriendTripList = [NSDictionary]()
             self.tripfriendList = [NSDictionary]()
             cpGroup.enter()
-            selectData()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            selectData(iduser: appDelegate.userID)
             cpGroup.enter()
-            selectFriendData()
+            selectFriendData(iduser: appDelegate.userID)
             cpGroup.notify(queue: DispatchQueue.main, execute: {
                 self.fristTime = true
                 if self.refreshControl.isRefreshing {
@@ -247,9 +248,10 @@ extension AllListViewController {
         
     }
     
-    func selectData() {
+    func selectData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "journeySelect"
+            "function": "journeySelect",
+            "iduser" : iduser
         ]
         let url = "http://worawaluns.in.th/friendforfare/get/index.php"
         let manager = initManager()
@@ -281,9 +283,10 @@ extension AllListViewController {
         })
     }
     
-    func selectFriendData() {
+    func selectFriendData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "journeyFriendSelect"
+            "function": "journeyFriendSelect",
+            "iduser": iduser
         ]
         let url = "http://worawaluns.in.th/friendforfare/get/index.php"
         let manager = initManager()

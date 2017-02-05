@@ -28,7 +28,8 @@ class ProfileTabBarController:UITableViewController{
         navigationController?.navigationBar.backgroundColor = UIColor.tabbarColor
         tableView.showsVerticalScrollIndicator = false
         
-        selectData()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        selectData(iduser: appDelegate.userID)
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
         
         
@@ -154,7 +155,9 @@ extension ProfileTabBarController:EditProfileViewDelegate {
     func editProfileViewDidFinish() {
         profile = [NSDictionary]()
         reviewprofile = [NSDictionary]()
-        selectData()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        selectData(iduser: appDelegate.userID)
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
         }
@@ -172,9 +175,10 @@ extension ProfileTabBarController:ProfileViewDelegate {
 extension ProfileTabBarController {
 
     
-    func selectData() {
+    func selectData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "profileSelect"
+            "function": "profileSelect",
+            "iduser": iduser
         ]
         let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=profileSelect"
         let manager = initManager()

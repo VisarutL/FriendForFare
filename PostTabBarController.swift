@@ -35,7 +35,13 @@ class PostTabBarController:UIViewController {
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var timeTextField: UITextField!
+    
+    
     var count = 1
+    var latitudepickup = Double()
+    var longtudepickup = Double()
+    var latitudedropoff = Double()
+    var longitudedropoff = Double()
 
     var allTextField:[UITextField] {
         return [
@@ -215,14 +221,14 @@ extension PostTabBarController: HandleMapSearch {
         switch locationFor {
         case "pickup":
             //set pickup variable
-            let latitudepickup = placemark.coordinate.latitude
-            let longitudepickup = placemark.coordinate.longitude
+            latitudepickup = placemark.coordinate.latitude
+            longtudepickup = placemark.coordinate.longitude
             let pickupname = placemark.name
             pickupButton.setTitle(pickupname, for: .normal)
             
             print("pickupname \(pickupname)")
             print("latitude \(latitudepickup)")
-            print("longitude \(longitudepickup)")
+            print("longitude \(longtudepickup)")
             mapView.removeAnnotations(mapView.annotations)
             let annotation = MKPointAnnotation()
             annotation.coordinate = placemark.coordinate
@@ -240,8 +246,8 @@ extension PostTabBarController: HandleMapSearch {
         mapView.setRegion(region, animated: true)
         case "dropoff":
             
-            let latitudedropoff = placemark.coordinate.latitude
-            let longitudedropoff = placemark.coordinate.longitude
+            latitudedropoff = placemark.coordinate.latitude
+            longitudedropoff = placemark.coordinate.longitude
             let dropoffname = placemark.name
             dropoffButton.setTitle(dropoffname, for: .normal)
             
@@ -315,16 +321,24 @@ extension PostTabBarController {
     
     func addData() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let pickup = pickupname
-//        let dropoff = dropoffname
+        let pickup = pickupButton.titleLabel?.text
+        let latpickup = latitudepickup
+        let longpickup = longtudepickup
+        let dropoff = dropoffButton.titleLabel?.text
+        let latdropoff = latitudedropoff
+        let longdropoff = longitudedropoff
         let detail = detailTextField.text
         let countjourney = count
         let date = dateTextField.text
         let time = timeTextField.text
         let userid = appDelegate.userID
         var parameter = Parameters()
-//        parameter.updateValue(pickup!, forKey: "pick_journey")
-//        parameter.updateValue(dropoff!, forKey: "drop_journey")
+        parameter.updateValue(pickup!, forKey: "pick_journey")
+        parameter.updateValue(latpickup, forKey: "latitude_pick")
+        parameter.updateValue(longpickup, forKey: "longitude_pick")
+        parameter.updateValue(dropoff!, forKey: "drop_journey")
+        parameter.updateValue(latdropoff, forKey: "latitude_drop")
+        parameter.updateValue(longdropoff, forKey: "longitude_drop")
         parameter.updateValue(countjourney, forKey: "count_journey")
         parameter.updateValue(date!, forKey: "date_journey")
         parameter.updateValue(time!, forKey: "time_journey")

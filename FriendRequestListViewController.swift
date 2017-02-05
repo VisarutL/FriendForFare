@@ -101,15 +101,17 @@ extension FriendRequestListViewController {
             
             fristTime = false
             self.friendrequestList = [NSDictionary]()
-            selectData()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            selectData(iduser: appDelegate.userID)
             
         }
         
     }
     
-    func selectData() {
+    func selectData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "friendrequestSelect"
+            "function": "friendrequestSelect",
+            "iduser": iduser
         ]
         let url = "http://worawaluns.in.th/friendforfare/get/index.php"
         let manager = initManager()
