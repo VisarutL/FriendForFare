@@ -286,10 +286,10 @@ extension DetailJourneyViewController {
     }
     
     func postcommentData(idjourney:String) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
         let comment = commentTextField.text
         let idjourney = idjourney
-        let userid = appDelegate.userID
+        let userid = userID
         var parameter = Parameters()
         parameter.updateValue(comment!, forKey: "comment_forum")
         parameter.updateValue(idjourney, forKey: "journey_id_forum")

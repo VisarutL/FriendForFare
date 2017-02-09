@@ -86,7 +86,8 @@ class ReviewViewController:UITableViewController {
         vc.myText = "ReviewUser"
         vc.review = reviewList[indexPath.row] as! [String : Any]
         let nvc = NavController(rootViewController: vc)
-        self.present(nvc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+//        self.present(nvc, animated: true, completion: nil)
         
     }
     

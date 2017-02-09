@@ -14,11 +14,19 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
 
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
 
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    
     @IBOutlet weak var fbloginButton: FBSDKLoginButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        print("userID: \(userID)")
+        
         configureFacebook()
         if (FBSDKAccessToken.current() != nil) {
             // User is logged in, do work such as go to next view controller.
@@ -32,11 +40,17 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
     }
     
     @IBAction func loginAction(_ sender: Any) {
-        appDelegate.userID = 1
+        guard let name = nameTextField.text , name != "",
+            let password = passwordTextField.text , password != "" else {
+            return alert(message: "wrong username or password ! sus")
+        }
+        
+        let userID = 1
+        UserDefaults.standard.set(userID, forKey: "UserID")
+        
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let nvc = storyBoard.instantiateViewController(withIdentifier: "NavTabBarController") as! TabBarViewController
         self.present(nvc, animated: true, completion: nil)
-
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!)

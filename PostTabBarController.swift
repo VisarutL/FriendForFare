@@ -320,7 +320,7 @@ extension PostTabBarController : MKMapViewDelegate {
 extension PostTabBarController {
     
     func addData() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
         let pickup = pickupButton.titleLabel?.text
         let latpickup = latitudepickup
         let longpickup = longtudepickup
@@ -331,7 +331,7 @@ extension PostTabBarController {
         let countjourney = count
         let date = dateTextField.text
         let time = timeTextField.text
-        let userid = appDelegate.userID
+        let userid = userID
         var parameter = Parameters()
         parameter.updateValue(pickup!, forKey: "pick_journey")
         parameter.updateValue(latpickup, forKey: "latitude_pick")

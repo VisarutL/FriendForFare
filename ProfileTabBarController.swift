@@ -28,8 +28,8 @@ class ProfileTabBarController:UITableViewController{
         navigationController?.navigationBar.backgroundColor = UIColor.tabbarColor
         tableView.showsVerticalScrollIndicator = false
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        selectData(iduser: appDelegate.userID)
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        selectData(iduser: userID)
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
         
         
@@ -149,6 +149,35 @@ class ProfileTabBarController:UITableViewController{
 //        }
         
     }
+    
+    
+    @IBAction func logoutAction(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "", message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
+        
+        let logoutAction = UIAlertAction(title: "Logout", style: .destructive, handler: {
+            _ in
+            UserDefaults.standard.set(0, forKey: "UserID")
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyBoard.instantiateViewController(withIdentifier: "LoginVC")
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window!.rootViewController = vc
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(logoutAction)
+        alert.addAction(cancelAction)
+    
+        alert.popoverPresentationController?.sourceView = self.view
+        let cgRectMake = CGRect(x: self.view.bounds.size.width / 2.0, y:self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        alert.popoverPresentationController?.sourceRect = cgRectMake
+        self.present(alert, animated: true, completion: nil)
+        
+        
+        
+        
+    }
+    
 }
 
 extension ProfileTabBarController:EditProfileViewDelegate {
@@ -156,8 +185,8 @@ extension ProfileTabBarController:EditProfileViewDelegate {
         profile = [NSDictionary]()
         reviewprofile = [NSDictionary]()
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        selectData(iduser: appDelegate.userID)
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        selectData(iduser: userID)
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
         }
@@ -196,8 +225,8 @@ extension ProfileTabBarController {
                             self.profile.append(item as! NSDictionary)
                             
                         }
-                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                        self.reviewData(id:appDelegate.userID)
+                        let userID = UserDefaults.standard.integer(forKey: "UserID")
+                        self.reviewData(id:userID)
                         
                     }
                 case .failure(let error):

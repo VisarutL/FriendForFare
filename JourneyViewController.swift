@@ -121,8 +121,8 @@ class JourneyViewController:UIViewController {
     
     @IBAction func joinAction(_ sender: Any) {
         let idjour = "\(trip["id_journey"] as! String)"
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        joinJourney(id:appDelegate.userID,idjour:idjour )
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        joinJourney(id: userID,idjour:idjour )
     }
     
 }

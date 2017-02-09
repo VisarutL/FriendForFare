@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreLocation
+
 import FBSDKCoreKit
 import FBSDKShareKit
 import FBSDKLoginKit
@@ -22,7 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Add any custom logic here.
         
         setNavigationBarAppearace()
+        setLocationService()
         
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        print("userID: \(userID)")
+        
+        if userID > 0 {
+            DispatchQueue.main.async {
+                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                let nvc = storyBoard.instantiateViewController(withIdentifier: "NavTabBarController") as! TabBarViewController
+                self.window!.rootViewController = nvc
+            }
+        }
         return true
     }
     
@@ -54,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         let loginManager: FBSDKLoginManager = FBSDKLoginManager()
         loginManager.logOut()
-
+        LocationService.sharedInstance.stopUpdatingLocation()
     }
 
     func setNavigationBarAppearace() {
@@ -62,6 +75,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.tintColor = UIColor.black
         navigationBarAppearace.barTintColor = UIColor.tabbarColor
         navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black]
+    }
+}
+
+extension AppDelegate : LocationServiceDelegate {
+    func setLocationService() {
+        LocationService.sharedInstance.delegate = self
+        LocationService.sharedInstance.startUpdatingLocation()
+    }
+    
+    func tracingLocation(_ currentLocation: CLLocation) {
+
+    }
+    
+    func tracingLocationDidFailWithError(_ error: NSError) {
+    
     }
 }
 

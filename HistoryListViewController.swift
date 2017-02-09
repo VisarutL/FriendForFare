@@ -102,8 +102,9 @@ extension HistoryListViewController {
             
             fristTime = false
             self.tripList = [NSDictionary]()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            selectData(iduser: appDelegate.userID)
+            let userID = UserDefaults.standard.integer(forKey: "UserID")
+            selectData(iduser: userID)
+
             
         }
         

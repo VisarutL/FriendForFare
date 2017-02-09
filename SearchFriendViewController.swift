@@ -25,8 +25,8 @@ class SearchFriendViewController: UIViewController  {
         initSearchBar()
         initTableView()
         setCloseButton()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        selectData(iduser: appDelegate.userID)
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        selectData(iduser: userID)
         
     }
     
@@ -93,8 +93,8 @@ extension SearchFriendViewController:SearchFriendViewCellDelegate {
         if let i = userList.index(of: addUser) {
             userList.remove(at: i)
             filteredUserList.remove(at:index.row)
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            addFriendData(id: appDelegate.userID, idfriend: "\(addUser["id_user"] as! String)")
+            let userID = UserDefaults.standard.integer(forKey: "UserID")
+            addFriendData(id: userID, idfriend: "\(addUser["id_user"] as! String)")
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

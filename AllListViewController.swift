@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreLocation
+
 import XLPagerTabStrip
 import Alamofire
 
@@ -33,13 +35,16 @@ class AllListViewController: UIViewController {
     var itemInfo:IndicatorInfo?
     var fristTime = true
     
+    var currentLocation:CLLocation?
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initSearchBar()
         initTableView()
         setPullToRefresh()
-        refresh()
+        self.currentLocation = LocationService.sharedInstance.currentLocation
+        self.refresh()
+        print("currentLocation: \(currentLocation)")
         
     }
     
@@ -56,14 +61,14 @@ extension AllListViewController:UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rows = Int()
         switch section {
         case 0:
             rows = hiddingSection[section] ? 0 : filteredTripList.count
         case 1:
-            rows = filteredfriendTripList.count
+            rows = hiddingSection[section] ? 0 : filteredfriendTripList.count
         default:
             break
         }
@@ -90,6 +95,8 @@ extension AllListViewController:UITableViewDelegate {
 }
 
 extension AllListViewController:UITableViewDataSource {
+    
+   
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: feedViewCelldentifier, for: indexPath) as! FeedViewCell
@@ -132,27 +139,30 @@ extension AllListViewController:UITableViewDataSource {
         return 2
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionTitles[section]
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 28
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 20))
-        headerView.backgroundColor = UIColor.tabbarColor
-        
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = sectionTitles[section]
-        headerView.addSubview(label)
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20).isActive = true
-        label.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
-        label.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
+        let headerView = Bundle.main.loadNibNamed("SectionHeaderView",
+                                                            owner: nil,
+                                                            options: nil)?.first as! SectionHeaderView
+        headerView.titleLabel.text = sectionTitles[section]
+        headerView.optionButton.tag = section
+        headerView.optionButton.addTarget(self, action: #selector(collapseAction), for: .touchUpInside)
         return headerView
-        
+    }
+    
+    func collapseAction(_ sender:Any) {
+        let button = sender as! UIButton
+        button.isEnabled = false
+        hiddingSection[button.tag] = !hiddingSection[button.tag]
+        let section = NSIndexSet(index: button.tag) as IndexSet
+        DispatchQueue.main.async {
+            button.isEnabled = true
+            self.tableView?.reloadSections(section, with: .automatic)
+        }
     }
 }
 
@@ -183,6 +193,7 @@ extension AllListViewController {
         self.tableView = tableView
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = 90.0
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         let lead = tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0)
@@ -233,10 +244,10 @@ extension AllListViewController {
             self.filteredfriendTripList = [NSDictionary]()
             self.tripfriendList = [NSDictionary]()
             cpGroup.enter()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            selectData(iduser: appDelegate.userID)
+            let userID = UserDefaults.standard.integer(forKey: "UserID")
+            selectData(iduser: userID)
             cpGroup.enter()
-            selectFriendData(iduser: appDelegate.userID)
+            selectFriendData(iduser: userID)
             cpGroup.notify(queue: DispatchQueue.main, execute: {
                 self.fristTime = true
                 if self.refreshControl.isRefreshing {
@@ -258,7 +269,7 @@ extension AllListViewController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                 if let JSON = response.result.value {
@@ -293,10 +304,10 @@ extension AllListViewController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
-                case .success:                if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
+                case .success:
+                    if let JSON = response.result.value {
                     
                     for trip in JSON as! NSArray {
                         self.tripfriendList.append(trip as! NSDictionary)
@@ -309,7 +320,7 @@ extension AllListViewController {
                 }
                 self.cpGroup.leave()
             case .failure(let error):
-                print(error)
+                self.alert( message: "selectFriendData:\(error.localizedDescription)")
                 self.cpGroup.leave()
             }
         })

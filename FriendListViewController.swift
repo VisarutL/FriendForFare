@@ -186,8 +186,8 @@ extension FriendListViewController {
             
             fristTime = false
             self.friendList = [NSDictionary]()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            selectData(iduser: appDelegate.userID)
+            let userID = UserDefaults.standard.integer(forKey: "UserID")
+            selectData(iduser: userID)
             
         }
         

@@ -17,31 +17,20 @@ class ReviewUserViewController:UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var rateImage: UIImageView!
     @IBOutlet weak var commentTextField: UITextField!
+    
+    @IBOutlet var starButtons: [UIButton]!
     var allTextField:[UITextField] {
-        return [
-            commentTextField
-        ]
+        return [commentTextField]
     }
     
     var myText:String?
     var review = [String: Any]()
-    let userRate = 3
-    let arrayRate = [0,1,2,3,4]
+    var userRate = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setReviewUser()
         
-        let path = "http://worawaluns.in.th/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(review["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            profileImage.image = #imageLiteral(resourceName: "userprofile")
-        } else {
-            profileImage.image = UIImage(data:data as! Data)
-        }
-        fullnameLabel.text = "\(review["fname_user"] as! String) \(review["lname_user"] as! String)"
-        usernameLabel.text = "\(review["username_user"] as! String)"
-        setRateImage(rate: Int(userRate))
     }
     
     func initManager() -> SessionManager {
@@ -54,6 +43,30 @@ class ReviewUserViewController:UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    func setReviewUser() {
+        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let url = NSURL(string:"\(path)\(review["pic_user"]!)")
+        let data = NSData(contentsOf:url! as URL)
+        profileImage.image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
+        fullnameLabel.text = "\(review["fname_user"] as! String) \(review["lname_user"] as! String)"
+        usernameLabel.text = "\(review["username_user"] as! String)"
+        starButtons.forEach({
+            let state = $0.tag <= Int(userRate) ? true : false
+            $0.isSelected = state
+        })
+        
+    }
+
+    @IBAction func starsTappedAction(_ sender: Any) {
+        let button = sender as! UIButton
+        userRate = button.tag
+        starButtons.forEach({
+            let state = $0.tag <= button.tag ? true : false
+            $0.isSelected = state
+        })
+        
     }
     
     @IBAction func actionReview(_ sender: Any) {
@@ -76,7 +89,8 @@ class ReviewUserViewController:UIViewController {
     
     
     @IBAction func actionCancel(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        let _  = self.navigationController?.popViewController(animated: true)
     }
     
     func setRateImage(rate:Int) {
@@ -100,11 +114,11 @@ class ReviewUserViewController:UIViewController {
 extension ReviewUserViewController {
     
     func simulateRegister() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
         let rate = 4
         let comment = commentTextField.text
         let iduserreview = review["id_user"]
-        let iduser = appDelegate.userID
+        let iduser = userID
         let journeyid = review["journey_id"]
         var parameter = Parameters()
         parameter.updateValue(rate, forKey: "rate_review")

@@ -172,9 +172,9 @@ extension MyListViewController {
             fristTime = false
             self.tripmyList = [NSDictionary]()
             self.tripmyjoinList = [NSDictionary]()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            selectData(iduser: appDelegate.userID)
-            selectmyjoinData(iduser: appDelegate.userID)
+            let userID = UserDefaults.standard.integer(forKey: "UserID")
+            selectData(iduser: userID)
+            selectmyjoinData(iduser: userID)
             
         }
         
