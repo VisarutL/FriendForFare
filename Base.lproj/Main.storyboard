@@ -389,7 +389,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="oeI-93-i64">
-                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="Ucy-ki-B1r">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="Ucy-ki-B1r">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="actionCancel:" destination="SJv-Zv-hdj" id="RHb-cr-9is"/>
@@ -445,7 +445,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavController" automaticallyAdjustsScrollViewInsets="NO" id="ueU-Bc-rj3" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="ic-1" id="tzx-Dr-N2t">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -1068,7 +1068,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overFullScreen" id="Osg-rv-7R5" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="ic-2" id="UOz-Nj-MPz">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" alpha="0.94999999999999996" contentMode="scaleToFill" id="pDy-kK-hLc">
@@ -1090,7 +1090,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vfl-dK-Hdn" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="ic-4" id="d4M-fr-bnH">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="xg1-Nc-p7D">
@@ -1112,7 +1112,7 @@
             <objects>
                 <navigationController storyboardIdentifier="FriendNavController" automaticallyAdjustsScrollViewInsets="NO" id="int-3C-FV7" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="ic-3" id="4kh-Gy-YC0">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>

@@ -63,7 +63,7 @@ class FriendListViewController:UITableViewController {
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
             
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
@@ -142,7 +142,7 @@ extension FriendListViewController {
             "function": "deleteFriend",
             "userid" : id
         ]
-        let url = "http://worawaluns.in.th/friendforfare/delete/index.php?function=deleteFriend"
+        let url = "http://localhost/friendforfare/delete/index.php?function=deleteFriend"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -203,7 +203,7 @@ extension FriendListViewController {
             "function": "friendSelect",
             "iduser": iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://localhost/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

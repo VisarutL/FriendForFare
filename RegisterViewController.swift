@@ -80,8 +80,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             uploadUserImage()
             
         } else {
-            let error = "alert please fill all information."
-            print("error: \(error)")
+            return alert(message: "alert please fill all information.")
         }
     }
 
@@ -235,7 +234,7 @@ extension RegisterViewController {
                     self.dismiss(animated: true, completion: nil)
                     
                     //status 202
-                    print(JSON)
+//                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)

@@ -75,7 +75,7 @@ extension SearchFriendViewController:UITableViewDataSource {
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
         
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
@@ -171,7 +171,7 @@ extension SearchFriendViewController {
             "function": "serachFriendSelect",
             "iduser": iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=serachFriendSelect"
+        let url = "http://localhost/friendforfare/get/index.php?function=serachFriendSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -209,7 +209,7 @@ extension SearchFriendViewController {
             "function": "addFriendData",
             "parameter": parameter
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=addFriendData"
+        let url = "http://localhost/friendforfare/post/index.php?function=addFriendData"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

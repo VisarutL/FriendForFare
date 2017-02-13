@@ -46,7 +46,7 @@ class ReviewUserViewController:UIViewController {
     }
     
     func setReviewUser() {
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(review["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         profileImage.image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
@@ -81,8 +81,7 @@ class ReviewUserViewController:UIViewController {
             simulateRegister()
             
         } else {
-            let error = "alert please fill all information."
-            print("error: \(error)")
+            return alert(message: "alert please fill all information.")
         }
         
     }
@@ -136,7 +135,7 @@ extension ReviewUserViewController {
             "parameter": parameter
         ]
         
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php"
+        let url = "http://localhost/friendforfare/post/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -173,12 +172,12 @@ extension ReviewUserViewController {
             "iduserReview": iduser
         ]
         
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php"
+        let url = "http://localhost/friendforfare/post/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     guard let JSON = response.result.value as! [String : Any]? else {
@@ -193,7 +192,7 @@ extension ReviewUserViewController {
                     }
                     self.dismiss(animated: true, completion: nil)
                     //status 202
-                    print(JSON)
+//                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)

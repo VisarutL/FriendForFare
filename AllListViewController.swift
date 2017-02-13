@@ -43,7 +43,11 @@ class AllListViewController: UIViewController {
         initTableView()
         setPullToRefresh()
         self.currentLocation = LocationService.sharedInstance.currentLocation
-        self.refresh()
+        var latitude = currentLocation?.coordinate.latitude
+        var longitude = currentLocation?.coordinate.longitude
+        self.refresh(lat:latitude!,long:longitude!)
+        print("latitude: \(latitude)")
+        print("longitude: \(longitude)")
         print("currentLocation: \(currentLocation)")
         
     }
@@ -120,7 +124,7 @@ extension AllListViewController:UITableViewDataSource {
         cell.amountLabel.text = "0/\(trip["count_journey"] as! String)"
         cell.dateTmeLabel.text = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
         
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
@@ -128,11 +132,8 @@ extension AllListViewController:UITableViewDataSource {
         } else {
             cell.profileImage.image = UIImage(data:data as! Data)
         }
-
-        
         return cell
-        
-        
+    
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -234,7 +235,7 @@ extension AllListViewController:UISearchBarDelegate {
 extension AllListViewController {
 //    (completionHandler:@escaping (_ r:[Region]?
     
-    func refresh() {
+    func refresh(lat:Double,long:Double) {
         
         if fristTime {
             
@@ -245,7 +246,7 @@ extension AllListViewController {
             self.tripfriendList = [NSDictionary]()
             cpGroup.enter()
             let userID = UserDefaults.standard.integer(forKey: "UserID")
-            selectData(iduser: userID)
+            selectData(iduser: userID,latt: lat, longg: long)
             cpGroup.enter()
             selectFriendData(iduser: userID)
             cpGroup.notify(queue: DispatchQueue.main, execute: {
@@ -259,12 +260,14 @@ extension AllListViewController {
         
     }
     
-    func selectData(iduser:Int) {
+    func selectData(iduser:Int,latt:Double,longg:Double) {
         let parameters: Parameters = [
             "function": "journeySelect",
-            "iduser" : iduser
+            "iduser" : iduser,
+            "latitude": latt,
+            "longitude": longg
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://localhost/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -299,7 +302,7 @@ extension AllListViewController {
             "function": "journeyFriendSelect",
             "iduser": iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://localhost/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

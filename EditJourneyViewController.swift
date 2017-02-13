@@ -193,7 +193,7 @@ extension EditJourneyViewController {
             "function": "updateData",
             "parameter": parameter
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=updateData"
+        let url = "http://localhost/friendforfare/post/index.php?function=updateData"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -214,7 +214,7 @@ extension EditJourneyViewController {
                     self.dismiss(animated: true, completion: nil)
                     
                     //status 202
-                    print(JSON)
+//                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)
@@ -234,7 +234,7 @@ extension EditJourneyViewController {
             "function": "deletePost",
             "parameter": parameter
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=deletePost"
+        let url = "http://localhost/friendforfare/post/index.php?function=deletePost"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

@@ -110,7 +110,7 @@ class JourneyViewController:UIViewController {
         guard userjoinedList.count != 0 else { return }
         let count = userjoinedList.count - 1
         for i in 0...count {
-            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let path = "http://localhost/friendforfare/images/"
             let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
             let url = NSURL(string:"\(path)\(imageName)")
             let data = NSData(contentsOf:url as! URL)
@@ -134,7 +134,7 @@ extension JourneyViewController {
             "function": "userJoined",
             "idjourney": idjourney
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=userJoined"
+        let url = "http://localhost/friendforfare/get/index.php?function=userJoined"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -172,12 +172,12 @@ extension JourneyViewController {
             "function": "joinJourney",
             "parameter": parameter
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=joinJourney"
+        let url = "http://localhost/friendforfare/post/index.php?function=joinJourney"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     guard let JSON = response.result.value as! [String : Any]? else {
@@ -191,7 +191,7 @@ extension JourneyViewController {
                         return
                     }
                     //status 202
-                    print(JSON)
+//                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)

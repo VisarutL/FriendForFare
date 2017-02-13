@@ -42,7 +42,7 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
     @IBAction func loginAction(_ sender: Any) {
         guard let name = nameTextField.text , name != "",
             let password = passwordTextField.text , password != "" else {
-            return alert(message: "wrong username or password ! sus")
+            return alert(message: "wrong username or password !!!")
         }
         
         let userID = 1

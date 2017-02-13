@@ -70,7 +70,7 @@ class ProfileFriendTabBarController:UITableViewController{
         let rate = profilefriend["rate_review"] as! String
         cell.setRateImage(rate: Int(rate)!)
         
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(profilefriend["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
@@ -101,7 +101,7 @@ class ProfileFriendTabBarController:UITableViewController{
             cell.telLabel.text = "\(friend["tel_user"] as! String)"
             cell.emailLabel.text = "\(friend["email_user"] as! String)"
             
-            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
             if data == nil {
@@ -140,7 +140,7 @@ extension ProfileFriendTabBarController {
             "function": "profilefriendSelect",
             "userid" : iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=profilefriendSelect"
+        let url = "http://localhost/friendforfare/get/index.php?function=profilefriendSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

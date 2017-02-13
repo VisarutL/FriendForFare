@@ -64,7 +64,7 @@ class FriendRequestListViewController:UITableViewController {
             cell.nameLabel.text = "\(friendrequest["fname_user"]!) \(friendrequest["lname_user"]!)"
             cell.usernameLabel.text = "\(friendrequest["username_user"]!)"
             
-            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(friendrequest["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
             if data == nil {
@@ -113,12 +113,12 @@ extension FriendRequestListViewController {
             "function": "friendrequestSelect",
             "iduser": iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://localhost/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                 
@@ -211,12 +211,12 @@ extension FriendRequestListViewController {
             "userid" : userID,
             "status" : status
         ]
-        let url = "http://worawaluns.in.th/friendforfare/update/index.php"
+        let url = "http://localhost/friendforfare/update/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     
@@ -232,7 +232,7 @@ extension FriendRequestListViewController {
                     }
                     
                     //status 202
-                    print(JSON)
+//                    print(JSON)
                     let row = index.row
                     self.friendrequestList.remove(at: row)
                     DispatchQueue.main.async {

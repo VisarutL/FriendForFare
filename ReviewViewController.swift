@@ -58,7 +58,7 @@ class ReviewViewController:UITableViewController {
         cell.layoutMargins = UIEdgeInsets.zero
         
         let review = reviewList[indexPath.row]
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(review["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
@@ -116,18 +116,18 @@ extension ReviewViewController {
             "function": "reviewJourneySelect",
             "journeyid" : idtrip
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=reviewJourneySelect"
+        let url = "http://localhost/friendforfare/get/index.php?function=reviewJourneySelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                //                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     
                     
                     if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
+//                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.reviewList.append(item as! NSDictionary)
                         }

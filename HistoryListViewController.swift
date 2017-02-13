@@ -62,7 +62,7 @@ class HistoryListViewController: UITableViewController {
         cell.amountLabel.text = "0/\(trip["count_journey"] as! String)"
         cell.dateTmeLabel.text = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
         
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
@@ -115,18 +115,18 @@ extension HistoryListViewController {
             "function": "historyjourneySelect",
             "iduser": iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://localhost/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
 
                 
                 if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
+//                    print("JSON: \(JSON)")
                     for trip in JSON as! NSArray {
                         self.tripList.append(trip as! NSDictionary)
                     }

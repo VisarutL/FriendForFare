@@ -113,9 +113,7 @@ class PostTabBarController:UIViewController {
         if checkTextField() {
             addData()
         } else {
-            let error = "alert please fill all information."
-            print("error: \(error)")
-        }
+            return alert(message: "alert please fill all information.")        }
 
     }
     
@@ -352,12 +350,12 @@ extension PostTabBarController {
             "function": "insertPost",
             "parameter": parameter
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=insertPost"
+        let url = "http://localhost/friendforfare/post/index.php?function=insertPost"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     guard let JSON = response.result.value as! [String : Any]? else {
@@ -374,7 +372,7 @@ extension PostTabBarController {
                     self.delegate?.postTabBarDidClose()
                     
                     //status 202
-                    print(JSON)
+//                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)

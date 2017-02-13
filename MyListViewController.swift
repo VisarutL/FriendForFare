@@ -94,7 +94,7 @@ class MyListViewController: UITableViewController {
             cell.amountLabel.text = "0/\(tripme["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripme["date_journey"] as! String) \(tripme["time_journey"] as! String)"
             
-            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(tripme["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
             if data == nil {
@@ -109,7 +109,7 @@ class MyListViewController: UITableViewController {
             cell.amountLabel.text = "0/\(tripjoin["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripjoin["date_journey"] as! String) \(tripjoin["time_journey"] as! String)"
             
-            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(tripjoin["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
             if data == nil {
@@ -185,7 +185,7 @@ extension MyListViewController {
             "function": "journeymylistSelect",
             "iduser": iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://localhost/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -225,7 +225,7 @@ extension MyListViewController {
             "function": "journeymyjoinedSelect",
             "iduser": iduser
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php"
+        let url = "http://localhost/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

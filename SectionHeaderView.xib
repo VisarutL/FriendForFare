@@ -21,13 +21,13 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sxH-mB-fcy">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sxH-mB-fcy">
                     <rect key="frame" x="345" y="324" width="20" height="20"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="8ZB-kR-Noe"/>
                         <constraint firstAttribute="height" constant="20" id="8oa-WZ-ATc"/>
                     </constraints>
+                    <state key="normal" image="ic-1"/>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -44,4 +44,7 @@
             <point key="canvasLocation" x="1219.5" y="-607.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="ic-1" width="30" height="30"/>
+    </resources>
 </document>

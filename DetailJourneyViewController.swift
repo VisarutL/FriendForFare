@@ -163,7 +163,7 @@ class DetailJourneyViewController:UIViewController {
         guard userjoinedList.count != 0 else { return }
         let count = userjoinedList.count - 1
         for i in 0...count {
-            let path = "http://worawaluns.in.th/friendforfare/images/"
+            let path = "http://localhost/friendforfare/images/"
             let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
             let url = NSURL(string:"\(path)\(imageName)")
             let data = NSData(contentsOf:url as! URL)
@@ -231,7 +231,7 @@ extension DetailJourneyViewController {
             "function": "commentjourneySelect",
             "journeyid" : idtrip
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=commentjourneySelect"
+        let url = "http://localhost/friendforfare/get/index.php?function=commentjourneySelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -262,7 +262,7 @@ extension DetailJourneyViewController {
             "function": "userJoined",
             "idjourney": idjourney
         ]
-        let url = "http://worawaluns.in.th/friendforfare/get/index.php?function=userJoined"
+        let url = "http://localhost/friendforfare/get/index.php?function=userJoined"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -302,7 +302,7 @@ extension DetailJourneyViewController {
             "function": "insertcommentPost",
             "parameter": parameter
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=insertcommentPost"
+        let url = "http://localhost/friendforfare/post/index.php?function=insertcommentPost"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -322,7 +322,7 @@ extension DetailJourneyViewController {
                     }
                     
                     //status 202
-                    print(JSON)
+//                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)
