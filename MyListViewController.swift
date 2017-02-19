@@ -190,11 +190,11 @@ extension MyListViewController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                 if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
+//                    print("JSON: \(JSON)")
                     for trip in JSON as! NSArray {
                         self.tripmyList.append(trip as! NSDictionary)
                     }
@@ -230,11 +230,11 @@ extension MyListViewController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                 if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
+//                    print("JSON: \(JSON)")
                     for tripjoin in JSON as! NSArray {
                         self.tripmyjoinList.append(tripjoin as! NSDictionary)
                     }

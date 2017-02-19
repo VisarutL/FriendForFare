@@ -21,6 +21,7 @@ class ProfileTabBarController:UITableViewController{
     
     var profile = [NSDictionary]()
     var reviewprofile = [NSDictionary]()
+    var rateProfile = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class ProfileTabBarController:UITableViewController{
         
         let userID = UserDefaults.standard.integer(forKey: "UserID")
         selectData(iduser: userID)
+//        avgrate(iduser: userID)
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
         
         
@@ -234,9 +236,7 @@ extension ProfileTabBarController {
                 }
             })
     }
-
-
-
+    
     func reviewData(id:Int) {
         let parameters: Parameters = [
             "function": "reviewprofileSelect",
@@ -267,5 +267,33 @@ extension ProfileTabBarController {
                 }
             })
         }
+    
+//    func avgrate(iduser:Int) {
+//        let parameters: Parameters = [
+//            "function": "avgrate",
+//            "iduser" : iduser
+//        ]
+//        let url = "http://localhost/friendforfare/get/index.php"
+//        let manager = initManager()
+//        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+//            .responseJSON(completionHandler: { response in
+//                manager.session.invalidateAndCancel()
+//                //                debugPrint(response)
+//                switch response.result {
+//                case .success:
+//                    if let JSON = response.result.value {
+////                        print("JSON: \(JSON)")
+//                        for item in JSON as! NSArray {
+//                            self.rateProfile.append(item as! NSDictionary)
+//                        }
+//                        DispatchQueue.main.async {
+//                            self.tableView.reloadData()
+//                        }
+//                    }
+//                case .failure(let error):
+//                    print(error)
+//                }
+//            })
+//    }
 
 }

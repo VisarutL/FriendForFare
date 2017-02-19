@@ -44,12 +44,18 @@ class ReviewUserViewCell:UITableViewCell {
     func setRateImage(rate:Int) {
         var imageName = String()
         switch rate {
-        case 0:
-            imageName = "rate-0"
+        case 1:
+            imageName = "rate-1"
+        case 2:
+            imageName = "rate-2"
         case 3:
             imageName = "rate-3"
+        case 4:
+            imageName = "rate-4"
+        case 5:
+            imageName = "rate-5"
         default:
-            imageName = "rate-4-half"
+            imageName = "rate-0"
         }
         rateImage.image = UIImage(named: imageName)
     }

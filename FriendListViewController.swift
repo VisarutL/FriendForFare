@@ -147,7 +147,7 @@ extension FriendListViewController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     
@@ -208,10 +208,9 @@ extension FriendListViewController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
-                
                 if let JSON = response.result.value {
                     //                    print("JSON: \(JSON)")
                     for friend in JSON as! NSArray {
