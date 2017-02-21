@@ -13,13 +13,19 @@ protocol RequestFormDelegate:class {
     func requestFormDidClose()
     func requestFormDidCompleteAction()
 }
+
+protocol ListTapBarDelegate: class {
+    func didMoveController(index:Int)
+}
+
 class ListTapBarController: ButtonBarPagerTabStripViewController {
     
     //mark - ui
     let buttonColor = UIColor.systemColor
     let unselectedIconColor = UIColor.unSelectedColor
-    var searchBarButton = UIBarButtonItem()
+//    var alertBarButton = UIBarButtonItem()
     //mark - property
+    @IBOutlet weak var joinAlertController: UIBarButtonItem!
 
     
     weak var requestFormDelegate: RequestFormDelegate?
@@ -28,14 +34,19 @@ class ListTapBarController: ButtonBarPagerTabStripViewController {
         buttonBarSetting()
         super.viewDidLoad()
         layoutInitial()
-//        setRightButton()
         
     }
-
     
-//    func setRightButton() {
-//        setRequestRightButton()
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier else {
+            return
+        }
+        switch identifier {
+        case "JoinAlert": break
+        default:
+            break
+        }
+    }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let itemInfo = [
@@ -43,9 +54,10 @@ class ListTapBarController: ButtonBarPagerTabStripViewController {
             IndicatorInfo(title: "MY LIST"),
             IndicatorInfo(title: "HISTORY"),
         ]
-        
+
         let child_0 = AllListViewController()
         child_0.itemInfo = itemInfo[0]
+        child_0.delegate = self
         let child_1 = MyListViewController(style: .plain, itemInfo: itemInfo[1])
         let child_2 = HistoryListViewController(style: .plain, itemInfo: itemInfo[2])
         
@@ -60,6 +72,21 @@ class ListTapBarController: ButtonBarPagerTabStripViewController {
     
 }
 
+extension ListTapBarController:ListTapBarDelegate {
+    func didMoveController(index: Int) {
+        DispatchQueue.main.async {
+            self.moveToViewControllerAtIndex(index, animated: true)
+        }
+        
+    }
+}
+
+extension ListTapBarController : UIPopoverPresentationControllerDelegate {
+//    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+//        return UIModalPresentationStyle.none
+//    }
+}
+
 // MARK: - function
 extension ListTapBarController {
     
@@ -67,22 +94,23 @@ extension ListTapBarController {
         self.requestFormDelegate?.requestFormDidClose()
     }
     
-//    func searchAction() {
-//        
-//        let searchController = SearchFeedViewController(style: .plain)
-//        let nvc = UINavigationController(rootViewController: searchController)
-//        self.present(nvc, animated: true, completion: nil)
-//        
-//        
-//    }
     
-    func rejectAction() {
-        rejectPopup()
+    func joinAlertAction() {
+        
+        let vc = UITableViewController(style: .grouped)
+        vc.modalPresentationStyle = .popover
+        vc.preferredContentSize   = CGSize(width: 300.0, height: 300.0)
+        
+        let popvc = vc.popoverPresentationController
+        popvc?.permittedArrowDirections = UIPopoverArrowDirection.up
+        popvc?.delegate = self
+//        popvc?.sourceView = vc
+//        popvc?.sourceRect = CGRectMake(alertBarButton.frame.width / 2, alertBarButton.frame.height,0,0)
+        present(vc, animated: true, completion: nil)
+
+        
     }
     
-    func approveAction() {
-        approvePopup()
-    }
     
     func alert() {
         let message = "this is sample text dummy."
@@ -96,51 +124,6 @@ extension ListTapBarController {
         alert.view.tintColor = UIColor.systemColor
         
     }
-    
-    func approvePopup() {
-        let message = "this is sample text dummy for approve."
-        let alert = UIAlertController(title: "", message:message, preferredStyle: .alert)
-        let cancle = UIAlertAction(title: "cancle", style: .cancel, handler: nil)
-        let action = UIAlertAction(title: "Approve", style: .default, handler: {
-            _ in
-            
-                self.requestFormDelegate?.requestFormDidCompleteAction()
-            
-        })
-        alert.addAction(cancle)
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
-        alert.view.tintColor = UIColor.systemColor
-        
-    }
-    
-    func rejectPopup() {
-        let message = "this is sample text dummy for reject submition."
-        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        let cancle = UIAlertAction(title: "cancle", style: .cancel, handler: nil)
-        let action = UIAlertAction(title: "reject", style: .default) {
-            _ in
-            if let field = alert.textFields {
-//                let rejectRemark = field[0].text
-//                let requestID = "New"
-//                let statusID = "lorem"
-                
-                self.requestFormDelegate?.requestFormDidCompleteAction()
-            }
-        }
-        
-        alert.addTextField { textField in
-            textField.placeholder = "reject remark"
-            textField.addTarget(self, action: #selector(ListTapBarController.alertControllerTextFieldDidChange(_:)), for: .editingChanged)
-            textField.delegate = self
-        }
-        action.isEnabled = false
-        alert.addAction(cancle)
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
-        alert.view.tintColor = UIColor.systemColor
-    }
-    
     
     
 }
@@ -199,4 +182,3 @@ extension ListTapBarController {
 
     
 }
-

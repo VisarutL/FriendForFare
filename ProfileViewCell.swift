@@ -35,6 +35,7 @@ class ProfileViewCell:UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 //        setProfileImage()
+        profileImage.image = UIImage(named: "userprofile")
         fullnameLabel.text = "full name."
         telLabel.text = "telephone."
         emailLabel.text = "mail."

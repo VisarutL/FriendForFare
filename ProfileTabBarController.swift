@@ -30,10 +30,9 @@ class ProfileTabBarController:UITableViewController{
         tableView.showsVerticalScrollIndicator = false
         
         let userID = UserDefaults.standard.integer(forKey: "UserID")
-        selectData(iduser: userID)
-//        avgrate(iduser: userID)
+        self.selectData(iduser: userID)
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
-        
+        tableView.rowHeight = 140
         
         
     }
@@ -93,10 +92,8 @@ class ProfileTabBarController:UITableViewController{
             let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(reviewprofile["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
-            if data == nil {
-                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-            } else {
-                cell.profileImage.image = UIImage(data:data as! Data)
+            if let data = data as? Data {
+                cell.profileImage.image = UIImage(data:data )
             }
 
         }
@@ -250,14 +247,38 @@ extension ProfileTabBarController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-                    
-                    
                     if let JSON = response.result.value {
 //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.reviewprofile.append(item as! NSDictionary)
                         }
-                        
+                        let userID = UserDefaults.standard.integer(forKey: "UserID")
+                        self.avgrate(iduser: userID)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+        }
+    
+    func avgrate(iduser:Int) {
+        let parameters: Parameters = [
+            "function": "avgrate",
+            "iduser" : iduser
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+//                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.rateProfile.append(item as! NSDictionary)
+                        }
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
@@ -266,34 +287,6 @@ extension ProfileTabBarController {
                     print(error)
                 }
             })
-        }
-    
-//    func avgrate(iduser:Int) {
-//        let parameters: Parameters = [
-//            "function": "avgrate",
-//            "iduser" : iduser
-//        ]
-//        let url = "http://localhost/friendforfare/get/index.php"
-//        let manager = initManager()
-//        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
-//            .responseJSON(completionHandler: { response in
-//                manager.session.invalidateAndCancel()
-//                //                debugPrint(response)
-//                switch response.result {
-//                case .success:
-//                    if let JSON = response.result.value {
-////                        print("JSON: \(JSON)")
-//                        for item in JSON as! NSArray {
-//                            self.rateProfile.append(item as! NSDictionary)
-//                        }
-//                        DispatchQueue.main.async {
-//                            self.tableView.reloadData()
-//                        }
-//                    }
-//                case .failure(let error):
-//                    print(error)
-//                }
-//            })
-//    }
+    }
 
 }

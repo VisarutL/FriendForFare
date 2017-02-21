@@ -8,6 +8,11 @@
 
 import UIKit
 import Alamofire
+
+protocol DetailJourneyDelegate: class {
+    func detailJourneyDidFinish()
+}
+
 class DetailJourneyViewController:UIViewController {
     
     @IBOutlet weak var pickupLabel: UILabel!
@@ -38,6 +43,8 @@ class DetailJourneyViewController:UIViewController {
         ]
     }
     
+    weak var delegate:DetailJourneyDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,6 +54,8 @@ class DetailJourneyViewController:UIViewController {
         setCloseButton()
         selectData()
         loadImage()
+        
+        
         
     }
     
@@ -68,28 +77,16 @@ class DetailJourneyViewController:UIViewController {
             switch identifier {
             case "showMapPickup":
                 let vc = segue.destination as! MapPickUpViewController
-                switch joinButtonToggle!.lowercased() {
-                case "myTrip".lowercased():
-                    vc.latitude = Double(tripDetail["latitude_pick"] as! String)!
-                    vc.longitude = Double(tripDetail["longitude_pick"] as! String)!
-                    vc.pick = (tripDetail["pick_journey"] as! String)
-                case "otherTrip".lowercased():
-                    vc.latitude = Double(tripDetail["latitude_pick"] as! String)!
-                    vc.longitude = Double(tripDetail["longitude_pick"] as! String)!
-                    vc.pick = (tripDetail["pick_journey"] as! String)
-                default:
-                    break
-                }
+                vc.latitude = Double(tripDetail["latitude_pick"] as! String)!
+                vc.longitude = Double(tripDetail["longitude_pick"] as! String)!
+                vc.pick = (tripDetail["pick_journey"] as! String)
             case "editPost":
                 let vcc = segue.destination as! EditJourneyViewController
-                switch joinButtonToggle!.lowercased() {
-                case "myTrip".lowercased():
-                    vcc.idjourney = Int(tripDetail["id_journey"] as! String)!
-                case "otherTrip".lowercased():
-                    vcc.idjourney = Int(tripDetail["id_journey"] as! String)!
-                default:
-                    break
-                }
+                vcc.idjourney = Int(tripDetail["id_journey"] as! String)!
+            case "MapDistance":
+                let vc = segue.destination as! MapViewController
+                vc.tripDetail = tripDetail
+                vc.delegate = self
             default:
                 break
             }
@@ -111,12 +108,13 @@ class DetailJourneyViewController:UIViewController {
         case "myTrip".lowercased():
             actionButton.setTitle("LET'S GO", for: .normal)
             actionButton.backgroundColor = UIColor.greenBT
-            
+            actionButton.addTarget(self, action: #selector(MapDistanceAction), for: .touchUpInside)
             
         case "otherTrip".lowercased():
             self.navigationItem.rightBarButtonItem = nil
             actionButton.setTitle("CANCEL", for: .normal)
             actionButton.backgroundColor = UIColor.redBT
+            actionButton.addTarget(self, action: #selector(CancelAction), for: .touchUpInside)
             
         default:
             break
@@ -129,6 +127,14 @@ class DetailJourneyViewController:UIViewController {
         detailTextView.text = "\(tripDetail["detail_journey"] as! String)"
         let idtrip = "\(tripDetail["id_journey"] as! String)"
         userJoined(idjourney: idtrip)
+    }
+    
+    func MapDistanceAction() {
+        performSegue(withIdentifier: "MapDistance", sender: nil)
+    }
+    
+    func CancelAction() {
+    
     }
     
     func setCloseButton() {
@@ -156,6 +162,7 @@ class DetailJourneyViewController:UIViewController {
     func tableViewSetting() {
         tableview.delegate = self
         tableview.dataSource = self
+        
     }
     
     func loadImage() {
@@ -191,6 +198,12 @@ class DetailJourneyViewController:UIViewController {
     
 }
 
+extension DetailJourneyViewController: DetailJourneyMapDelegate {
+    func detailJourneyMapDidFinish() {
+        delegate?.detailJourneyDidFinish()
+    }
+}
+
 extension DetailJourneyViewController:UITableViewDelegate {
 
 }
@@ -209,7 +222,6 @@ extension DetailJourneyViewController:UITableViewDataSource {
             cell.textLabel?.text = (comment["username_user"] as! String)
             cell.detailTextLabel?.text = "\(comment["datetime_forum"] as! String) , \(comment["comment_forum"] as! String)"
         } else {
-            let comment = commentlist[indexPath.row]
             cell.textLabel?.text = "name"
             cell.detailTextLabel?.text = "detail"
         }

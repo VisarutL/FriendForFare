@@ -34,6 +34,7 @@ class FriendViewCell:UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         setProfileImage()
+        profileImage.image = UIImage(named: "userprofile")
     }
 
     @IBAction func confirmAction(_ sender: Any) {

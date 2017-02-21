@@ -31,6 +31,8 @@ class ReviewUserViewCell:UITableViewCell {
         super.layoutSubviews()
         
         setProfileImage()
+        profileImage.image = UIImage(named: "userprofile")
+
         
     }
     

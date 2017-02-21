@@ -154,7 +154,7 @@ extension SearchFriendViewController:UISearchBarDelegate {
             filteredUserList = [NSDictionary]()
         } else {
             filteredUserList = userList.filter({( list : NSDictionary) -> Bool in
-                let name = list["fname_user"] as! String
+                let name = list["username_user"] as! String
                 let filterText = name.lowercased()
                 return filterText.contains(searchText.lowercased())
             })
@@ -168,15 +168,15 @@ extension SearchFriendViewController {
     
     func selectData(iduser:Int) {
         let parameters: Parameters = [
-            "function": "serachFriendSelect",
+            "function": "searchFriendSelect",
             "iduser": iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=serachFriendSelect"
+        let url = "http://localhost/friendforfare/get/index.php?function=searchFriendSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     

@@ -36,6 +36,9 @@ class AllListViewController: UIViewController {
     var fristTime = true
     
     var currentLocation:CLLocation?
+    
+    weak var delegate:ListTapBarDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,12 +46,17 @@ class AllListViewController: UIViewController {
         initTableView()
         setPullToRefresh()
         self.currentLocation = LocationService.sharedInstance.currentLocation
-        var latitude = currentLocation?.coordinate.latitude
-        var longitude = currentLocation?.coordinate.longitude
+        let latitude = currentLocation?.coordinate.latitude
+        let longitude = currentLocation?.coordinate.longitude
         self.refresh(lat:latitude!,long:longitude!)
         print("latitude: \(latitude)")
         print("longitude: \(longitude)")
         print("currentLocation: \(currentLocation)")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
     }
     
@@ -87,8 +95,10 @@ extension AllListViewController:UITableViewDelegate {
         switch indexPath.section {
         case 0:
             vc.trip = filteredTripList[indexPath.row] as! [String : Any]
+            vc.delegate = self
         case 1:
             vc.trip = filteredfriendTripList[indexPath.row] as! [String : Any]
+            vc.delegate = self
         default:
             break
         }
@@ -97,7 +107,16 @@ extension AllListViewController:UITableViewDelegate {
         
     }
 }
-
+extension AllListViewController:JourneyDelegate {
+    func journeyDidJoin() {
+        dismiss(animated: true, completion: nil)
+        delegate?.didMoveController(index: 1)
+        let latitude = currentLocation?.coordinate.latitude
+        let longitude = currentLocation?.coordinate.longitude
+        refresh(lat: latitude!, long: longitude!)
+        
+    }
+}
 extension AllListViewController:UITableViewDataSource {
     
    
@@ -127,10 +146,8 @@ extension AllListViewController:UITableViewDataSource {
         let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-        } else {
-            cell.profileImage.image = UIImage(data:data as! Data)
+        if let data = data as? Data {
+            cell.profileImage.image = UIImage(data:data )
         }
         return cell
     
@@ -150,6 +167,7 @@ extension AllListViewController:UITableViewDataSource {
                                                             owner: nil,
                                                             options: nil)?.first as! SectionHeaderView
         headerView.titleLabel.text = sectionTitles[section]
+        headerView.isOptionButtonEnable = hiddingSection[section]
         headerView.optionButton.tag = section
         headerView.optionButton.addTarget(self, action: #selector(collapseAction), for: .touchUpInside)
         return headerView
@@ -236,7 +254,7 @@ extension AllListViewController {
 //    (completionHandler:@escaping (_ r:[Region]?
     
     func refresh(lat:Double,long:Double) {
-        
+            
         if fristTime {
             
             fristTime = false
@@ -348,4 +366,5 @@ extension AllListViewController:IndicatorInfoProvider {
     }
     
 }
+
 

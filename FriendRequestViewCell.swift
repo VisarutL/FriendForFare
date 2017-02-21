@@ -38,6 +38,7 @@ class FriendRequestViewCell:UITableViewCell {
         super.layoutSubviews()
         setProfileImage()
         removeButtonSetting()
+        profileImage.image = UIImage(named: "userprofile")
     }
     @IBAction func confirmAction(_ sender: Any) {
         delegate?.friendRequestViewCellDidConfirm(index: indexPath)

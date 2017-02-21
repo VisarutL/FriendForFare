@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 
+protocol JourneyDelegate:class {
+    func journeyDidJoin()
+}
 class JourneyViewController:UIViewController {
     
     var closeBarButton = UIBarButtonItem()
@@ -29,6 +32,8 @@ class JourneyViewController:UIViewController {
     @IBOutlet weak var imageProfile4: UIImageView!
     @IBOutlet weak var joinButton: UIButton!
     
+    weak var delegate:JourneyDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let myText = myText {
@@ -36,20 +41,16 @@ class JourneyViewController:UIViewController {
             print(myText)
         }
         setProfileImage()
-        let idtrip = "\(trip["id_journey"] as! String)"
+        let idtrip = trip["id_journey"] as! String
         selectData(idjourney: idtrip)
         viewSetting()
         setCloseButton()
-        pickupLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
-        dropoffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
-        datetimeLabel.text = "\(trip["date_journey"] as! String) , \(trip["time_journey"] as! String)"
-        countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
-        detailTextView.text = "\(trip["detail_journey"] as! String)"
+        setInfomation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
+        
     }
     
     func initManager() -> SessionManager {
@@ -105,18 +106,21 @@ class JourneyViewController:UIViewController {
         }
     }
     
-    func loadImage() {
-        var profileImages:[UIImageView] = [imageProfile1,imageProfile2,imageProfile3,imageProfile4]
-        guard userjoinedList.count != 0 else { return }
-        let count = userjoinedList.count - 1
-        for i in 0...count {
-            let path = "http://localhost/friendforfare/images/"
-            let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
-            let url = NSURL(string:"\(path)\(imageName)")
-            let data = NSData(contentsOf:url as! URL)
-            let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
-            profileImages[i].image = image
+    func setInfomation() {
+        pickupLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
+        dropoffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
+        datetimeLabel.text = "\(trip["date_journey"] as! String) , \(trip["time_journey"] as! String)"
+        countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
+        detailTextView.text = "\(trip["detail_journey"] as! String)"
+    }
+    
+    func handleJoinButton() {
+        if userjoinedList.count == Int(trip["count_journey"] as! String)! {
+            joinButton.setTitle("Full", for: .normal)
+            joinButton.backgroundColor = UIColor.gray
+            joinButton.isEnabled = false
         }
+        countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
     }
     
     @IBAction func joinAction(_ sender: Any) {
@@ -142,19 +146,33 @@ extension JourneyViewController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-                    
-                    
+
                     if let JSON = response.result.value {
                         print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.userjoinedList.append(item as! NSDictionary)
                         }
+                        self.handleJoinButton()
                         self.loadImage()
                     }
                 case .failure(let error):
                     print(error)
             }
         })
+    }
+    
+    func loadImage() {
+        var profileImages:[UIImageView] = [imageProfile1,imageProfile2,imageProfile3,imageProfile4]
+        guard userjoinedList.count != 0 else { return }
+        let count = userjoinedList.count - 1
+        for i in 0...count {
+            let path = "http://localhost/friendforfare/images/"
+            let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
+            let url = NSURL(string:"\(path)\(imageName)")
+            let data = NSData(contentsOf:url as! URL)
+            let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
+            profileImages[i].image = image
+        }
     }
     
     func joinJourney(id:Int,idjour:String) {
@@ -190,10 +208,11 @@ extension JourneyViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    //status 202
-//                    print(JSON)
+                    
+                    self.delegate?.journeyDidJoin()
+                    
                 case .failure(let error):
-                    //alert
+ 
                     print(error.localizedDescription)
                 }
             })

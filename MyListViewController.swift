@@ -10,6 +10,7 @@ import UIKit
 import XLPagerTabStrip
 import Alamofire
 
+
 class MyListViewController: UITableViewController {
     
     let feedViewCelldentifier = "Cell"
@@ -21,6 +22,7 @@ class MyListViewController: UITableViewController {
     var dateFormatter = DateFormatter()
     var fristTime = true
     
+    var hiddingSection = [false,false]
     let numberOfRow = [2,2]
     
     var itemInfo = IndicatorInfo(title: "New")
@@ -49,8 +51,23 @@ class MyListViewController: UITableViewController {
         return manager
     }
     
+    func collapseAction(_ sender:Any) {
+        let button = sender as! UIButton
+        button.isEnabled = false
+        hiddingSection[button.tag] = !hiddingSection[button.tag]
+        let section = NSIndexSet(index: button.tag) as IndexSet
+        DispatchQueue.main.async {
+            button.isEnabled = true
+            self.tableView?.reloadSections(section, with: .automatic)
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 28
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -58,22 +75,14 @@ class MyListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 20))
-        headerView.backgroundColor = UIColor.tabbarColor
         
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = sectionTitles[section]
-        headerView.addSubview(label)
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20).isActive = true
-        label.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
-        label.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
+        let headerView = Bundle.main.loadNibNamed("SectionHeaderView",
+                                                  owner: nil,
+                                                  options: nil)?.first as! SectionHeaderView
+        headerView.titleLabel.text = sectionTitles[section]
+        headerView.optionButton.tag = section
+        headerView.optionButton.addTarget(self, action: #selector(collapseAction), for: .touchUpInside)
         return headerView
-        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -112,10 +121,8 @@ class MyListViewController: UITableViewController {
             let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(tripjoin["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
-            if data == nil {
-                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-            } else {
-                cell.profileImage.image = UIImage(data:data as! Data)
+            if let data = data as? Data {
+                cell.profileImage.image = UIImage(data:data )
             }
         default:
             break
@@ -127,17 +134,16 @@ class MyListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var rows = Int()
         switch section {
         case 0:
-            let tripmy = tripmyList.count
-            return tripmy
+            rows = hiddingSection[section] ? 0 : tripmyList.count
         case 1:
-            let tripjoined = tripmyjoinList.count
-            return tripjoined
+            rows = hiddingSection[section] ? 0 : tripmyjoinList.count
         default:
             break
         }
-        return numberOfRow[section]
+        return rows
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -150,6 +156,7 @@ class MyListViewController: UITableViewController {
         case 0:
             vc.tripDetail = tripmyList[indexPath.row] as! [String : Any]
             vc.joinButtonToggle = "myTrip"
+            vc.delegate = self
         case 1:
             vc.tripDetail = tripmyjoinList[indexPath.row] as! [String : Any]
             vc.joinButtonToggle = "otherTrip"
@@ -161,6 +168,16 @@ class MyListViewController: UITableViewController {
         self.present(nvc, animated: true, completion: nil)
     }
 
+}
+
+extension MyListViewController: DetailJourneyDelegate{
+    func detailJourneyDidFinish() {
+        dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+    }
 }
 
 extension MyListViewController {

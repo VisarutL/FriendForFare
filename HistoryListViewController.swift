@@ -65,10 +65,8 @@ class HistoryListViewController: UITableViewController {
         let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-        } else {
-            cell.profileImage.image = UIImage(data:data as! Data)
+        if let data = data as? Data {
+            cell.profileImage.image = UIImage(data:data )
         }
 
 

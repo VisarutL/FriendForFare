@@ -45,6 +45,7 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
             return alert(message: "wrong username or password !!!")
         }
         
+//        loginData(username:name,password:password)
         let userID = 1
         UserDefaults.standard.set(userID, forKey: "UserID")
         
@@ -91,3 +92,42 @@ extension ViewController:RequestFormDelegate {
         
     }
 }
+
+//extension ViewController {
+//    func loginData() {
+//        let parameters: Parameters = [
+//            "function": "journeySelect",
+//            "iduser" : iduser,
+//            "latitude": latt,
+//            "longitude": longg
+//        ]
+//        let url = "http://localhost/friendforfare/get/index.php"
+//        let manager = initManager()
+//        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+//            .responseJSON(completionHandler: { response in
+//                manager.session.invalidateAndCancel()
+//                //                debugPrint(response)
+//                switch response.result {
+//                case .success:
+//                    if let JSON = response.result.value {
+//                        //                    print("JSON: \(JSON)")
+//                        
+//                        for trip in JSON as! NSArray {
+//                            self.tripList.append(trip as! NSDictionary)
+//                            self.filteredTripList = self.tripList
+//                        }
+//                        
+//                        let now = NSDate()
+//                        let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+//                        self.refreshControl.attributedTitle = NSAttributedString(string: updateString)
+//                        
+//                    }
+//                    
+//                    self.cpGroup.leave()
+//                case .failure(let error):
+//                    print(error)
+//                    self.cpGroup.leave()
+//                }
+//            })
+//    }
+//}

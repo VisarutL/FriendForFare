@@ -31,6 +31,7 @@ class SearchFriendViewCell:UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         setProfileImage()
+        profileImage.image = UIImage(named: "userprofile")
     }
     
     @IBAction func addFriendAction(_ sender: Any) {

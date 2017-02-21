@@ -495,9 +495,6 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                 <state key="normal" title="LET GO">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="s61-d6-enF" kind="show" id="ErH-Pq-9P9"/>
-                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EO4-IL-u1l">
                                 <rect key="frame" x="0.0" y="421" width="375" height="193"/>
@@ -507,18 +504,18 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JiS-4A-4Vs" id="tu5-bF-qv8">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5RK-TL-bi9">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="4" width="34" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cOj-2C-w5r">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
+                                                    <rect key="frame" x="15" y="25" width="44" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -612,6 +609,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                         <outlet property="profile3ImageView" destination="TCc-We-iYF" id="HqO-uA-tFp"/>
                         <outlet property="profile4ImageView" destination="qqa-du-zM9" id="VCW-cI-8A1"/>
                         <outlet property="tableview" destination="EO4-IL-u1l" id="g15-xs-7kL"/>
+                        <segue destination="s61-d6-enF" kind="show" identifier="MapDistance" id="kB3-7o-IHf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mLN-rH-JWS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -672,6 +670,9 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                 <state key="normal" title="FINISH">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="finishAction:" destination="s61-d6-enF" eventType="touchUpInside" id="2Sd-hT-csz"/>
+                                </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Aoc-HC-kEy">
                                 <rect key="frame" x="0.0" y="64" width="375" height="558"/>
@@ -688,6 +689,9 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                             <constraint firstItem="M6u-Vu-Lso" firstAttribute="top" secondItem="b3q-tH-ahA" secondAttribute="bottom" id="uIg-iV-sKW"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="Aoc-HC-kEy" id="ViE-nI-FgT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hKh-td-9Uo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
