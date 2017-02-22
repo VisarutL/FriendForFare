@@ -55,8 +55,6 @@ class DetailJourneyViewController:UIViewController {
         selectData()
         loadImage()
         
-        
-        
     }
     
     func initManager() -> SessionManager {
@@ -134,7 +132,8 @@ class DetailJourneyViewController:UIViewController {
     }
     
     func CancelAction() {
-    
+        let idtrip = "\(tripDetail["id_journey"] as! String)"
+        cancelJoin(idjourney: idtrip)
     }
     
     func setCloseButton() {
@@ -341,6 +340,45 @@ extension DetailJourneyViewController {
                 }
             })
     }
+    
+    func cancelJoin(idjourney:String) {
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        let idjourney = idjourney
+        let iduser = userID
+        let parameters: Parameters = [
+            "function": "cancelJoin",
+            "userid" : iduser,
+            "journeyid" : idjourney
+        ]
+        let url = "http://localhost/friendforfare/delete/index.php?function=cancelJoin"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+//                debugPrint(response)[
+                switch response.result {
+                case .success:
+                    
+                    guard let JSON = response.result.value as! [String : Any]? else {
+                        print("error: cannnot cast result value to JSON or nil.")
+                        return
+                    }
+                    
+                    let status = JSON["status"] as! String
+                    if  status == "404" {
+                        print("error: \(JSON["message"] as! String)")
+                        return
+                    }
+                    self.dismiss(animated: true, completion: nil)
+                    //status 202
+                    print(JSON)
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+
+    
     
 }
 

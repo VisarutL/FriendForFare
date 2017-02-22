@@ -26,26 +26,27 @@ class MapViewController:UIViewController {
         print(tripDetail)
         let latpick = Double(tripDetail["latitude_pick"] as! String)!
         let longpick = Double(tripDetail["longitude_pick"] as! String)!
-        let latdrop = Double(tripDetail["latitude_drop"] as! String)!
-        let longdrop = Double(tripDetail["longitude_drop"] as! String)!
-        let pick = "\(tripDetail["journey_pick"])"
-        let drop = "\(tripDetail["journey_drop"])"
+        let pick = (tripDetail["pick_journey"])
+        
         
         let sourceLocation = CLLocationCoordinate2D(latitude: latpick, longitude: longpick)
         let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
         let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
         let sourceAnnotation = MKPointAnnotation()
-        sourceAnnotation.title = pick
+        sourceAnnotation.title = pick as! String?
         if let location = sourcePlacemark.location {
             sourceAnnotation.coordinate = location.coordinate
         }
         
+        let latdrop = Double(tripDetail["latitude_drop"] as! String)!
+        let longdrop = Double(tripDetail["longitude_drop"] as! String)!
+        let drop = (tripDetail["drop_journey"])
         let destinationLocation = CLLocationCoordinate2D(latitude: latdrop, longitude: longdrop)
         let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
         
         let destinationAnnotation = MKPointAnnotation()
-        destinationAnnotation.title = drop
+        destinationAnnotation.title = drop as! String?
         if let location = destinationPlacemark.location {
             destinationAnnotation.coordinate = location.coordinate
         }

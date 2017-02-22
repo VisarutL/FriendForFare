@@ -517,7 +517,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="List" id="sRD-UG-BPb">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="DfB-cx-DAa">
+                        <barButtonItem key="rightBarButtonItem" image="Notification1" id="DfB-cx-DAa">
                             <connections>
                                 <segue destination="H67-yX-ytM" kind="presentation" id="ifM-tL-7qK"/>
                             </connections>
@@ -1645,6 +1645,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Notification1" width="37" height="37"/>
         <image name="btn-star-disable" width="58" height="58"/>
         <image name="btn-star-enable" width="58" height="58"/>
         <image name="dropoff" width="58" height="58"/>

@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="733" height="197"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I3u-it-TXl" id="bPU-Rz-n4K">
-                <rect key="frame" x="0.0" y="0.0" width="733" height="196"/>
+                <rect key="frame" x="0.0" y="0.0" width="733" height="196.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qdb-bc-uv5">
@@ -39,7 +39,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5Y-7T-fBd">
-                                        <rect key="frame" x="21" y="-1" width="39.5" height="18"/>
+                                        <rect key="frame" x="26" y="-1" width="39.5" height="18"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                                         <color key="textColor" red="0.53725490196078429" green="0.5490196078431373" blue="0.5607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -50,7 +50,7 @@
                                     <constraint firstItem="ORP-uT-e3r" firstAttribute="leading" secondItem="eG0-E6-EFn" secondAttribute="leading" id="9z1-83-tu6"/>
                                     <constraint firstItem="ORP-uT-e3r" firstAttribute="centerY" secondItem="eG0-E6-EFn" secondAttribute="centerY" id="Ncj-Cl-qAm"/>
                                     <constraint firstItem="Y5Y-7T-fBd" firstAttribute="centerY" secondItem="eG0-E6-EFn" secondAttribute="centerY" id="hNL-QQ-VXb"/>
-                                    <constraint firstItem="Y5Y-7T-fBd" firstAttribute="leading" secondItem="ORP-uT-e3r" secondAttribute="trailing" constant="3" id="pqM-uP-UWh"/>
+                                    <constraint firstItem="Y5Y-7T-fBd" firstAttribute="leading" secondItem="ORP-uT-e3r" secondAttribute="trailing" constant="8" id="pqM-uP-UWh"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKO-hC-9yV">
@@ -66,7 +66,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCr-3M-p8P">
-                                        <rect key="frame" x="21" y="-1" width="39.5" height="18"/>
+                                        <rect key="frame" x="26" y="-1" width="39.5" height="18"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                                         <color key="textColor" red="0.53725490196078429" green="0.5490196078431373" blue="0.5607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -74,7 +74,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="zCr-3M-p8P" firstAttribute="leading" secondItem="P6W-9v-dPr" secondAttribute="trailing" constant="3" id="4AW-md-iaO"/>
+                                    <constraint firstItem="zCr-3M-p8P" firstAttribute="leading" secondItem="P6W-9v-dPr" secondAttribute="trailing" constant="8" id="4AW-md-iaO"/>
                                     <constraint firstItem="zCr-3M-p8P" firstAttribute="centerY" secondItem="bKO-hC-9yV" secondAttribute="centerY" id="VAa-UL-Gp1"/>
                                     <constraint firstItem="P6W-9v-dPr" firstAttribute="leading" secondItem="bKO-hC-9yV" secondAttribute="leading" id="hdO-9s-ARN"/>
                                     <constraint firstItem="P6W-9v-dPr" firstAttribute="centerY" secondItem="bKO-hC-9yV" secondAttribute="centerY" id="uHV-Cg-bfU"/>

@@ -17,10 +17,10 @@ class SectionHeaderView: UIView {
     var isOptionButtonEnable = Bool() {
         didSet {
             if isOptionButtonEnable {
-                let image = UIImage(named: "btn-star-disable")
+                let image = UIImage(named: "Down1")
                 optionButton.setImage(image, for: .normal)
             } else {
-                let image = UIImage(named: "btn-star-enable")
+                let image = UIImage(named: "Up1")
                 optionButton.setImage(image, for: .normal)
             }
         }

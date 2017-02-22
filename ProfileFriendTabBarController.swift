@@ -20,7 +20,7 @@ class ProfileFriendTabBarController:UITableViewController{
     var myText:String?
     var friend = [String: Any]()
     
-    let userRate = 3
+    let userRate = 0
     let arrayRate = [0,1,2,3,4]
     
     var profilefriend = [NSDictionary]()
@@ -34,6 +34,7 @@ class ProfileFriendTabBarController:UITableViewController{
         selectData()
         setCloseButton()
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
+        tableView.rowHeight = 100
         
     }
     func initManager() -> SessionManager {
@@ -51,7 +52,7 @@ class ProfileFriendTabBarController:UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 100
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

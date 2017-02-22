@@ -48,7 +48,7 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         profileImageSetting()
         
-        let path = "http://worawaluns.in.th/friendforfare/images/"
+        let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(picuser)")
         let data = NSData(contentsOf:url! as URL)
         profileimage.image = UIImage(data:data as! Data)
@@ -126,7 +126,7 @@ extension EditProfileViewController {
             "parameter": parameter
         ]
         
-        let url = "http://worawaluns.in.th/friendforfare/update/index.php"
+        let url = "http://localhost/friendforfare/update/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -166,7 +166,7 @@ extension EditProfileViewController {
         let parameters: Parameters = [
             "function": "uploadImage"
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=uploadImage"
+        let url = "http://localhost/friendforfare/post/index.php?function=uploadImage"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 

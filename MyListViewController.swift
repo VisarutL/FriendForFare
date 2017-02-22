@@ -80,6 +80,7 @@ class MyListViewController: UITableViewController {
                                                   owner: nil,
                                                   options: nil)?.first as! SectionHeaderView
         headerView.titleLabel.text = sectionTitles[section]
+        headerView.isOptionButtonEnable = hiddingSection[section]
         headerView.optionButton.tag = section
         headerView.optionButton.addTarget(self, action: #selector(collapseAction), for: .touchUpInside)
         return headerView

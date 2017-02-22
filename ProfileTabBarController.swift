@@ -32,7 +32,7 @@ class ProfileTabBarController:UITableViewController{
         let userID = UserDefaults.standard.integer(forKey: "UserID")
         self.selectData(iduser: userID)
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
-        tableView.rowHeight = 140
+        tableView.rowHeight = 100
         
         
     }
@@ -44,8 +44,8 @@ class ProfileTabBarController:UITableViewController{
     func initManager() -> SessionManager {
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = nil
-        configuration.timeoutIntervalForRequest = 10
-        configuration.timeoutIntervalForResource = 10
+        configuration.timeoutIntervalForRequest = 20
+        configuration.timeoutIntervalForResource = 20
         return Alamofire.SessionManager(configuration: configuration)
     }
     
@@ -116,10 +116,14 @@ class ProfileTabBarController:UITableViewController{
             cell.telLabel.text = "telephone."
             cell.emailLabel.text = "mail."
             cell.profileImage.image = UIImage(named: "userprofile")
+            cell.setRateImage(rate: 0)
         } else {
             cell.fullnameLabel.text = "\(profile[0]["fname_user"]!) \(profile[0]["lname_user"]!)"
             cell.telLabel.text = "\(profile[0]["tel_user"]!)"
             cell.emailLabel.text = "\(profile[0]["email_user"]!)"
+            let rate = "\(rateProfile[0]["rate"]!)"
+            let rateprofile = Int(rate)
+            cell.setRateImage(rate: rateprofile!)
             
             let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(profile[0]["pic_user"]!)")
@@ -132,7 +136,6 @@ class ProfileTabBarController:UITableViewController{
         }
         cell.showLogout = true
         cell.delegate = self
-        cell.setRateImage(rate: userRate)
         
         return cell
     }
@@ -183,6 +186,7 @@ extension ProfileTabBarController:EditProfileViewDelegate {
     func editProfileViewDidFinish() {
         profile = [NSDictionary]()
         reviewprofile = [NSDictionary]()
+        rateProfile = [NSDictionary]()
         
         let userID = UserDefaults.standard.integer(forKey: "UserID")
         selectData(iduser: userID)
@@ -271,7 +275,7 @@ extension ProfileTabBarController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                //                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
