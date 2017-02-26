@@ -88,6 +88,7 @@ class MapViewController:UIViewController {
     
     @IBAction func finishAction(_ sender: Any) {
         delegate?.detailJourneyMapDidFinish()
+        
     }
    
 }

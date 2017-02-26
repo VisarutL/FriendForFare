@@ -526,7 +526,6 @@
                     <connections>
                         <outlet property="buttonBarView" destination="syw-uY-3Z9" id="W45-KO-uTp"/>
                         <outlet property="containerView" destination="1rq-2m-MLC" id="O7z-Ot-0X3"/>
-                        <outlet property="joinAlertController" destination="DfB-cx-DAa" id="KLz-lQ-dQp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wWU-Of-igh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1520,10 +1519,10 @@
             </objects>
             <point key="canvasLocation" x="6396" y="-359.37031484257875"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Notification View Controller-->
         <scene sceneID="bda-ui-YMC">
             <objects>
-                <tableViewController id="Uoa-Nc-OIU" sceneMemberID="viewController">
+                <tableViewController id="Uoa-Nc-OIU" customClass="NotificationViewController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wnC-2o-C3X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1543,7 +1542,14 @@
                             <outlet property="delegate" destination="Uoa-Nc-OIU" id="E90-wA-yrk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="KhJ-cL-9bj"/>
+                    <navigationItem key="navigationItem" id="KhJ-cL-9bj">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="pa4-dC-9Ac">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backAction:" destination="Uoa-Nc-OIU" id="aib-dp-sCh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AO5-wH-kR0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1630,9 +1636,10 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="H67-yX-ytM" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LtX-5w-GCu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="LtX-5w-GCu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="1" green="0.80541926622390747" blue="0.002127740066498518" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1645,7 +1652,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Notification1" width="37" height="37"/>
+        <image name="Notification1" width="23" height="23"/>
         <image name="btn-star-disable" width="58" height="58"/>
         <image name="btn-star-enable" width="58" height="58"/>
         <image name="dropoff" width="58" height="58"/>

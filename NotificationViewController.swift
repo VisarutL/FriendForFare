@@ -1,35 +1,32 @@
 //
-//  ReviewViewController.swift
+//  NotificationViewController.swift
 //  FriendForFare
 //
-//  Created by Visarut on 12/12/2559 BE.
-//  Copyright © 2559 BE Newfml. All rights reserved.
+//  Created by Visarut on 2/27/2560 BE.
+//  Copyright © 2560 BE Newfml. All rights reserved.
 //
 
 import UIKit
 import Alamofire
 
-class ReviewViewController:UITableViewController {
+class NotificationViewController: UITableViewController {
     
-    let reviewCelldentifier = "Cell"
-    let reviewCell = "ReviewViewCell"
-    var myText:String?
-    var trip = [String: Any]()
-    var reviewList = [NSDictionary]()
-    var dateFormatter = DateFormatter()
+    let notificationCelldentifier = "Cell"
+    let notificationCell = "NotificationViewCell"
     var fristTime = true
+    var joinList = [NSDictionary]()
+    var dateFormatter = DateFormatter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setPullToRefresh()
         handleRefresh()
-        if let myText = myText {
-            title = myText
-            print(myText)
-        }
-        
-        tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewCelldentifier)
+        tableView.register(UINib(nibName: notificationCell, bundle: nil), forCellReuseIdentifier: notificationCelldentifier)
         tableView?.rowHeight = 90
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     func initManager() -> SessionManager {
@@ -40,8 +37,8 @@ class ReviewViewController:UITableViewController {
         return manager
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @IBAction func backAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -51,73 +48,68 @@ class ReviewViewController:UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: reviewCelldentifier, for: indexPath) as! ReviewViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: notificationCelldentifier, for: indexPath) as! NotificationViewCell
         
         print("\(indexPath.row)")
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
-        let review = reviewList[indexPath.row]
+        let join = joinList[indexPath.row]
         let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(review["pic_user"]!)")
+        let url = NSURL(string:"\(path)\(join["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
             cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
         } else {
             cell.profileImage.image = UIImage(data:data as! Data)
         }
-        cell.fullnameLabel.text = "\(review["fname_user"]!) \(review["lname_user"]!)"
-        cell.usernameLabel.text = "\(review["username_user"]!)"
+        cell.fullnameLabel.text = "\(join["fname_user"] as! String) \(join["lname_user"] as! String)"
+        cell.journeyLabel.text = "\(join["drop_journey"] as! String)"
+        cell.timeLabel.text = "\(join["datetime_joinjourney"] as! String)"
         
         return cell
-        
-        
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reviewList.count
+        return joinList.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ReviewUserViewController") as! ReviewUserViewController
-        vc.myText = "ReviewUser"
-        vc.review = reviewList[indexPath.row] as! [String : Any]
+        let storyboard = UIStoryboard(name: "ListTapBarDetail", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "JoinViewController") as! JoinViewController
+        vc.myText = "joinUser"
+        vc.join = joinList[indexPath.row] as! [String : Any]
         let nvc = NavController(rootViewController: vc)
         self.navigationController?.pushViewController(vc, animated: true)
-//        self.present(nvc, animated: true, completion: nil)
         
     }
+
     
-    @IBAction func actionCancel(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
 }
 
-extension ReviewViewController {
-    
+extension NotificationViewController {
     func handleRefresh() {
         
         if fristTime {
             
             fristTime = false
-            self.reviewList = [NSDictionary]()
-            selectData()
+            self.joinList = [NSDictionary]()
+            let userID = UserDefaults.standard.integer(forKey: "UserID")
+            selectData(id:userID)
             
         }
         
     }
     
-    func selectData() {
-        let idtrip = (trip["id_journey"] as! String)
+    func selectData(id:Int) {
         let parameters: Parameters = [
-            "function": "reviewJourneySelect",
-            "journeyid" : idtrip
+            "function": "notificationJoin",
+            "iduser" : id
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=reviewJourneySelect"
+        let url = "http://localhost/friendforfare/get/index.php?function=notificationJoin"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -125,12 +117,10 @@ extension ReviewViewController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-                    
-                    
                     if let JSON = response.result.value {
 //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
-                            self.reviewList.append(item as! NSDictionary)
+                            self.joinList.append(item as! NSDictionary)
                         }
                         
                     }
@@ -146,13 +136,12 @@ extension ReviewViewController {
                                 refreshControl.endRefreshing()
                             }
                         }
-                        
                         self.tableView?.reloadData()
                     }
                 case .failure(let error):
                     print(error)
                 }
-        })
+            })
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -173,5 +162,4 @@ extension ReviewViewController {
                                        for: UIControlEvents.valueChanged)
     }
 
-    
 }

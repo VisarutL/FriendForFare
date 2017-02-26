@@ -49,7 +49,11 @@ class ReviewUserViewController:UIViewController {
         let path = "http://localhost/friendforfare/images/"
         let url = NSURL(string:"\(path)\(review["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
-        profileImage.image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
+        if data == nil {
+            profileImage.image = UIImage(named: "userprofile")
+        } else {
+            profileImage.image = UIImage(data:data as! Data)
+        }
         fullnameLabel.text = "\(review["fname_user"] as! String) \(review["lname_user"] as! String)"
         usernameLabel.text = "\(review["username_user"] as! String)"
         starButtons.forEach({

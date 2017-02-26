@@ -52,6 +52,7 @@ class AllListViewController: UIViewController {
         print("latitude: \(latitude)")
         print("longitude: \(longitude)")
         print("currentLocation: \(currentLocation)")
+        tableView?.rowHeight = 90
         
     }
     

@@ -310,6 +310,10 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                     <connections>
                         <outlet property="acceptButton" destination="iAm-e4-wO2" id="Fso-kU-LU3"/>
                         <outlet property="cancelButton" destination="KEg-UX-Ykp" id="IvQ-rv-HL6"/>
+                        <outlet property="fullnameLabel" destination="fD6-zn-P8b" id="uGQ-ya-Dgd"/>
+                        <outlet property="imageUserProfile" destination="T0y-Zf-YyW" id="VmA-t4-YCS"/>
+                        <outlet property="rateUser" destination="gHJ-v5-A8k" id="uf7-Kh-IVL"/>
+                        <outlet property="telLabel" destination="ajH-Zu-lKO" id="zqi-PU-UHK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P5T-vP-dqn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -944,10 +948,10 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
             </objects>
             <point key="canvasLocation" x="6711" y="-100"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Controller-->
         <scene sceneID="beM-Qa-Vnf">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ykq-Bc-B6I" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ykq-Bc-B6I" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZvK-Gm-KGZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
