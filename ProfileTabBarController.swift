@@ -93,7 +93,7 @@ class ProfileTabBarController:UITableViewController{
             let url = NSURL(string:"\(path)\(reviewprofile["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
             if let data = data as? Data {
-                cell.profileImage.image = UIImage(data:data )
+                cell.profileImage.image = UIImage(data:data)
             }
 
         }

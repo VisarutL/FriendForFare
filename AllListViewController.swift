@@ -148,7 +148,7 @@ extension AllListViewController:UITableViewDataSource {
         let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if let data = data as? Data {
-            cell.profileImage.image = UIImage(data:data )
+            cell.profileImage.image = UIImage(data:data)
         }
         return cell
     

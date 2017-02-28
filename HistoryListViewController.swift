@@ -32,6 +32,7 @@ class HistoryListViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: feedViewCell, bundle: nil), forCellReuseIdentifier: feedViewCelldentifier)
+        tableView?.rowHeight = 90
         setPullToRefresh()
         handleRefresh()
     }

@@ -75,7 +75,7 @@ class ProfileFriendTabBarController:UITableViewController{
         let url = NSURL(string:"\(path)\(profilefriend["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
-            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
+            cell.profileImage.image = UIImage(named: "userprofile")
         } else {
             cell.profileImage.image = UIImage(data:data as! Data)
         }

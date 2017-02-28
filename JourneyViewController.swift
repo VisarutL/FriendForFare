@@ -216,6 +216,5 @@ extension JourneyViewController {
                     print(error.localizedDescription)
                 }
             })
-        
     }
 }

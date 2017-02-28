@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Alamofire
 
 protocol DetailJourneyMapDelegate: class {
     func detailJourneyMapDidFinish()
@@ -85,10 +86,19 @@ class MapViewController:UIViewController {
         }
     }
     
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = nil
+        configuration.timeoutIntervalForRequest = 20
+        configuration.timeoutIntervalForResource = 20
+        return Alamofire.SessionManager(configuration: configuration)
+    }
+    
     
     @IBAction func finishAction(_ sender: Any) {
+        let idtrip = Int(tripDetail["id_journey"] as! String)!
+        finishUpdate(idjourney:idtrip)
         delegate?.detailJourneyMapDidFinish()
-        
     }
    
 }
@@ -101,4 +111,45 @@ extension MapViewController: MKMapViewDelegate {
         return renderer
     }
 
+}
+
+extension MapViewController {
+    func finishUpdate(idjourney:Int) {
+        let idjourney = idjourney
+        var parameter = Parameters()
+        parameter.updateValue(idjourney, forKey: "id_journey")
+        insertUserid(parameter: parameter)
+    }
+    
+    func insertUserid(parameter:Parameters)  {
+        
+        let parameters: Parameters = [
+            "function": "finishUpdate",
+            "parameter": parameter
+        ]
+        let url = "http://localhost/friendforfare/post/index.php?function=finishUpdate"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    guard let JSON = response.result.value as! [String : Any]? else {
+                        print("error: cannnot cast result value to JSON or nil.")
+                        return
+                    }
+                    
+                    let status = JSON["status"] as! String
+                    if  status == "404" {
+                        print("error: \(JSON["message"] as! String)")
+                        return
+                    }
+                    
+                case .failure(let error):
+                    
+                    print(error.localizedDescription)
+                }
+            })
+    }
 }

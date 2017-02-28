@@ -111,7 +111,10 @@ class DetailJourneyViewController:UIViewController {
         case "otherTrip".lowercased():
             self.navigationItem.rightBarButtonItem = nil
             actionButton.setTitle("CANCEL", for: .normal)
+            actionButton.setTitleColor(UIColor.white, for: .normal)
             actionButton.backgroundColor = UIColor.redBT
+//            actionButton.layer.borderWidth = 1
+//            actionButton.layer.borderColor = UIColor.black.cgColor
             actionButton.addTarget(self, action: #selector(CancelAction), for: .touchUpInside)
             
         default:
