@@ -122,8 +122,8 @@ class ProfileTabBarController:UITableViewController{
             cell.setRateImage(rate: 0)
         } else {
             cell.fullnameLabel.text = "\(profile[0]["fname_user"]!) \(profile[0]["lname_user"]!)"
-            cell.telLabel.text = "\(profile[0]["tel_user"]!)"
-            cell.emailLabel.text = "\(profile[0]["email_user"]!)"
+            cell.telLabel.text = "Tel : \(profile[0]["tel_user"]!)"
+            cell.emailLabel.text = "Email : \(profile[0]["email_user"]!)"
             let rate = "\(rateProfile[0]["rate"]!)"
             let rateprofile = Int(rate)
             if rateprofile == nil {
@@ -131,15 +131,19 @@ class ProfileTabBarController:UITableViewController{
             } else {
                 cell.setRateImage(rate: rateprofile!)
             }
-
+            
+            guard let imageName = profile[0]["pic_user"] as? String ,imageName != "" else {
+                return cell
+            }
             
             let path = "http://localhost/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(profile[0]["pic_user"]!)")
-            let data = NSData(contentsOf:url! as URL)
-            if data == nil {
-                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-            } else {
-                cell.profileImage.image = UIImage(data:data as! Data)
+            if let url = NSURL(string: "\(path)\(imageName)") {
+                if let data = NSData(contentsOf: url as URL) {
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = UIImage(data: data as Data)
+                    }
+                    
+                }
             }
         }
         cell.showLogout = true

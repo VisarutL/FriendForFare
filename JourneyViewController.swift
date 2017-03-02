@@ -249,7 +249,7 @@ extension JourneyViewController {
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
+//                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.rateProfile.append(item as! NSDictionary)
                         }

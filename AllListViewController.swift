@@ -158,8 +158,6 @@ extension AllListViewController:UITableViewDataSource {
                 
             }
         }
-        
-        
         return cell
     
     }
@@ -340,7 +338,7 @@ extension AllListViewController {
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-                    
+//                    print("JSON: \(JSON)")
                     for trip in JSON as! NSArray {
                         self.tripfriendList.append(trip as! NSDictionary)
                         self.filteredfriendTripList = self.tripfriendList

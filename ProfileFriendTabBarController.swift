@@ -24,6 +24,7 @@ class ProfileFriendTabBarController:UITableViewController{
     let arrayRate = [0,1,2,3,4]
     
     var profilefriend = [NSDictionary]()
+    var rateProfile = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class ProfileFriendTabBarController:UITableViewController{
         tableView.showsVerticalScrollIndicator = false
         
         selectData()
+        avgrate()
         setCloseButton()
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
         tableView.rowHeight = 100
@@ -104,19 +106,35 @@ class ProfileFriendTabBarController:UITableViewController{
             cell.emailLabel.text = "mail."
         } else {
             cell.fullnameLabel.text = "\(friend["fname_user"] as! String) \(friend["lname_user"] as! String)"
-            cell.telLabel.text = "\(friend["tel_user"] as! String)"
-            cell.emailLabel.text = "\(friend["email_user"] as! String)"
+            cell.telLabel.text = "Tel : \(friend["tel_user"] as! String)"
+            cell.emailLabel.text = "Email : \(friend["email_user"] as! String)"
+            if rateProfile.count == 0 {
+                
+            } else {
+                let rate = "\(rateProfile[0]["rate"]!)"
+                let rateprofile = Int(rate)
+                if rateprofile == nil {
+                    cell.setRateImage(rate: 0)
+                } else {
+                    cell.setRateImage(rate: rateprofile!)
+                }
+            }
+            
+            
+            guard let imageName = friend["pic_user"] as? String ,imageName != "" else {
+                return cell
+            }
             
             let path = "http://localhost/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
-            let data = NSData(contentsOf:url! as URL)
-            if data == nil {
-                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-            } else {
-                cell.profileImage.image = UIImage(data:data as! Data)
+            if let url = NSURL(string: "\(path)\(imageName)") {
+                if let data = NSData(contentsOf: url as URL) {
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = UIImage(data: data as Data)
+                    }
+                    
+                }
             }
         }
-        
         
         cell.setRateImage(rate: userRate)
         
@@ -157,7 +175,7 @@ extension ProfileFriendTabBarController {
                     
                     
                     if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
+//                        print("JSON: \(JSON)")
                         
                         for item in JSON as! NSArray {
                             self.profilefriend.append(item as! NSDictionary)
@@ -172,4 +190,34 @@ extension ProfileFriendTabBarController {
                 }
             })
     }
+    
+    func avgrate() {
+        let iduser = (friend["id_user"] as! String)
+        let parameters: Parameters = [
+            "function": "avgrate",
+            "iduser" : iduser
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.rateProfile.append(item as! NSDictionary)
+                        }
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+
 }
