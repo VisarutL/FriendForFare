@@ -34,6 +34,10 @@ class HistoryListViewController: UITableViewController {
         tableView.register(UINib(nibName: feedViewCell, bundle: nil), forCellReuseIdentifier: feedViewCelldentifier)
         tableView?.rowHeight = 90
         setPullToRefresh()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         handleRefresh()
     }
     
@@ -63,11 +67,18 @@ class HistoryListViewController: UITableViewController {
         cell.amountLabel.text = "0/\(trip["count_journey"] as! String)"
         cell.dateTmeLabel.text = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
         
+        guard let imageName = trip["pic_user"] as? String ,imageName != "" else {
+            return cell
+        }
+        
         let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        if let data = data as? Data {
-            cell.profileImage.image = UIImage(data:data )
+        if let url = NSURL(string: "\(path)\(imageName)") {
+            if let data = NSData(contentsOf: url as URL) {
+                DispatchQueue.main.async {
+                    cell.profileImage.image = UIImage(data: data as Data)
+                }
+                
+            }
         }
 
 

@@ -28,17 +28,17 @@ class FriendRequestViewCell:UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setProfileImage()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        profileImage.image = UIImage(named: "userprofile")
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setProfileImage()
         removeButtonSetting()
-        profileImage.image = UIImage(named: "userprofile")
     }
     @IBAction func confirmAction(_ sender: Any) {
         delegate?.friendRequestViewCellDidConfirm(index: indexPath)

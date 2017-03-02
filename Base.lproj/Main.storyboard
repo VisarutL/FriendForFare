@@ -201,10 +201,10 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nn3-Hd-jm1">
-                                <rect key="frame" x="8" y="135" width="359" height="50"/>
+                                <rect key="frame" x="8" y="135" width="359" height="45"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="V1J-nA-8js"/>
+                                    <constraint firstAttribute="height" constant="45" id="V1J-nA-8js"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -247,7 +247,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="86N-yK-a3V" id="0jY-dA-odX">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -649,7 +649,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sMs-4k-Lq2" userLabel="Detail">
-                                <rect key="frame" x="0.0" y="372" width="375" height="250"/>
+                                <rect key="frame" x="0.0" y="364" width="375" height="250"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Persons" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nC-Hc-QZ9">
                                         <rect key="frame" x="0.0" y="8" width="375" height="20.5"/>
@@ -794,7 +794,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VZc-UL-P38">
-                                <rect key="frame" x="0.0" y="622" width="375" height="45"/>
+                                <rect key="frame" x="8" y="614" width="359" height="45"/>
                                 <color key="backgroundColor" red="0.14114794999738689" green="0.14645432692307692" blue="0.1401537339659078" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="ttj-Az-cB3"/>
@@ -808,7 +808,7 @@
                                 </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryX-Wi-RNS">
-                                <rect key="frame" x="0.0" y="104" width="375" height="268"/>
+                                <rect key="frame" x="0.0" y="104" width="375" height="260"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -820,10 +820,10 @@
                             <constraint firstAttribute="trailing" secondItem="ryX-Wi-RNS" secondAttribute="trailing" id="CYh-LQ-a9p"/>
                             <constraint firstAttribute="trailing" secondItem="sMs-4k-Lq2" secondAttribute="trailing" id="DLP-HT-mxw"/>
                             <constraint firstAttribute="trailing" secondItem="b7t-z0-Q6P" secondAttribute="trailing" id="FFX-qH-xvl"/>
-                            <constraint firstItem="VZc-UL-P38" firstAttribute="leading" secondItem="sSS-PQ-PPg" secondAttribute="leading" id="VU6-6t-vgy"/>
-                            <constraint firstAttribute="trailing" secondItem="VZc-UL-P38" secondAttribute="trailing" id="bA8-hI-KIo"/>
+                            <constraint firstItem="VZc-UL-P38" firstAttribute="leading" secondItem="sSS-PQ-PPg" secondAttribute="leading" constant="8" id="VU6-6t-vgy"/>
+                            <constraint firstAttribute="trailing" secondItem="VZc-UL-P38" secondAttribute="trailing" constant="8" id="bA8-hI-KIo"/>
                             <constraint firstItem="sMs-4k-Lq2" firstAttribute="top" secondItem="ryX-Wi-RNS" secondAttribute="bottom" id="emb-hf-uo5"/>
-                            <constraint firstItem="4sC-eA-enq" firstAttribute="top" secondItem="VZc-UL-P38" secondAttribute="bottom" id="ety-Bh-Gcq"/>
+                            <constraint firstItem="4sC-eA-enq" firstAttribute="top" secondItem="VZc-UL-P38" secondAttribute="bottom" constant="8" id="ety-Bh-Gcq"/>
                             <constraint firstItem="ryX-Wi-RNS" firstAttribute="leading" secondItem="sSS-PQ-PPg" secondAttribute="leading" id="hVd-LJ-7T7"/>
                             <constraint firstItem="ryX-Wi-RNS" firstAttribute="top" secondItem="b7t-z0-Q6P" secondAttribute="bottom" id="q7x-cW-uvI"/>
                         </constraints>
@@ -864,7 +864,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M9Z-md-bkS" id="ndT-8Z-ZYI">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1519,7 +1519,7 @@
             </objects>
             <point key="canvasLocation" x="6396" y="-359.37031484257875"/>
         </scene>
-        <!--Notification View Controller-->
+        <!--Notification-->
         <scene sceneID="bda-ui-YMC">
             <objects>
                 <tableViewController id="Uoa-Nc-OIU" customClass="NotificationViewController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
@@ -1532,7 +1532,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gxf-ts-hmO" id="AOa-H3-zfI">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1542,8 +1542,8 @@
                             <outlet property="delegate" destination="Uoa-Nc-OIU" id="E90-wA-yrk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="KhJ-cL-9bj">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="pa4-dC-9Ac">
+                    <navigationItem key="navigationItem" title="Notification" id="KhJ-cL-9bj">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="pa4-dC-9Ac">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="backAction:" destination="Uoa-Nc-OIU" id="aib-dp-sCh"/>
@@ -1576,7 +1576,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3XB-bE-ZjC" id="ZVv-CU-2Sp">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1636,7 +1636,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="H67-yX-ytM" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="LtX-5w-GCu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LtX-5w-GCu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="1" green="0.80541926622390747" blue="0.002127740066498518" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

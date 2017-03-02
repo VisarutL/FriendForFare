@@ -41,6 +41,11 @@ class MyListViewController: UITableViewController {
         tableView.register(UINib(nibName: feedViewCell, bundle: nil), forCellReuseIdentifier: feedViewCelldentifier)
         tableView?.rowHeight = 90
         setPullToRefresh()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         handleRefresh()
     }
     
@@ -105,13 +110,18 @@ class MyListViewController: UITableViewController {
             cell.amountLabel.text = "0/\(tripme["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripme["date_journey"] as! String) \(tripme["time_journey"] as! String)"
             
+            guard let imageName = tripme["pic_user"] as? String ,imageName != "" else {
+                return cell
+            }
+            
             let path = "http://localhost/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(tripme["pic_user"]!)")
-            let data = NSData(contentsOf:url! as URL)
-            if data == nil {
-                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-            } else {
-                cell.profileImage.image = UIImage(data:data as! Data)
+            if let url = NSURL(string: "\(path)\(imageName)") {
+                if let data = NSData(contentsOf: url as URL) {
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = UIImage(data: data as Data)
+                    }
+                    
+                }
             }
         case 1:
             let tripjoin = tripmyjoinList[indexPath.row]
@@ -120,11 +130,18 @@ class MyListViewController: UITableViewController {
             cell.amountLabel.text = "0/\(tripjoin["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripjoin["date_journey"] as! String) \(tripjoin["time_journey"] as! String)"
             
+            guard let imageName = tripjoin["pic_user"] as? String ,imageName != "" else {
+                return cell
+            }
+            
             let path = "http://localhost/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(tripjoin["pic_user"]!)")
-            let data = NSData(contentsOf:url! as URL)
-            if let data = data as? Data {
-                cell.profileImage.image = UIImage(data:data )
+            if let url = NSURL(string: "\(path)\(imageName)") {
+                if let data = NSData(contentsOf: url as URL) {
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = UIImage(data: data as Data)
+                    }
+                    
+                }
             }
         default:
             break
@@ -162,6 +179,7 @@ class MyListViewController: UITableViewController {
         case 1:
             vc.tripDetail = tripmyjoinList[indexPath.row] as! [String : Any]
             vc.joinButtonToggle = "otherTrip"
+            vc.delegate = self
         default:
             break
         }
@@ -176,7 +194,7 @@ extension MyListViewController: DetailJourneyDelegate{
     func detailJourneyDidFinish() {
         dismiss(animated: true, completion: nil)
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.handleRefresh()
         }
         
     }

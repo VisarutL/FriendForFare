@@ -75,11 +75,19 @@ extension SearchFriendViewController:UITableViewDataSource {
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
         
+        guard let imageName = friend["pic_user"] as? String ,imageName != "" else {
+            return cell
+        }
+        
         let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
-        cell.profileImage.image = image
+        if let url = NSURL(string: "\(path)\(imageName)") {
+            if let data = NSData(contentsOf: url as URL) {
+                DispatchQueue.main.async {
+                    cell.profileImage.image = UIImage(data: data as Data)
+                }
+                
+            }
+        }
         cell.delegate = self
         cell.indexPath = indexPath as NSIndexPath
         
@@ -179,8 +187,6 @@ extension SearchFriendViewController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-                    
-                    
                     if let JSON = response.result.value {
                         print("JSON: \(JSON)")
                         for item in JSON as! NSArray {

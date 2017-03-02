@@ -28,7 +28,7 @@ class ReviewViewController:UITableViewController {
         }
         
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewCelldentifier)
-        tableView?.rowHeight = 90
+        tableView?.rowHeight = 80
         
     }
     
@@ -43,11 +43,6 @@ class ReviewViewController:UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
@@ -59,16 +54,22 @@ class ReviewViewController:UITableViewController {
         cell.layoutMargins = UIEdgeInsets.zero
         
         let review = reviewList[indexPath.row]
-        let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(review["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-        } else {
-            cell.profileImage.image = UIImage(data:data as! Data)
-        }
         cell.fullnameLabel.text = "\(review["fname_user"]!) \(review["lname_user"]!)"
         cell.usernameLabel.text = "\(review["username_user"]!)"
+        
+        guard let imageName = review["pic_user"] as? String ,imageName != "" else {
+            return cell
+        }
+        
+        let path = "http://localhost/friendforfare/images/"
+        if let url = NSURL(string: "\(path)\(imageName)") {
+            if let data = NSData(contentsOf: url as URL) {
+                DispatchQueue.main.async {
+                    cell.profileImage.image = UIImage(data: data as Data)
+                }
+                
+            }
+        }
         
         return cell
         

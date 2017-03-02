@@ -60,7 +60,6 @@ class ReviewUserViewController:UIViewController {
             let state = $0.tag <= Int(userRate) ? true : false
             $0.isSelected = state
         })
-        
     }
 
     @IBAction func starsTappedAction(_ sender: Any) {

@@ -18,6 +18,8 @@ class JourneyViewController:UIViewController {
     var myText:String?
     var trip = [String: Any]()
     var userjoinedList = [NSDictionary]()
+    var profileList = [NSDictionary]()
+    var rateProfile = [NSDictionary]()
     
 
     
@@ -31,7 +33,11 @@ class JourneyViewController:UIViewController {
     @IBOutlet weak var imageProfile3: UIImageView!
     @IBOutlet weak var imageProfile4: UIImageView!
     @IBOutlet weak var joinButton: UIButton!
-    
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var fullnameLabel: UILabel!
+    @IBOutlet weak var telLabel: UILabel!
+    @IBOutlet weak var rateImage: UIImageView!
+
     weak var delegate:JourneyDelegate?
     
     override func viewDidLoad() {
@@ -43,6 +49,7 @@ class JourneyViewController:UIViewController {
         setProfileImage()
         let idtrip = trip["id_journey"] as! String
         selectData(idjourney: idtrip)
+        selectOwnerJourney(idjourney: idtrip)
         viewSetting()
         setCloseButton()
         setInfomation()
@@ -93,8 +100,49 @@ class JourneyViewController:UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func setProfile() {
+        let path = "http://localhost/friendforfare/images/"
+        let url = NSURL(string:"\(path)\(profileList[0]["pic_user"]!)")
+        let data = NSData(contentsOf:url! as URL)
+        if data == nil {
+            profileImage.image = UIImage(named: "userprofile")
+        } else {
+            profileImage.image = UIImage(data:data as! Data)
+        }
+        fullnameLabel.text = "\(profileList[0]["fname_user"]!) \(profileList[0]["lname_user"]!)"
+        telLabel.text = "Tel : \(profileList[0]["tel_user"]!)"
+        let rate = "\(rateProfile[0]["rate"]!)"
+        let rateprofile = Int(rate)
+        if rateprofile == nil {
+            setRateImageProfile(rate:0)
+        } else {
+            setRateImageProfile(rate:rateprofile!)
+        }
+    }
+    
+    func setRateImageProfile(rate:Int) {
+        var imageName = String()
+        switch rate {
+        case 1:
+            imageName = "rate-1"
+        case 2:
+            imageName = "rate-2"
+        case 3:
+            imageName = "rate-3"
+        case 4:
+            imageName = "rate-4"
+        case 5:
+            imageName = "rate-5"
+        default:
+            imageName = "rate-0"
+        }
+        rateImage.image = UIImage(named: imageName)
+    }
+    
     func setProfileImage() {
         DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
+            self.profileImage.clipsToBounds = true
             self.imageProfile1.layer.cornerRadius = self.imageProfile1.bounds.size.height / 2
             self.imageProfile1.clipsToBounds = true
             self.imageProfile2.layer.cornerRadius = self.imageProfile1.bounds.size.height / 2
@@ -117,7 +165,7 @@ class JourneyViewController:UIViewController {
     func handleJoinButton() {
         if userjoinedList.count == Int(trip["count_journey"] as! String)! {
             joinButton.setTitle("Full", for: .normal)
-            joinButton.backgroundColor = UIColor.gray
+            joinButton.backgroundColor = UIColor.redBT
             joinButton.isEnabled = false
         }
         countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
@@ -146,9 +194,8 @@ extension JourneyViewController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-
                     if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
+//                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.userjoinedList.append(item as! NSDictionary)
                         }
@@ -159,6 +206,59 @@ extension JourneyViewController {
                     print(error)
             }
         })
+    }
+    
+    func selectOwnerJourney(idjourney:String) {
+        let parameters: Parameters = [
+            "function": "selectOwnerJourney",
+            "idjourney": idjourney
+        ]
+        let url = "http://localhost/friendforfare/get/index.php?function=selectOwnerJourney"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+//                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+//                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.profileList.append(item as! NSDictionary)
+                        }
+                        let iduser = Int("\(self.profileList[0]["id_user"]!)")
+                        self.avgrate(iduser: iduser!)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+    
+    func avgrate(iduser:Int) {
+        let parameters: Parameters = [
+            "function": "avgrate",
+            "iduser" : iduser
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+//                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.rateProfile.append(item as! NSDictionary)
+                        }
+                        self.setProfile()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
     }
     
     func loadImage() {

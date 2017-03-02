@@ -15,34 +15,34 @@
             <rect key="frame" x="0.0" y="0.0" width="651" height="282"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hl3-oQ-uHJ" id="82G-ho-V0z">
-                <rect key="frame" x="0.0" y="0.0" width="651" height="282"/>
+                <rect key="frame" x="0.0" y="0.0" width="651" height="281"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OjX-0s-yXL">
-                        <rect key="frame" x="20" y="109" width="65" height="65"/>
+                        <rect key="frame" x="20" y="111.5" width="60" height="60"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="65" id="P7H-qr-REI"/>
-                            <constraint firstAttribute="width" constant="65" id="hLO-k3-6Es"/>
+                            <constraint firstAttribute="height" constant="60" id="P7H-qr-REI"/>
+                            <constraint firstAttribute="width" constant="60" id="hLO-k3-6Es"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZOv-bb-GEg">
-                        <rect key="frame" x="105" y="113.5" width="42" height="57.5"/>
+                        <rect key="frame" x="100" y="114.5" width="42" height="55.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kqG-b7-LCQ">
-                                <rect key="frame" x="0.0" y="0.0" width="42" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="0.0" width="42" height="19.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snX-8c-Wbn">
-                                <rect key="frame" x="0.0" y="20" width="42" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="19.5" width="42" height="19.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQB-DJ-CEY">
-                                <rect key="frame" x="0.0" y="40" width="42" height="17.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <rect key="frame" x="0.0" y="39" width="42" height="16.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>

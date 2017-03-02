@@ -16,19 +16,16 @@ class ReviewViewCell:UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        setProfileImage()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.profileImage.image = UIImage(named: "userprofile")
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        setProfileImage()
-        profileImage.image = UIImage(named: "userprofile")
-        
     }
     
     func setProfileImage() {

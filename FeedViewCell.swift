@@ -11,13 +11,9 @@ import UIKit
 class FeedViewCell:UITableViewCell {
     
     @IBOutlet weak var profileImage: UIImageView!
-    
     @IBOutlet weak var pickUpLabel: UILabel!
-    
     @IBOutlet weak var dropOffLabel: UILabel!
-    
     @IBOutlet weak var amountLabel: UILabel!
-    
     @IBOutlet weak var dateTmeLabel: UILabel!
     
     override func awakeFromNib() {
@@ -28,11 +24,12 @@ class FeedViewCell:UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.profileImage.image = UIImage(named: "userprofile")
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        profileImage.image = UIImage(named: "userprofile")
+
     }
     
     func setProfileImage() {

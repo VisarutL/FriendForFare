@@ -45,6 +45,13 @@ class AllListViewController: UIViewController {
         initSearchBar()
         initTableView()
         setPullToRefresh()
+        tableView?.rowHeight = 90
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         self.currentLocation = LocationService.sharedInstance.currentLocation
         let latitude = currentLocation?.coordinate.latitude
         let longitude = currentLocation?.coordinate.longitude
@@ -52,12 +59,6 @@ class AllListViewController: UIViewController {
         print("latitude: \(latitude)")
         print("longitude: \(longitude)")
         print("currentLocation: \(currentLocation)")
-        tableView?.rowHeight = 90
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
     }
     
@@ -144,12 +145,21 @@ extension AllListViewController:UITableViewDataSource {
         cell.amountLabel.text = "0/\(trip["count_journey"] as! String)"
         cell.dateTmeLabel.text = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
         
-        let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(trip["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        if let data = data as? Data {
-            cell.profileImage.image = UIImage(data:data)
+        guard let imageName = trip["pic_user"] as? String ,imageName != "" else {
+            return cell
         }
+        
+        let path = "http://localhost/friendforfare/images/"
+        if let url = NSURL(string: "\(path)\(imageName)") {
+            if let data = NSData(contentsOf: url as URL) {
+                DispatchQueue.main.async {
+                    cell.profileImage.image = UIImage(data: data as Data)
+                }
+                
+            }
+        }
+        
+        
         return cell
     
     }

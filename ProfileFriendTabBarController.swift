@@ -71,13 +71,18 @@ class ProfileFriendTabBarController:UITableViewController{
         let rate = profilefriend["rate_review"] as! String
         cell.setRateImage(rate: Int(rate)!)
         
+        guard let imageName = profilefriend["pic_user"] as? String ,imageName != "" else {
+            return cell
+        }
+        
         let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(profilefriend["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            cell.profileImage.image = UIImage(named: "userprofile")
-        } else {
-            cell.profileImage.image = UIImage(data:data as! Data)
+        if let url = NSURL(string: "\(path)\(imageName)") {
+            if let data = NSData(contentsOf: url as URL) {
+                DispatchQueue.main.async {
+                    cell.profileImage.image = UIImage(data: data as Data)
+                }
+                
+            }
         }
         
         return cell

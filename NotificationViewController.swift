@@ -22,7 +22,7 @@ class NotificationViewController: UITableViewController {
         setPullToRefresh()
         handleRefresh()
         tableView.register(UINib(nibName: notificationCell, bundle: nil), forCellReuseIdentifier: notificationCelldentifier)
-        tableView?.rowHeight = 90
+        tableView?.rowHeight = 80
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,11 +40,6 @@ class NotificationViewController: UITableViewController {
     @IBAction func backAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         

@@ -20,7 +20,8 @@ class JoinViewController:UIViewController {
     var profile = [NSDictionary]()
     var reviewprofile = [NSDictionary]()
     var rateProfile = [NSDictionary]()
-    var tableView:UITableView?
+    
+    @IBOutlet weak var tableView: UITableView!
     
     
     @IBOutlet weak var imageUserProfile: UIImageView!
@@ -39,11 +40,6 @@ class JoinViewController:UIViewController {
         selectData(iduser: iduser)
         initTableView()
         setProfileImage()
-        
-//        tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
-//        tableView.rowHeight = 100
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,7 +118,7 @@ extension JoinViewController:UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profile.count
+        return reviewprofile.count
     }
 
 }
@@ -140,15 +136,19 @@ extension JoinViewController:UITableViewDataSource {
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
 
-
-        let reviewprofile = self.reviewprofile[indexPath.row]
         if reviewprofile.count == 0 {
-
+            
         } else {
-            cell.comemtLabel.text = "\(reviewprofile["comment_review"]!)"
-            cell.timeLabel.text = "\(reviewprofile["datetime_review"]!)"
+            
+            let reviewprofile = self.reviewprofile[indexPath.row]
             let rate = reviewprofile["rate_review"] as! String
+            let comment = reviewprofile["comment_review"] as! String
+            let time = reviewprofile["datetime_review"] as! String
+            
+            cell.comemtLabel.text = "\(comment)"
+            cell.timeLabel.text = "\(time)"
             cell.setRateImage(rate: Int(rate)!)
+            
             let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(reviewprofile["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
@@ -163,7 +163,7 @@ extension JoinViewController:UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 260
+        return 0
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -178,17 +178,14 @@ extension JoinViewController:UITableViewDataSource {
 extension JoinViewController {
     func initTableView() {
         
-        let tableView = UITableView(frame: self.view.bounds, style: .plain)
-        view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+//        tableView.layer.borderWidth = 1.5
+//        tableView.layer.borderColor = UIColor.black.cgColor
+//        tableView.layer.cornerRadius = 12
+//        tableView.layer.masksToBounds = true
         tableView.rowHeight = 90.0
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
-        let lead = tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0)
-        let trail = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        let bottom = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        NSLayoutConstraint.activate([lead, trail, bottom])
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
         
     }

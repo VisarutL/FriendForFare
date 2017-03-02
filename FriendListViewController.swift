@@ -34,10 +34,14 @@ class FriendListViewController:UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: friendViewCell, bundle: nil), forCellReuseIdentifier: friendViewCelldentifier)
-        tableView?.rowHeight = 90
+        tableView?.rowHeight = 80
         setPullToRefresh()
-        handleRefresh()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handleRefresh()
     }
     
     
@@ -47,11 +51,6 @@ class FriendListViewController:UITableViewController {
         configuration.timeoutIntervalForResource = 10
         let manager = Alamofire.SessionManager(configuration: configuration)
         return manager
-    }
-
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,13 +63,18 @@ class FriendListViewController:UITableViewController {
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
             
+        guard let imageName = friend["pic_user"] as? String ,imageName != "" else {
+            return cell
+        }
+        
         let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(friend["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-        } else {
-            cell.profileImage.image = UIImage(data:data as! Data)
+        if let url = NSURL(string: "\(path)\(imageName)") {
+            if let data = NSData(contentsOf: url as URL) {
+                DispatchQueue.main.async {
+                    cell.profileImage.image = UIImage(data: data as Data)
+                }
+                
+            }
         }
         
         return cell

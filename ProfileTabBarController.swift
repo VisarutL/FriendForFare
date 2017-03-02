@@ -30,6 +30,7 @@ class ProfileTabBarController:UITableViewController{
         tableView.showsVerticalScrollIndicator = false
         
         let userID = UserDefaults.standard.integer(forKey: "UserID")
+        print("userID: \(userID)")
         self.selectData(iduser: userID)
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
         tableView.rowHeight = 100
@@ -66,10 +67,6 @@ class ProfileTabBarController:UITableViewController{
         vc.userid = (profile[0]["id_user"] as! String)
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
@@ -80,20 +77,26 @@ class ProfileTabBarController:UITableViewController{
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
-        
-        let reviewprofile = self.reviewprofile[indexPath.row]
         if reviewprofile.count == 0 {
             
         } else {
+            let reviewprofile = self.reviewprofile[indexPath.row]
             cell.comemtLabel.text = "\(reviewprofile["comment_review"]!)"
             cell.timeLabel.text = "\(reviewprofile["datetime_review"]!)"
             let rate = reviewprofile["rate_review"] as! String
             cell.setRateImage(rate: Int(rate)!)
+            guard let imageName = reviewprofile["pic_user"] as? String ,imageName != "" else {
+                return cell
+            }
+            
             let path = "http://localhost/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(reviewprofile["pic_user"]!)")
-            let data = NSData(contentsOf:url! as URL)
-            if let data = data as? Data {
-                cell.profileImage.image = UIImage(data:data)
+            if let url = NSURL(string: "\(path)\(imageName)") {
+                if let data = NSData(contentsOf: url as URL) {
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = UIImage(data: data as Data)
+                    }
+                    
+                }
             }
 
         }
@@ -103,7 +106,7 @@ class ProfileTabBarController:UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profile.count
+        return reviewprofile.count
     }
     
     
@@ -123,7 +126,12 @@ class ProfileTabBarController:UITableViewController{
             cell.emailLabel.text = "\(profile[0]["email_user"]!)"
             let rate = "\(rateProfile[0]["rate"]!)"
             let rateprofile = Int(rate)
-            cell.setRateImage(rate: rateprofile!)
+            if rateprofile == nil {
+                cell.setRateImage(rate: 0)
+            } else {
+                cell.setRateImage(rate: rateprofile!)
+            }
+
             
             let path = "http://localhost/friendforfare/images/"
             let url = NSURL(string:"\(path)\(profile[0]["pic_user"]!)")
@@ -220,8 +228,6 @@ extension ProfileTabBarController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-                    
-                    
                     if let JSON = response.result.value {
 //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {

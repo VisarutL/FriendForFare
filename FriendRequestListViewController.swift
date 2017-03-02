@@ -32,8 +32,12 @@ class FriendRequestListViewController:UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: friendRequestViewCell, bundle: nil), forCellReuseIdentifier: friendRequestViewCelldentifier)
-        tableView?.rowHeight = 90
+        tableView?.rowHeight = 80
         setPullToRefresh()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         handleRefresh()
     }
     
@@ -43,10 +47,6 @@ class FriendRequestListViewController:UITableViewController {
         configuration.timeoutIntervalForResource = 10
         let manager = Alamofire.SessionManager(configuration: configuration)
         return manager
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,19 +59,21 @@ class FriendRequestListViewController:UITableViewController {
         cell.indexPath = indexPath as NSIndexPath
         if friendrequestList.count == 0 {
             cell.nameLabel.text = "name"
-            cell.usernameLabel.text = "username"
         } else {
         let friendrequest = friendrequestList[indexPath.row]
             cell.nameLabel.text = "\(friendrequest["fname_user"]!) \(friendrequest["lname_user"]!)"
-            cell.usernameLabel.text = "\(friendrequest["username_user"]!)"
+            guard let imageName = friendrequest["pic_user"] as? String ,imageName != "" else {
+                return cell
+            }
             
             let path = "http://localhost/friendforfare/images/"
-            let url = NSURL(string:"\(path)\(friendrequest["pic_user"]!)")
-            let data = NSData(contentsOf:url! as URL)
-            if data == nil {
-                cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-            } else {
-                cell.profileImage.image = UIImage(data:data as! Data)
+            if let url = NSURL(string: "\(path)\(imageName)") {
+                if let data = NSData(contentsOf: url as URL) {
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = UIImage(data: data as Data)
+                    }
+                    
+                }
             }
         }
         return cell

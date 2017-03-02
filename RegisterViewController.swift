@@ -53,8 +53,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    deinit {
         deregisterFromKeyboardNotifications()
     }
     
@@ -269,7 +268,7 @@ extension RegisterViewController {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
                         
-//                        debugPrint(response)
+                        debugPrint(response)
                         if let result = response.result.value {
                             let JSON = result as! NSDictionary
                             let imageLocation = JSON.object(forKey: "filepath") as? String

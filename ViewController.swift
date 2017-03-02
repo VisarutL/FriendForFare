@@ -7,62 +7,91 @@
 //
 
 import UIKit
+
+import Alamofire
 import FBSDKCoreKit
+import FBSDKShareKit
 import FBSDKLoginKit
 
-class ViewController: UIViewController,FBSDKLoginButtonDelegate {
-
-    var appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+class ViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
-    
     @IBOutlet weak var fbloginButton: FBSDKLoginButton!
+    
+    var userlogin = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let userID = UserDefaults.standard.integer(forKey: "UserID")
         print("userID: \(userID)")
-        
+    
         configureFacebook()
-        if (FBSDKAccessToken.current() != nil) {
-            // User is logged in, do work such as go to next view controller.
-        }
     
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func initManager() -> SessionManager {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 10
+        let manager = Alamofire.SessionManager(configuration: configuration)
+        return manager
     }
+
     
     @IBAction func loginAction(_ sender: Any) {
         guard let name = nameTextField.text , name != "",
             let password = passwordTextField.text , password != "" else {
             return alert(message: "wrong username or password !!!")
         }
+
+        loginData(username:name,password:password)
         
-//        loginData(username:name,password:password)
-        let userID = 1
-        UserDefaults.standard.set(userID, forKey: "UserID")
-        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func login(iduser:Int) {
+        print(iduser)
+        UserDefaults.standard.set(iduser, forKey: "UserID")
+        self.presentNavTabBarController()
+    }
+    
+    func presentNavTabBarController() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let nvc = storyBoard.instantiateViewController(withIdentifier: "NavTabBarController") as! TabBarViewController
         self.present(nvc, animated: true, completion: nil)
     }
+
+}
+
+extension ViewController:FBSDKLoginButtonDelegate {
+
+    func configureFacebook() {
+        fbloginButton.readPermissions = ["public_profile", "email", "user_friends"];
+        fbloginButton.delegate = self
+    }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!)
     {
-        FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, gender, picture"]).start {
-            (connection, result, error) -> Void in
+        
+        
+        let parameter = ["fields": "id, name, first_name, last_name, picture.type(large), email, gender"]
+        //        let parameter = ["fields":"first_name,last_name, picture.type(large)"]
+        FBSDKGraphRequest.init(graphPath: "me", parameters: parameter).start {
+            (conncetion, result, error) -> Void in
             
-            let resultDictionary = result as? [String : AnyObject]
-            print("result facebook \(resultDictionary)!")
-            UserDefaults.standard.setValue(resultDictionary, forKey: "datalogin")
-            self.performSegue(withIdentifier: "mainTabViewController", sender: self)
+            guard error == nil else {
+                return self.alert(title:"loginButton",message: "fb login: \(error?.localizedDescription)")
+            }
+            
+            if ((FBSDKAccessToken.current()) != nil) {
+                let resultDictionary = result as? [String : AnyObject]
+                self.registerAction(dict: resultDictionary!)
+            }
             
         }
     }
@@ -72,62 +101,140 @@ class ViewController: UIViewController,FBSDKLoginButtonDelegate {
         loginManager.logOut()
     }
     
-    func configureFacebook()
-    {
-        fbloginButton.readPermissions = ["public_profile", "email", "user_friends"];
-        fbloginButton.delegate = self
-    }
+    func registerAction(dict:[String : AnyObject]) {
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        let picture = dict["picture"] as! NSDictionary
+        let data = picture["data"]  as! NSDictionary
+        let imageUrl = data["url"] as! String
+        let gender = dict["gender"] as! String
+        let last_name = dict["last_name"] as! String
+        let name = dict["name"] as! String
+        let id = dict["id"] as! String
+        let first_name = dict["first_name"] as! String
+        
+        var userImage =  UIImage()
+        if let url = NSURL(string: imageUrl) {
+            if let data = NSData(contentsOf: url as URL) {
+                userImage = UIImage(data: data as Data)!
+            }
+        }
+        
+        let imageFile = userImage
+        let imageData = UIImageJPEGRepresentation(imageFile, 0.5)!
+        let parameters: Parameters = [
+            "function": "registerUser",
+            "gender": gender,
+            "first_name": first_name,
+            "last_name": last_name,
+            "name": name,
+            "id": id
+        ]
+        let url = "http://worawaluns.in.th/friendforfare/post/index.php"
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                
+                multipartFormData.append(imageData, withName: "image", fileName: "\(imageData).jpg", mimeType: "image/jpg")
+                for (key, value) in parameters {
+                    
+                    multipartFormData.append((value as! String).data(using: String.Encoding.utf8)!, withName: key)
+                }
+        },
+            to: url,
+            encodingCompletion: { encodingResult in
+                //                debugPrint(encodingResult)
+                
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        
+                        debugPrint(response)
+                        
+                        switch response.result {
+                        case .success:
+                            if let JSON = response.result.value as? NSDictionary {
+                                
+                                let status = JSON["status"] as! String
+                                switch status {
+                                case "202":
+                                    let lastid = JSON["lastid"] as! Int
+                                    UserDefaults.standard.set(lastid, forKey: "UserID")
+                                    print(lastid)
+                                    self.presentNavTabBarController()
+                                case "303":
+                                    let id = JSON["iduser"] as! Int
+                                    UserDefaults.standard.set(id, forKey: "UserID")
+                                    self.presentNavTabBarController()
+                                case "404":
+                                    let message = JSON["message"] as! String
+                                    print("error: \(message)")
+                                default:
+                                    print("error: \(JSON)")
+                                    break
+                                }
+                                
+                            }
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        
+                        }
+                        
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        })
+        
     }
 
 }
 
 extension ViewController:RequestFormDelegate {
+    
     func requestFormDidClose(){
          dismiss(animated: true, completion: nil)
     }
+    
     func requestFormDidCompleteAction(){
         
     }
+    
 }
 
-//extension ViewController {
-//    func loginData() {
-//        let parameters: Parameters = [
-//            "function": "journeySelect",
-//            "iduser" : iduser,
-//            "latitude": latt,
-//            "longitude": longg
-//        ]
-//        let url = "http://localhost/friendforfare/get/index.php"
-//        let manager = initManager()
-//        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
-//            .responseJSON(completionHandler: { response in
-//                manager.session.invalidateAndCancel()
-//                //                debugPrint(response)
-//                switch response.result {
-//                case .success:
-//                    if let JSON = response.result.value {
-//                        //                    print("JSON: \(JSON)")
-//                        
-//                        for trip in JSON as! NSArray {
-//                            self.tripList.append(trip as! NSDictionary)
-//                            self.filteredTripList = self.tripList
-//                        }
-//                        
-//                        let now = NSDate()
-//                        let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
-//                        self.refreshControl.attributedTitle = NSAttributedString(string: updateString)
-//                        
-//                    }
-//                    
-//                    self.cpGroup.leave()
-//                case .failure(let error):
-//                    print(error)
-//                    self.cpGroup.leave()
-//                }
-//            })
-//    }
-//}
+extension ViewController {
+    func loginData(username:String,password:String) {
+        let parameters: Parameters = [
+            "function": "loginData",
+            "username": username,
+            "password": password
+            
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+//                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value as? NSDictionary {
+                        let status = JSON["status"] as! String
+                        switch status {
+                        case "202":
+                            let iduser = JSON["iduser"] as! Int
+                            self.login(iduser: iduser )
+                        case "404":
+                            let message = JSON["message"] as! String
+                            self.alert(message: "\(message)")
+                        default:
+                            print("error: \(JSON)")
+                            break
+                        }
+//                        print("JSON: \(JSON)")
+
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+}

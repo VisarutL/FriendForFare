@@ -372,9 +372,12 @@ extension DetailJourneyViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    self.dismiss(animated: true, completion: nil)
-                    //status 202
+                    
                     print(JSON)
+                    self.delegate?.detailJourneyDidFinish()
+                    //status 202
+                    
+                    
                 case .failure(let error):
                     print(error)
                 }
