@@ -129,7 +129,7 @@ extension ViewController:FBSDKLoginButtonDelegate {
             "name": name,
             "id": id
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php"
+        let url = "http://localhost/friendforfare/post/index.php"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
@@ -146,13 +146,11 @@ extension ViewController:FBSDKLoginButtonDelegate {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
-                        
                         debugPrint(response)
-                        
                         switch response.result {
                         case .success:
                             if let JSON = response.result.value as? NSDictionary {
-                                
+                                print("JSON: \(JSON)")
                                 let status = JSON["status"] as! String
                                 switch status {
                                 case "202":

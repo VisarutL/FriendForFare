@@ -114,7 +114,7 @@ class JoinViewController:UIViewController {
 extension JoinViewController:UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 115
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

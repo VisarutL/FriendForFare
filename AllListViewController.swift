@@ -343,7 +343,6 @@ extension AllListViewController {
                         self.tripfriendList.append(trip as! NSDictionary)
                         self.filteredfriendTripList = self.tripfriendList
                     }
-                    
                     let now = NSDate()
                     let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
                     self.refreshControl.attributedTitle = NSAttributedString(string: updateString)

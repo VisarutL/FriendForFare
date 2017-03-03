@@ -24,11 +24,13 @@ class ReviewUserViewController:UIViewController {
     }
     
     var myText:String?
+    var journeyID = Int()
     var review = [String: Any]()
     var userRate = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setProfileImage()
         setReviewUser()
         
     }
@@ -114,6 +116,14 @@ class ReviewUserViewController:UIViewController {
         rateImage.image = UIImage(named: imageName)
     }
     
+    
+    func setProfileImage() {
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -127,13 +137,13 @@ extension ReviewUserViewController {
         let comment = commentTextField.text
         let iduserreview = review["id_user"]
         let iduser = userID
-        let journeyid = review["journey_id"]
+        let journeyid = journeyID
         var parameter = Parameters()
         parameter.updateValue(rate, forKey: "rate_review")
         parameter.updateValue(comment!, forKey: "comment_review")
         parameter.updateValue(iduser, forKey: "reviewer_id")
         parameter.updateValue(iduserreview!, forKey: "user_id_review")
-        parameter.updateValue(journeyid!, forKey: "journey_id")
+        parameter.updateValue(journeyid, forKey: "journey_id")
         insertReviewData(parameter: parameter)
     }
     
@@ -162,46 +172,9 @@ extension ReviewUserViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    let iduserreview = JSON["iduserreview"] as! String
-                    self.updateStatus(statusreview: 1,iduser: iduserreview)
-                    //status 202
-                    print(JSON)
-                case .failure(let error):
-                    //alert
-                    print(error.localizedDescription)
-                }
-            })
-        
-    }
-    
-    func updateStatus(statusreview:Int, iduser:String)  {
-        let parameters: Parameters = [
-            "function": "updateStatus",
-            "statusReview": statusreview,
-            "iduserReview": iduser
-        ]
-        
-        let url = "http://localhost/friendforfare/post/index.php"
-        let manager = initManager()
-        manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
-            .responseJSON(completionHandler: { response in
-                manager.session.invalidateAndCancel()
-//                debugPrint(response)
-                switch response.result {
-                case .success:
-                    guard let JSON = response.result.value as! [String : Any]? else {
-                        print("error: cannnot cast result value to JSON or nil.")
-                        return
-                    }
-                    
-                    let status = JSON["status"] as! String
-                    if  status == "404" {
-                        print("error: \(JSON["message"] as! String)")
-                        return
-                    }
                     self.dismiss(animated: true, completion: nil)
                     //status 202
-//                    print(JSON)
+                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)

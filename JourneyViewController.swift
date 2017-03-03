@@ -48,7 +48,7 @@ class JourneyViewController:UIViewController {
         }
         setProfileImage()
         let idtrip = trip["id_journey"] as! String
-        selectData(idjourney: idtrip)
+        userJoined(idjourney: idtrip)
         selectOwnerJourney(idjourney: idtrip)
         viewSetting()
         setCloseButton()
@@ -181,7 +181,7 @@ class JourneyViewController:UIViewController {
 
 extension JourneyViewController {
     
-    func selectData(idjourney:String) {
+    func userJoined(idjourney:String) {
         let parameters: Parameters = [
             "function": "userJoined",
             "idjourney": idjourney

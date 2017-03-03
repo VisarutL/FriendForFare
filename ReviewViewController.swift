@@ -21,7 +21,6 @@ class ReviewViewController:UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setPullToRefresh()
-        handleRefresh()
         if let myText = myText {
             title = myText
             print(myText)
@@ -32,16 +31,17 @@ class ReviewViewController:UITableViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handleRefresh()
+    }
+    
     func initManager() -> SessionManager {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.timeoutIntervalForRequest = 10
         configuration.timeoutIntervalForResource = 10
         let manager = Alamofire.SessionManager(configuration: configuration)
         return manager
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -86,6 +86,7 @@ class ReviewViewController:UITableViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ReviewUserViewController") as! ReviewUserViewController
         vc.myText = "ReviewUser"
+        vc.journeyID = Int(trip["id_journey"] as! String)!
         vc.review = reviewList[indexPath.row] as! [String : Any]
         let nvc = NavController(rootViewController: vc)
         self.navigationController?.pushViewController(vc, animated: true)
@@ -113,10 +114,12 @@ extension ReviewViewController {
     }
     
     func selectData() {
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
         let idtrip = (trip["id_journey"] as! String)
         let parameters: Parameters = [
             "function": "reviewJourneySelect",
-            "journeyid" : idtrip
+            "journeyid" : idtrip,
+            "userid" : userID
         ]
         let url = "http://localhost/friendforfare/get/index.php?function=reviewJourneySelect"
         let manager = initManager()

@@ -33,7 +33,7 @@ class ProfileTabBarController:UITableViewController{
         print("userID: \(userID)")
         self.selectData(iduser: userID)
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
-        tableView.rowHeight = 100
+        tableView.rowHeight = 115
         
         
     }

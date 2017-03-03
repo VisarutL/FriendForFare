@@ -36,7 +36,7 @@ class ProfileFriendTabBarController:UITableViewController{
         avgrate()
         setCloseButton()
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
-        tableView.rowHeight = 100
+        tableView.rowHeight = 115
         
     }
     func initManager() -> SessionManager {
