@@ -16,7 +16,7 @@ class NotificationViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        setProfileImage()
     }
     
     override func prepareForReuse() {
@@ -25,7 +25,6 @@ class NotificationViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        profileImage.image = UIImage(named: "userprofile")
     }
     
     func setProfileImage() {

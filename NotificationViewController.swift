@@ -51,13 +51,18 @@ class NotificationViewController: UITableViewController {
         cell.layoutMargins = UIEdgeInsets.zero
         
         let join = joinList[indexPath.row]
+        guard let imageName = join["pic_user"] as? String ,imageName != "" else {
+            return cell
+        }
+        
         let path = "http://localhost/friendforfare/images/"
-        let url = NSURL(string:"\(path)\(join["pic_user"]!)")
-        let data = NSData(contentsOf:url! as URL)
-        if data == nil {
-            cell.profileImage.image = #imageLiteral(resourceName: "userprofile")
-        } else {
-            cell.profileImage.image = UIImage(data:data as! Data)
+        if let url = NSURL(string: "\(path)\(imageName)") {
+            if let data = NSData(contentsOf: url as URL) {
+                DispatchQueue.main.async {
+                    cell.profileImage.image = UIImage(data: data as Data)
+                }
+                
+            }
         }
         cell.fullnameLabel.text = "\(join["fname_user"] as! String) \(join["lname_user"] as! String)"
         cell.journeyLabel.text = "\(join["drop_journey"] as! String)"

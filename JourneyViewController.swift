@@ -308,8 +308,8 @@ extension JourneyViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    
-                    self.delegate?.journeyDidJoin()
+                    self.dismiss(animated: true, completion: nil)
+//                    self.delegate?.journeyDidJoin()
                     
                 case .failure(let error):
  
