@@ -29,6 +29,7 @@ class DetailJourneyViewController:UIViewController {
     @IBOutlet weak var profile3ImageView: UIImageView!
     @IBOutlet weak var profile4ImageView: UIImageView!
     @IBOutlet weak var commentTextField: UITextField!
+    @IBOutlet weak var postButton: UIButton!
     
     var tripDetail = [String: Any]()
     var closeBarButton = UIBarButtonItem()
@@ -47,7 +48,7 @@ class DetailJourneyViewController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setButton()
         setProfileImage()
         viewSetting()
         tableViewSetting()
@@ -181,6 +182,13 @@ class DetailJourneyViewController:UIViewController {
         }
     }
     
+    func setButton() {
+        postButton.backgroundColor = .clear
+        postButton.layer.cornerRadius = 0
+        postButton.layer.borderWidth = 1
+        postButton.layer.borderColor = UIColor.black.cgColor
+    }
+    
     @IBAction func postAction(_ sender: Any) {
         func checkTextField() -> Bool {
             for textField in allTextField {
@@ -194,7 +202,7 @@ class DetailJourneyViewController:UIViewController {
             postcommentData(idjourney:idtrip)
         } else {
             let error = "alert please fill all information."
-            print("error: \(error)")
+            self.alert(message: error)
         }
     }
     

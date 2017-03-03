@@ -13,7 +13,7 @@ protocol HandleMapSearch: class {
     func dropPinZoomIn(_ placemark:MKPlacemark,locationFor:String)
 }
 
-class PickSearchLocationController:UITableViewController {
+class PickSearchLocationController:UITableViewController,UISearchBarDelegate {
     
     var locationHandle = String()
     var matchingItems: [MKMapItem] = []
@@ -27,6 +27,8 @@ class PickSearchLocationController:UITableViewController {
         
         searchController.searchResultsUpdater = self
         let searchBar = searchController.searchBar
+        searchBar.showsCancelButton = true
+        searchBar.delegate = self
         searchBar.sizeToFit()
         searchBar.placeholder = "Search for \(locationHandle)"
         navigationItem.titleView = searchController.searchBar
@@ -67,6 +69,17 @@ class PickSearchLocationController:UITableViewController {
         
         return addressLine
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // Stop doing the search stuff
+        // and clear the text in the search bar
+        searchBar.text = ""
+        dismiss(animated: true, completion: nil)
+        // Hide the cancel button
+        searchBar.showsCancelButton = false
+        // You could also change the position, frame etc of the searchBar
+    }
+    
 }
 
 extension PickSearchLocationController {

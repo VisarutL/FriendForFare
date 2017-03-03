@@ -85,19 +85,26 @@ class ProfileTabBarController:UITableViewController{
             cell.timeLabel.text = "\(reviewprofile["datetime_review"]!)"
             let rate = reviewprofile["rate_review"] as! String
             cell.setRateImage(rate: Int(rate)!)
-            guard let imageName = reviewprofile["pic_user"] as? String ,imageName != "" else {
-                return cell
-            }
             
-            let path = "http://localhost/friendforfare/images/"
-            if let url = NSURL(string: "\(path)\(imageName)") {
-                if let data = NSData(contentsOf: url as URL) {
-                    DispatchQueue.main.async {
-                        cell.profileImage.image = UIImage(data: data as Data)
-                    }
-                    
-                }
+            let gender = reviewprofile["gender_user"] as! String
+            if gender == "1" {
+                cell.profileImage.image = UIImage(named: "Men1")
+            } else {
+                cell.profileImage.image = UIImage(named: "Female1")
             }
+//            guard let imageName = reviewprofile["pic_user"] as? String ,imageName != "" else {
+//                return cell
+//            }
+//            
+//            let path = "http://localhost/friendforfare/images/"
+//            if let url = NSURL(string: "\(path)\(imageName)") {
+//                if let data = NSData(contentsOf: url as URL) {
+//                    DispatchQueue.main.async {
+//                        cell.profileImage.image = UIImage(data: data as Data)
+//                    }
+//                    
+//                }
+//            }
 
         }
         

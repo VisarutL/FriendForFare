@@ -156,7 +156,6 @@ extension SearchFriendViewController {
 }
 
 extension SearchFriendViewController:UISearchBarDelegate {
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.characters.count == 0 {
             filteredUserList = [NSDictionary]()

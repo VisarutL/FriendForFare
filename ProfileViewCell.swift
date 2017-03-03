@@ -19,7 +19,6 @@ class ProfileViewCell:UITableViewCell {
     @IBOutlet weak var telLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var rateImage: UIImageView!
-    @IBOutlet weak var logoutButton: UIButton!
     
     var showLogout = false
     
@@ -27,9 +26,7 @@ class ProfileViewCell:UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        setLogoutHidden()
         setProfileImage()
-        setLogoutButton()
     }
     
     override func prepareForReuse() {
@@ -43,11 +40,6 @@ class ProfileViewCell:UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if showLogout {
-            logoutButton.isUserInteractionEnabled = true
-            logoutButton.isHidden = false
-        }
-        
     }
     
     @IBAction func logoutAction(_ sender: Any) {
@@ -74,20 +66,11 @@ class ProfileViewCell:UITableViewCell {
         rateImage.image = UIImage(named: imageName)
     }
     
-    func setLogoutButton() {
-        self.logoutButton.layer.cornerRadius = self.logoutButton.bounds.size.height / 2
-        self.logoutButton.clipsToBounds = true
-    }
     
     func setProfileImage() {
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
             self.profileImage.clipsToBounds = true
         }
-    }
-    
-    func setLogoutHidden() {
-        logoutButton.isUserInteractionEnabled = false
-        logoutButton.isHidden = true
     }
 }

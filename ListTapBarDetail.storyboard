@@ -370,10 +370,10 @@ adipisicing pecu, sed do
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1zI-bg-h7U" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dVv-LP-szA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dVv-LP-szA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.9882352941176471" green="0.80000000000000004" blue="0.11764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -448,7 +448,7 @@ adipisicing pecu, sed do
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.98039215690000003" green="0.82352941180000006" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="106" id="Edy-9Q-C2g"/>
                                     <constraint firstAttribute="trailing" secondItem="A7X-v9-sfe" secondAttribute="trailing" constant="8" id="g4c-ms-Saj"/>
@@ -457,8 +457,15 @@ adipisicing pecu, sed do
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GDz-DB-BUh">
-                                <rect key="frame" x="0.0" y="170" width="375" height="190"/>
+                                <rect key="frame" x="0.0" y="170" width="375" height="165"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vlt-xm-Fzk">
+                                        <rect key="frame" x="0.0" y="164" width="375" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="Q4Z-OJ-fIg"/>
+                                        </constraints>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWc-IP-Dx5">
                                         <rect key="frame" x="8" y="8" width="359" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -486,7 +493,7 @@ adipisicing pecu, sed do
                                         </constraints>
                                     </stackView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zjn-7T-yYa">
-                                        <rect key="frame" x="4" y="116.5" width="367" height="65.5"/>
+                                        <rect key="frame" x="4" y="116.5" width="367" height="40.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <string key="text">Tel. 0932857443
 adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -505,22 +512,25 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                 <constraints>
                                     <constraint firstItem="Oaf-KS-n62" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="8" id="4S0-F2-C76"/>
                                     <constraint firstItem="Oaf-KS-n62" firstAttribute="top" secondItem="jWc-IP-Dx5" secondAttribute="bottom" constant="8" id="86C-zo-uWC"/>
+                                    <constraint firstItem="vlt-xm-Fzk" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" id="90u-ft-m86"/>
                                     <constraint firstItem="7rE-qq-PJc" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="8" id="B4N-aF-lQt"/>
                                     <constraint firstAttribute="trailing" secondItem="Oaf-KS-n62" secondAttribute="trailing" constant="8" id="Ibn-Fq-Gx8"/>
                                     <constraint firstAttribute="trailing" secondItem="7rE-qq-PJc" secondAttribute="trailing" constant="8" id="Lk7-65-Jod"/>
                                     <constraint firstAttribute="trailing" secondItem="Zjn-7T-yYa" secondAttribute="trailing" constant="4" id="OQn-5L-6lJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="vlt-xm-Fzk" secondAttribute="trailing" id="Sfl-SH-haj"/>
                                     <constraint firstItem="Zjn-7T-yYa" firstAttribute="top" secondItem="7rE-qq-PJc" secondAttribute="bottom" constant="-5" id="SgB-jj-viS"/>
                                     <constraint firstItem="Zjn-7T-yYa" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="4" id="dvj-GW-Org"/>
                                     <constraint firstItem="jWc-IP-Dx5" firstAttribute="top" secondItem="GDz-DB-BUh" secondAttribute="top" constant="8" id="gfw-B6-oh7"/>
+                                    <constraint firstAttribute="bottom" secondItem="vlt-xm-Fzk" secondAttribute="bottom" id="mV3-pI-feQ"/>
                                     <constraint firstItem="jWc-IP-Dx5" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="8" id="nDE-16-6RY"/>
                                     <constraint firstAttribute="trailing" secondItem="jWc-IP-Dx5" secondAttribute="trailing" constant="8" id="vHy-T1-10v"/>
                                     <constraint firstAttribute="bottom" secondItem="Zjn-7T-yYa" secondAttribute="bottom" constant="8" id="vee-gd-MsQ"/>
-                                    <constraint firstAttribute="height" constant="190" id="xdy-An-Wtu"/>
+                                    <constraint firstAttribute="height" constant="165" id="xdy-An-Wtu"/>
                                     <constraint firstItem="7rE-qq-PJc" firstAttribute="top" secondItem="Oaf-KS-n62" secondAttribute="bottom" constant="8" id="y7W-lH-sT8"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EO4-IL-u1l">
-                                <rect key="frame" x="0.0" y="368" width="375" height="132"/>
+                                <rect key="frame" x="0.0" y="343" width="375" height="157"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="5RK-TL-bi9" detailTextLabel="cOj-2C-w5r" style="IBUITableViewCellStyleSubtitle" id="JiS-4A-4Vs">
@@ -555,7 +565,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="mp2-kp-HLV"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="LET GO">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
@@ -581,13 +591,13 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wD4-tX-ARJ">
                                 <rect key="frame" x="8" y="561" width="359" height="45"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Ov6-nI-h0M"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <state key="normal" title="POST">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
                                     <action selector="postAction:" destination="d0J-PG-6bV" eventType="touchUpInside" id="c0c-52-fkZ"/>
@@ -639,6 +649,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                         <outlet property="dropoffLabel" destination="GAy-bh-M0X" id="RZk-mL-drV"/>
                         <outlet property="editButton" destination="lp4-Qo-hOp" id="mbb-1Z-y57"/>
                         <outlet property="pickupLabel" destination="NG9-MH-qQr" id="GyW-0e-XHu"/>
+                        <outlet property="postButton" destination="wD4-tX-ARJ" id="GS5-Sb-fqd"/>
                         <outlet property="profile1ImageView" destination="cQD-Jd-cMM" id="IcG-2X-Uoq"/>
                         <outlet property="profile2ImageView" destination="mcO-3g-I80" id="99I-Py-vaY"/>
                         <outlet property="profile3ImageView" destination="TCc-We-iYF" id="HqO-uA-tFp"/>
@@ -737,10 +748,10 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Z4Y-MO-mwq" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sLj-uh-Rz6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="sLj-uh-Rz6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.98823529409999999" green="0.80000000000000004" blue="0.1176470588" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -767,13 +778,13 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                 <rect key="frame" x="0.0" y="72" width="375" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Persons" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJT-xm-3u1">
-                                        <rect key="frame" x="8" y="2" width="359" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <rect key="frame" x="8" y="1.5" width="359" height="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.99215686270000003" green="0.80392156859999997" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="wJT-xm-3u1" secondAttribute="trailing" constant="8" id="9lI-Dm-cvh"/>
                                     <constraint firstAttribute="height" constant="20" id="FOV-VX-4Z9"/>
@@ -874,13 +885,13 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                 <rect key="frame" x="0.0" y="148" width="375" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qy1-cV-58Y">
-                                        <rect key="frame" x="8" y="2" width="359" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <rect key="frame" x="8" y="1.5" width="359" height="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.99215686270000003" green="0.80392156859999997" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="40D-ug-G02"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="5Qe-R6-owy"/>
@@ -984,10 +995,10 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ykq-Bc-B6I" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZvK-Gm-KGZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ZvK-Gm-KGZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.97647058823529409" green="0.79607843137254897" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

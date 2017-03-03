@@ -50,9 +50,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         allTextField.forEach({ $0.delegate = self })
         registerForKeyboardNotifications()
-        
     }
-    
     deinit {
         deregisterFromKeyboardNotifications()
     }
