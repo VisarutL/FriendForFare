@@ -142,7 +142,7 @@ extension FriendListViewController {
     func deleteFriend() {
         guard let deleteID = deleteID else { return }
         let friend = friendList[deleteID]
-        let id = friend["user_id_friend"] as! String
+        let id = friend["id_user"] as! String
         let parameters: Parameters = [
             "function": "deleteFriend",
             "userid" : id

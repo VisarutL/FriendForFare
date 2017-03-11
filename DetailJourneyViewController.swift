@@ -53,7 +53,6 @@ class DetailJourneyViewController:UIViewController {
         viewSetting()
         tableViewSetting()
         setCloseButton()
-        selectData()
         loadImage()
         
     }
@@ -68,6 +67,7 @@ class DetailJourneyViewController:UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        selectData()
         countLabel.text = "\(userjoinedList.count)/\(tripDetail["count_journey"] as! String)"
     }
     
@@ -190,6 +190,7 @@ class DetailJourneyViewController:UIViewController {
     }
     
     @IBAction func postAction(_ sender: Any) {
+        
         func checkTextField() -> Bool {
             for textField in allTextField {
                 if textField.text?.characters.count == 0 { return false }
@@ -200,6 +201,7 @@ class DetailJourneyViewController:UIViewController {
         if checkTextField() {
             let idtrip = "\(tripDetail["id_journey"] as! String)"
             postcommentData(idjourney:idtrip)
+            alert(message: "Post Sucess")
         } else {
             let error = "alert please fill all information."
             self.alert(message: error)

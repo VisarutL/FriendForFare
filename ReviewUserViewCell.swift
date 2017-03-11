@@ -15,6 +15,7 @@ class ReviewUserViewCell:UITableViewCell {
     @IBOutlet weak var comemtLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var rateImage: UIImageView!
+    @IBOutlet weak var journeyReviewLabel: UILabel!
     
     
     
@@ -37,6 +38,25 @@ class ReviewUserViewCell:UITableViewCell {
             self.profileImage.layer.cornerRadius = self.profileImage.bounds.size.height / 2
             self.profileImage.clipsToBounds = true
         }
+    }
+    
+    func setRateImageGirl(rate:Int) {
+        var imageName = String()
+        switch rate {
+        case 1:
+            imageName = "rate-g-1"
+        case 2:
+            imageName = "rate-g-2"
+        case 3:
+            imageName = "rate-g-3"
+        case 4:
+            imageName = "rate-g-4"
+        case 5:
+            imageName = "rate-g-5"
+        default:
+            imageName = "rate-g-0"
+        }
+        rateImage.image = UIImage(named: imageName)
     }
     
     func setRateImage(rate:Int) {

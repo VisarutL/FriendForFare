@@ -370,7 +370,7 @@ adipisicing pecu, sed do
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1zI-bg-h7U" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dVv-LP-szA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dVv-LP-szA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -748,7 +748,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Z4Y-MO-mwq" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="sLj-uh-Rz6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sLj-uh-Rz6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -995,7 +995,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ykq-Bc-B6I" customClass="NavController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ZvK-Gm-KGZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZvK-Gm-KGZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

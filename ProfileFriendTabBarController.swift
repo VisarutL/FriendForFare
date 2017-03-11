@@ -25,6 +25,7 @@ class ProfileFriendTabBarController:UITableViewController{
     
     var profilefriend = [NSDictionary]()
     var rateProfile = [NSDictionary]()
+    var rateProfileGirl = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,9 @@ class ProfileFriendTabBarController:UITableViewController{
         tableView.showsVerticalScrollIndicator = false
         
         selectData()
-        avgrate()
+        let iduser = "\(friend["id_user"] as! String)"
+        let userid = Int(iduser)
+        avgrate(iduser: userid!)
         setCloseButton()
         tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
         tableView.rowHeight = 115
@@ -109,14 +112,24 @@ class ProfileFriendTabBarController:UITableViewController{
             cell.telLabel.text = "Tel : \(friend["tel_user"] as! String)"
             cell.emailLabel.text = "Email : \(friend["email_user"] as! String)"
             if rateProfile.count == 0 {
-                
+                cell.setRateImage(rate: 0)
             } else {
                 let rate = "\(rateProfile[0]["rate"]!)"
                 let rateprofile = Int(rate)
                 if rateprofile == nil {
-                    cell.setRateImage(rate: 0)
                 } else {
                     cell.setRateImage(rate: rateprofile!)
+                }
+                if rateProfileGirl.count == 0 {
+                    cell.setRateImageGirl(rate: 0)
+                } else {
+                    let rategirl = "\(rateProfileGirl[0]["rategirl"]!)"
+                    let rateprofileGirl = Int(rategirl)
+                    if rateprofileGirl == nil {
+                        cell.setRateImageGirl(rate: 0)
+                    } else {
+                        cell.setRateImageGirl(rate: rateprofileGirl!)
+                    }
                 }
             }
             
@@ -191,8 +204,7 @@ extension ProfileFriendTabBarController {
             })
     }
     
-    func avgrate() {
-        let iduser = (friend["id_user"] as! String)
+    func avgrate(iduser:Int) {
         let parameters: Parameters = [
             "function": "avgrate",
             "iduser" : iduser
@@ -206,9 +218,37 @@ extension ProfileFriendTabBarController {
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
+                        //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.rateProfile.append(item as! NSDictionary)
+                        }
+                        let iduser = "\(self.friend["id_user"] as! String)"
+                        let userid = Int(iduser)
+                        self.avgrategirl(iduser: userid!)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+    
+    func avgrategirl(iduser:Int) {
+        let parameters: Parameters = [
+            "function": "avgrategirl",
+            "iduser" : iduser
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+                        //                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.rateProfileGirl.append(item as! NSDictionary)
                         }
                         DispatchQueue.main.async {
                             self.tableView.reloadData()

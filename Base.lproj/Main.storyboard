@@ -1028,7 +1028,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" id="JTM-El-Z8P">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="17S-2b-IgS">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="17S-2b-IgS">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="actionCancel:" destination="jFj-hZ-BgS" id="Cea-y8-9dv"/>

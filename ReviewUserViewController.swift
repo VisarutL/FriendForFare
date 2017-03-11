@@ -26,7 +26,7 @@ class ReviewUserViewController:UIViewController {
     var myText:String?
     var journeyID = Int()
     var review = [String: Any]()
-    var userRate = 1
+    var userRate = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,7 +133,7 @@ extension ReviewUserViewController {
     
     func simulateRegister() {
         let userID = UserDefaults.standard.integer(forKey: "UserID")
-        let rate = 4
+        let rate = userRate
         let comment = commentTextField.text
         let iduserreview = review["id_user"]
         let iduser = userID

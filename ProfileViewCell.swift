@@ -19,6 +19,7 @@ class ProfileViewCell:UITableViewCell {
     @IBOutlet weak var telLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var rateImage: UIImageView!
+    @IBOutlet weak var rateImageGirl: UIImageView!
     
     var showLogout = false
     
@@ -44,6 +45,25 @@ class ProfileViewCell:UITableViewCell {
     
     @IBAction func logoutAction(_ sender: Any) {
         delegate?.profileViewDidLogout()
+    }
+    
+    func setRateImageGirl(rate:Int) {
+        var imageName = String()
+        switch rate {
+        case 1:
+            imageName = "rate-g-1"
+        case 2:
+            imageName = "rate-g-2"
+        case 3:
+            imageName = "rate-g-3"
+        case 4:
+            imageName = "rate-g-4"
+        case 5:
+            imageName = "rate-g-5"
+        default:
+            imageName = "rate-g-0"
+        }
+        rateImageGirl.image = UIImage(named: imageName)
     }
     
     

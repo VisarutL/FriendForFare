@@ -22,6 +22,7 @@ class ProfileTabBarController:UITableViewController{
     var profile = [NSDictionary]()
     var reviewprofile = [NSDictionary]()
     var rateProfile = [NSDictionary]()
+    var rateProfileGirl = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,14 +84,15 @@ class ProfileTabBarController:UITableViewController{
             let reviewprofile = self.reviewprofile[indexPath.row]
             cell.comemtLabel.text = "\(reviewprofile["comment_review"]!)"
             cell.timeLabel.text = "\(reviewprofile["datetime_review"]!)"
+            cell.journeyReviewLabel.text = "\(reviewprofile["drop_journey"]!)"
             let rate = reviewprofile["rate_review"] as! String
-            cell.setRateImage(rate: Int(rate)!)
-            
             let gender = reviewprofile["gender_user"] as! String
             if gender == "1" {
                 cell.profileImage.image = UIImage(named: "Men1")
+                cell.setRateImage(rate: Int(rate)!)
             } else {
                 cell.profileImage.image = UIImage(named: "Female1")
+                cell.setRateImageGirl(rate: Int(rate)!)
             }
 //            guard let imageName = reviewprofile["pic_user"] as? String ,imageName != "" else {
 //                return cell
@@ -121,6 +123,9 @@ class ProfileTabBarController:UITableViewController{
         tableView.register(UINib(nibName: profileViewCell, bundle: nil), forCellReuseIdentifier: profileViewCelldentifier)
         let cell = tableView.dequeueReusableCell(withIdentifier: profileViewCelldentifier) as! ProfileViewCell
         
+        cell.telLabel.isHidden = true
+        cell.emailLabel.isHidden = true
+        
         if profile.count == 0 {
             cell.fullnameLabel.text = "full name."
             cell.telLabel.text = "telephone."
@@ -131,12 +136,26 @@ class ProfileTabBarController:UITableViewController{
             cell.fullnameLabel.text = "\(profile[0]["fname_user"]!) \(profile[0]["lname_user"]!)"
             cell.telLabel.text = "Tel : \(profile[0]["tel_user"]!)"
             cell.emailLabel.text = "Email : \(profile[0]["email_user"]!)"
-            let rate = "\(rateProfile[0]["rate"]!)"
-            let rateprofile = Int(rate)
-            if rateprofile == nil {
+            if rateProfile.count == 0 {
                 cell.setRateImage(rate: 0)
             } else {
-                cell.setRateImage(rate: rateprofile!)
+                let rate = "\(rateProfile[0]["rate"]!)"
+                let rateprofile = Int(rate)
+                if rateprofile == nil {
+                } else {
+                    cell.setRateImage(rate: rateprofile!)
+                }
+                if rateProfileGirl.count == 0 {
+                    cell.setRateImageGirl(rate: 0)
+                } else {
+                    let rategirl = "\(rateProfileGirl[0]["rategirl"]!)"
+                    let rateprofileGirl = Int(rategirl)
+                    if rateprofileGirl == nil {
+                        cell.setRateImageGirl(rate: 0)
+                    } else {
+                        cell.setRateImageGirl(rate: rateprofileGirl!)
+                    }
+                }
             }
             
             guard let imageName = profile[0]["pic_user"] as? String ,imageName != "" else {
@@ -160,7 +179,7 @@ class ProfileTabBarController:UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 260
+        return 220
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -299,6 +318,33 @@ extension ProfileTabBarController {
 //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.rateProfile.append(item as! NSDictionary)
+                        }
+                        let userID = UserDefaults.standard.integer(forKey: "UserID")
+                        self.avgrategirl(iduser: userID)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+    
+    func avgrategirl(iduser:Int) {
+        let parameters: Parameters = [
+            "function": "avgrategirl",
+            "iduser" : iduser
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+                        //                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.rateProfileGirl.append(item as! NSDictionary)
                         }
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
