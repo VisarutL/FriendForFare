@@ -28,7 +28,7 @@ class SectionHeaderView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.tabbarColor
+        backgroundColor = UIColor.sectionColor
     }
     
     

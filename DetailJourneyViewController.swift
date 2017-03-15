@@ -28,6 +28,11 @@ class DetailJourneyViewController:UIViewController {
     @IBOutlet weak var profile2ImageView: UIImageView!
     @IBOutlet weak var profile3ImageView: UIImageView!
     @IBOutlet weak var profile4ImageView: UIImageView!
+    @IBOutlet weak var username1Label: UILabel!
+    @IBOutlet weak var username2Label: UILabel!
+    @IBOutlet weak var username3Label: UILabel!
+    @IBOutlet weak var username4Label: UILabel!
+    
     @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var postButton: UIButton!
     
@@ -82,10 +87,14 @@ class DetailJourneyViewController:UIViewController {
             case "editPost":
                 let vcc = segue.destination as! EditJourneyViewController
                 vcc.idjourney = Int(tripDetail["id_journey"] as! String)!
-            case "MapDistance":
-                let vc = segue.destination as! MapViewController
+            case "CheckList":
+                let vc = segue.destination as! CheckListViewController
+                
+                let userID = UserDefaults.standard.integer(forKey: "UserID")
+                let test = userjoinedList.filter({ Int($0["user_id_joined"] as! String) != userID })
+                vc.userjoinedList = test as! [[String : Any]]
                 vc.tripDetail = tripDetail
-                vc.delegate = self
+                
             default:
                 break
             }
@@ -107,7 +116,7 @@ class DetailJourneyViewController:UIViewController {
         case "myTrip".lowercased():
             actionButton.setTitle("LET'S GO", for: .normal)
             actionButton.backgroundColor = UIColor.greenBT
-            actionButton.addTarget(self, action: #selector(MapDistanceAction), for: .touchUpInside)
+            actionButton.addTarget(self, action: #selector(CheckListAction), for: .touchUpInside)
             
         case "otherTrip".lowercased():
             self.navigationItem.rightBarButtonItem = nil
@@ -131,8 +140,8 @@ class DetailJourneyViewController:UIViewController {
         userJoined(idjourney: idtrip)
     }
     
-    func MapDistanceAction() {
-        performSegue(withIdentifier: "MapDistance", sender: nil)
+    func CheckListAction() {
+        performSegue(withIdentifier: "CheckList", sender: nil)
     }
     
     func CancelAction() {
@@ -170,15 +179,19 @@ class DetailJourneyViewController:UIViewController {
     
     func loadImage() {
         var profileImages:[UIImageView] = [profile1ImageView,profile2ImageView,profile3ImageView,profile4ImageView]
+        var allLabel:[UILabel] = [username1Label,username2Label,username3Label,username4Label]
         guard userjoinedList.count != 0 else { return }
         let count = userjoinedList.count - 1
         for i in 0...count {
+            let user = userjoinedList[i]
+            let pic_user = user["pic_user"] as! String
+            let username_user = user["username_user"] as! String
             let path = "http://localhost/friendforfare/images/"
-            let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
-            let url = NSURL(string:"\(path)\(imageName)")
+            let url = NSURL(string:"\(path)\(pic_user)")
             let data = NSData(contentsOf:url as! URL)
             let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
             profileImages[i].image = image
+            allLabel[i].text = username_user
         }
     }
     
@@ -267,12 +280,20 @@ extension DetailJourneyViewController {
                     
                     if let JSON = response.result.value {
                         print("JSON: \(JSON)")
+                        self.commentlist.removeAll()
+                        self.commentTextField.text = ""
                         for item in JSON as! NSArray {
                             self.commentlist.append(item as! NSDictionary)
                         }
                         
                         DispatchQueue.main.async {
                             self.tableview.reloadData()
+                            
+                            if self.commentlist.count != 0 {
+                                let index = IndexPath(row: self.commentlist.count - 1, section: 0)
+                                self.tableview.scrollToRow(at: index, at: .bottom,animated: true)
+                            }
+                            
                         }
                     }
                 case .failure(let error):
@@ -344,6 +365,9 @@ extension DetailJourneyViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
+                    
+                    
+                    self.selectData()
                     
                     //status 202
 //                    print(JSON)

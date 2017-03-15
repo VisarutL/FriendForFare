@@ -1,23 +1,20 @@
 //
-//  FriendViewCell.swift
+//  CheckListViewCell.swift
 //  FriendForFare
 //
-//  Created by Visarut on 12/11/2559 BE.
-//  Copyright © 2559 BE Newfml. All rights reserved.
+//  Created by Visarut on 3/15/2560 BE.
+//  Copyright © 2560 BE Newfml. All rights reserved.
 //
 
 import UIKit
 
-
-class FriendViewCell:UITableViewCell {
+class CheckListViewCell: UITableViewCell {
+    
     
     @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
-    
-    
-    var indexPath = NSIndexPath()
-    
+    @IBOutlet weak var tickButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,18 +23,11 @@ class FriendViewCell:UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        profileImage.image = UIImage(named: "userprofile")
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        
     }
-
-}
-
-extension FriendViewCell {
     
     func setProfileImage() {
         DispatchQueue.main.async {
@@ -45,4 +35,5 @@ extension FriendViewCell {
             self.profileImage.clipsToBounds = true
         }
     }
+    
 }

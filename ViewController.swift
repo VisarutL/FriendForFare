@@ -54,9 +54,11 @@ class ViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    func login(iduser:Int) {
-        print(iduser)
+    func login(iduser:Int,genderuser:Int) {
+        print("userID: \(iduser)")
+        print("uesrGender: \(genderuser)")
         UserDefaults.standard.set(iduser, forKey: "UserID")
+        UserDefaults.standard.set(genderuser, forKey: "UserGender")
         self.presentNavTabBarController()
     }
     
@@ -154,13 +156,16 @@ extension ViewController:FBSDKLoginButtonDelegate {
                                 let status = JSON["status"] as! String
                                 switch status {
                                 case "202":
-                                    let lastid = JSON["lastid"] as! Int
-                                    UserDefaults.standard.set(lastid, forKey: "UserID")
-                                    print(lastid)
+                                    let id = JSON["iduser"] as! Int
+                                    let gender = JSON["gender"] as! Int
+                                    UserDefaults.standard.set(id, forKey: "UserID")
+                                    UserDefaults.standard.set(gender, forKey: "UserGender")
                                     self.presentNavTabBarController()
                                 case "303":
                                     let id = JSON["iduser"] as! Int
+                                    let gender = JSON["gender"] as! Int
                                     UserDefaults.standard.set(id, forKey: "UserID")
+                                    UserDefaults.standard.set(gender, forKey: "UserGender")
                                     self.presentNavTabBarController()
                                 case "404":
                                     let message = JSON["message"] as! String
@@ -219,7 +224,8 @@ extension ViewController {
                         switch status {
                         case "202":
                             let iduser = JSON["iduser"] as! Int
-                            self.login(iduser: iduser )
+                            let gender = JSON["gender"] as! Int
+                            self.login(iduser: iduser,genderuser: gender )
                         case "404":
                             let message = JSON["message"] as! String
                             self.alert(message: "\(message)")

@@ -15,14 +15,15 @@ class MyListViewController: UITableViewController {
     
     let feedViewCelldentifier = "Cell"
     let feedViewCell = "FeedViewCell"
-    let sectionTitles = ["Owner", "Joined"]
+    let sectionTitles = ["Waited", "Owner", "Joined"]
     var tripmyList = [NSDictionary]()
     var tripmyjoinList = [NSDictionary]()
+    var tripmywaitList = [NSDictionary]()
     
     var dateFormatter = DateFormatter()
     var fristTime = true
     
-    var hiddingSection = [false,false]
+    var hiddingSection = [false,false,false]
     let numberOfRow = [2,2]
     
     var itemInfo = IndicatorInfo(title: "New")
@@ -69,7 +70,7 @@ class MyListViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -104,6 +105,26 @@ class MyListViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
+            let tripwait = tripmywaitList[indexPath.row]
+            cell.pickUpLabel.text = "PICK-UP : \(tripwait["pick_journey"] as! String)"
+            cell.dropOffLabel.text = "DROP-OFF : \(tripwait["drop_journey"] as! String)"
+            cell.amountLabel.text = "0/\(tripwait["count_journey"] as! String)"
+            cell.dateTmeLabel.text = "\(tripwait["date_journey"] as! String) \(tripwait["time_journey"] as! String)"
+            
+            guard let imageName = tripwait["pic_user"] as? String ,imageName != "" else {
+                return cell
+            }
+            
+            let path = "http://localhost/friendforfare/images/"
+            if let url = NSURL(string: "\(path)\(imageName)") {
+                if let data = NSData(contentsOf: url as URL) {
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = UIImage(data: data as Data)
+                    }
+                    
+                }
+            }
+        case 1:
             let tripme = tripmyList[indexPath.row]
             cell.pickUpLabel.text = "PICK-UP : \(tripme["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
@@ -123,7 +144,7 @@ class MyListViewController: UITableViewController {
                     
                 }
             }
-        case 1:
+        case 2:
             let tripjoin = tripmyjoinList[indexPath.row]
             cell.pickUpLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
@@ -156,8 +177,10 @@ class MyListViewController: UITableViewController {
         var rows = Int()
         switch section {
         case 0:
-            rows = hiddingSection[section] ? 0 : tripmyList.count
+            rows = hiddingSection[section] ? 0 : tripmywaitList.count
         case 1:
+            rows = hiddingSection[section] ? 0 : tripmyList.count
+        case 2:
             rows = hiddingSection[section] ? 0 : tripmyjoinList.count
         default:
             break
@@ -173,10 +196,14 @@ class MyListViewController: UITableViewController {
         vc.myText = "Journey"
         switch indexPath.section {
         case 0:
+            vc.tripDetail = tripmywaitList[indexPath.row] as! [String : Any]
+            vc.joinButtonToggle = "otherTrip"
+            vc.delegate = self
+        case 1:
             vc.tripDetail = tripmyList[indexPath.row] as! [String : Any]
             vc.joinButtonToggle = "myTrip"
             vc.delegate = self
-        case 1:
+        case 2:
             vc.tripDetail = tripmyjoinList[indexPath.row] as! [String : Any]
             vc.joinButtonToggle = "otherTrip"
             vc.delegate = self
@@ -209,7 +236,9 @@ extension MyListViewController {
             fristTime = false
             self.tripmyList = [NSDictionary]()
             self.tripmyjoinList = [NSDictionary]()
+            self.tripmywaitList = [NSDictionary]()
             let userID = UserDefaults.standard.integer(forKey: "UserID")
+            selectmywaitData(iduser: userID)
             selectData(iduser: userID)
             selectmyjoinData(iduser: userID)
             
@@ -295,6 +324,46 @@ extension MyListViewController {
                 print(error)
             }
         })
+    }
+    
+    func selectmywaitData(iduser:Int) {
+        let parameters: Parameters = [
+            "function": "journeymywaitedSelect",
+            "iduser": iduser
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+                        //                    print("JSON: \(JSON)")
+                        for tripjoin in JSON as! NSArray {
+                            self.tripmywaitList.append(tripjoin as! NSDictionary)
+                        }
+                    }
+                    let now = NSDate()
+                    let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                    self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
+                    
+                    DispatchQueue.main.async {
+                        self.fristTime = true
+                        
+                        if let refreshControl = self.refreshControl {
+                            if refreshControl.isRefreshing {
+                                refreshControl.endRefreshing()
+                            }
+                        }
+                        
+                        self.tableView?.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

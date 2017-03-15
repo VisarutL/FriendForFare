@@ -54,7 +54,7 @@ class FriendTabBarController:ButtonBarPagerTabStripViewController {
         //        child_3.delegate = self
         
         
-        return [child_0, child_1]
+        return [child_1,child_0 ]
     }
     
 }

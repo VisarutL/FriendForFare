@@ -34,6 +34,7 @@ extension UIColor {
     //        return appColor
     //    }
     
+    
     public class var borderImage: UIColor {
     let borderImage = UIColor(red: 240 / 255, green: 240 / 255, blue: 240 / 255, alpha: 0.0)
     return borderImage
@@ -62,6 +63,21 @@ extension UIColor {
     public class var tabbarColor: UIColor {
         let tabbarColor = UIColor(red: 255 / 255, green: 205 / 255, blue: 0 / 255, alpha: 1.0)
         return tabbarColor
+    }
+    
+    public class var sectionColor: UIColor {
+        let sectionColor = UIColor(red: 236 / 255, green: 239 / 255, blue: 241 / 255, alpha: 1.0)
+        return sectionColor
+    }
+    
+    public class var tabColor: UIColor {
+        let tabColor = UIColor(red: 33 / 255, green: 33 / 255, blue: 33 / 255, alpha: 1.0)
+        return tabColor
+    }
+    
+    public class var searchbarColor: UIColor {
+        let searchbarColor = UIColor(red: 207 / 255, green: 216 / 255, blue: 220 / 255, alpha: 1.0)
+        return searchbarColor
     }
     
     public class var systemColor: UIColor {

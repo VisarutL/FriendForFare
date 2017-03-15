@@ -20,6 +20,7 @@ class JourneyViewController:UIViewController {
     var userjoinedList = [NSDictionary]()
     var profileList = [NSDictionary]()
     var rateProfile = [NSDictionary]()
+    var rateProfileGirl = [NSDictionary]()
     
 
     
@@ -37,6 +38,7 @@ class JourneyViewController:UIViewController {
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var telLabel: UILabel!
     @IBOutlet weak var rateImage: UIImageView!
+    @IBOutlet weak var rateImageGirl: UIImageView!
 
     weak var delegate:JourneyDelegate?
     
@@ -111,16 +113,57 @@ class JourneyViewController:UIViewController {
         }
         fullnameLabel.text = "\(profileList[0]["fname_user"]!) \(profileList[0]["lname_user"]!)"
         telLabel.text = "Tel : \(profileList[0]["tel_user"]!)"
-        let rate = "\(rateProfile[0]["rate"]!)"
-        let rateprofile = Int(rate)
-        if rateprofile == nil {
-            setRateImageProfile(rate:0)
-        } else {
-            setRateImageProfile(rate:rateprofile!)
+        let genderUser = UserDefaults.standard.integer(forKey: "UserGender")
+        print(genderUser)
+        if genderUser == 1 {
+            rateImageGirl.isHidden = true
+            if rateProfileGirl.count == 0 {
+                setRateImageGirl(rate: 0)
+            } else {
+                let rategirl = "\(rateProfileGirl[0]["rategirl"]!)"
+                let rateprofileGirl = Int(rategirl)
+                if rateprofileGirl == nil {
+                    setRateImageGirl(rate: 0)
+                } else {
+                    setRateImageGirl(rate: rateprofileGirl!)
+                }
+            }
+            } else {
+                rateImage.isHidden = true
+                if rateProfile.count == 0 {
+                    setRateImage(rate: 0)
+                } else {
+                    let rate = "\(rateProfile[0]["rate"]!)"
+                    let rateprofile = Int(rate)
+                    if rateprofile == nil {
+                    } else {
+                        setRateImage(rate: rateprofile!)
+                    }
+                }
+            }
         }
+    
+    func setRateImageGirl(rate:Int) {
+        var imageName = String()
+        switch rate {
+        case 1:
+            imageName = "rate-g-1"
+        case 2:
+            imageName = "rate-g-2"
+        case 3:
+            imageName = "rate-g-3"
+        case 4:
+            imageName = "rate-g-4"
+        case 5:
+            imageName = "rate-g-5"
+        default:
+            imageName = "rate-g-0"
+        }
+        rateImageGirl.image = UIImage(named: imageName)
     }
     
-    func setRateImageProfile(rate:Int) {
+    
+    func setRateImage(rate:Int) {
         var imageName = String()
         switch rate {
         case 1:
@@ -245,13 +288,39 @@ extension JourneyViewController {
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-//                        print("JSON: \(JSON)")
+                        //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.rateProfile.append(item as! NSDictionary)
+                        }
+                        self.avgrategirl(iduser: iduser)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+    }
+    
+    func avgrategirl(iduser:Int) {
+        let parameters: Parameters = [
+            "function": "avgrategirl",
+            "iduser" : iduser
+        ]
+        let url = "http://localhost/friendforfare/get/index.php"
+        let manager = initManager()
+        manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
+            .responseJSON(completionHandler: { response in
+                manager.session.invalidateAndCancel()
+                //                debugPrint(response)
+                switch response.result {
+                case .success:
+                    if let JSON = response.result.value {
+                        //                        print("JSON: \(JSON)")
+                        for item in JSON as! NSArray {
+                            self.rateProfileGirl.append(item as! NSDictionary)
                         }
                         self.setProfile()
                     }
@@ -308,7 +377,7 @@ extension JourneyViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    self.dismiss(animated: true, completion: nil)
+                    self.alert( message: "Wait for accept", withCloseAction: true)
 //                    self.delegate?.journeyDidJoin()
                     
                 case .failure(let error):

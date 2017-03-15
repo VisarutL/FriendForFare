@@ -35,6 +35,7 @@ class MapViewController:UIViewController {
         let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
         let sourceAnnotation = MKPointAnnotation()
         sourceAnnotation.title = pick as! String?
+        sourceAnnotation.subtitle = "pick up."
         if let location = sourcePlacemark.location {
             sourceAnnotation.coordinate = location.coordinate
         }
@@ -48,6 +49,8 @@ class MapViewController:UIViewController {
         
         let destinationAnnotation = MKPointAnnotation()
         destinationAnnotation.title = drop as! String?
+        destinationAnnotation.subtitle = "drop off."
+        
         if let location = destinationPlacemark.location {
             destinationAnnotation.coordinate = location.coordinate
         }
@@ -67,6 +70,7 @@ class MapViewController:UIViewController {
         directionRequest.destination = destination
         directionRequest.transportType = .automobile
         
+        
         let directions = MKDirections(request: directionRequest)
         directions.calculate {
             (response, error) -> Void in
@@ -79,6 +83,7 @@ class MapViewController:UIViewController {
             }
             
             let route = response.routes[0]
+            print(route.distance.description)
             self.mapView.add((route.polyline), level: MKOverlayLevel.aboveRoads)
             
             let rect = route.polyline.boundingMapRect
@@ -106,8 +111,8 @@ class MapViewController:UIViewController {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.green
-        renderer.lineWidth = 6.0
+        renderer.strokeColor = UIColor.black
+        renderer.lineWidth = 4.0
         return renderer
     }
 
