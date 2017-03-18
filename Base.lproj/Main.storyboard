@@ -274,7 +274,7 @@
             </objects>
             <point key="canvasLocation" x="7335.1999999999998" y="-359.37031484257875"/>
         </scene>
-        <!--Review User View Controller-->
+        <!--Reivw Friend-->
         <scene sceneID="pjE-cP-sa3">
             <objects>
                 <viewController storyboardIdentifier="ReviewUserViewController" id="SJv-Zv-hdj" customClass="ReviewUserViewController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
@@ -392,7 +392,7 @@
                             <constraint firstItem="Kjh-Wm-1wK" firstAttribute="top" secondItem="aff-o0-T5j" secondAttribute="bottom" constant="10" id="zsi-Th-fbv"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="oeI-93-i64">
+                    <navigationItem key="navigationItem" title="Reivw Friend" id="oeI-93-i64">
                         <barButtonItem key="backBarButtonItem" title=" " id="wP1-bb-jM2"/>
                         <barButtonItem key="rightBarButtonItem" title="Review" id="6ht-Sh-3sZ">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

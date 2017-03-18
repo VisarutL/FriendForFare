@@ -140,9 +140,9 @@ extension AllListViewController:UITableViewDataSource {
             break
         }
 
-        cell.pickUpLabel.text = "\(trip["pick_journey"] as! String)"
-        cell.dropOffLabel.text = "\(trip["drop_journey"] as! String)"
-        cell.amountLabel.text = "0/\(trip["count_journey"] as! String)"
+        cell.pickUpLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
+        cell.dropOffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
+        cell.amountLabel.text = "\(trip["countuser"] as! String)/\(trip["count_journey"] as! String)"
         
         
         let dateTime  = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
@@ -152,8 +152,6 @@ extension AllListViewController:UITableViewDataSource {
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
         
         if let date = dateFormatter.date(from: dateTime) {
-            //        dateFormatter.dateStyle = .medium
-            //        dateFormatter.timeStyle = .short
             dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
             let timeStamp = dateFormatter.string(from: date)
@@ -357,7 +355,7 @@ extension AllListViewController {
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-//                    print("JSON: \(JSON)")
+                    print("JSON: \(JSON)")
                     for trip in JSON as! NSArray {
                         self.tripfriendList.append(trip as! NSDictionary)
                         self.filteredfriendTripList = self.tripfriendList

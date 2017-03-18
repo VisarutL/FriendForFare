@@ -358,21 +358,15 @@ extension PostTabBarController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-                    guard let JSON = response.result.value as! [String : Any]? else {
-                        print("error: cannnot cast result value to JSON or nil.")
-                        return
-                    }
-                    
-                    let status = JSON["status"] as! String
+                    if let JSON = response.result.value as? NSDictionary {
+                        print("JSON: \(JSON)")
+                        let status = JSON["status"] as! String
                     if  status == "404" {
                         print("error: \(JSON["message"] as! String)")
                         return
+                        }
                     }
-                    
                     self.delegate?.postTabBarDidClose()
-                    
-                    //status 202
-//                    print(JSON)
                 case .failure(let error):
                     //alert
                     print(error.localizedDescription)

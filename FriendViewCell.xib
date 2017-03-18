@@ -18,25 +18,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="733" height="196"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QXX-MG-Xxh">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userprofile" translatesAutoresizingMaskIntoConstraints="NO" id="QXX-MG-Xxh">
                         <rect key="frame" x="20" y="68" width="60" height="60"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="42e-5h-zKB"/>
                             <constraint firstAttribute="height" constant="60" id="iCd-gQ-yt9"/>
                         </constraints>
                     </imageView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-6" translatesAutoresizingMaskIntoConstraints="NO" id="hiN-DE-UAD">
-                        <rect key="frame" x="100" y="75.5" width="42" height="45"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="hiN-DE-UAD">
+                        <rect key="frame" x="100" y="75.5" width="37" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDs-1V-fB7">
-                                <rect key="frame" x="0.0" y="0.0" width="42" height="25.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                <rect key="frame" x="0.0" y="0.0" width="37" height="27.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyV-ld-9eP">
-                                <rect key="frame" x="0.0" y="19.5" width="42" height="25.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <rect key="frame" x="0.0" y="17.5" width="37" height="27.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -62,4 +62,7 @@
             <point key="canvasLocation" x="146.5" y="-88.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="userprofile" width="504" height="504"/>
+    </resources>
 </document>

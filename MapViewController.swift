@@ -25,6 +25,7 @@ class MapViewController:UIViewController {
         super.viewDidLoad()
         mapView.delegate = self
         print(tripDetail)
+        self.title = "Distance"
         let latpick = Double(tripDetail["latitude_pick"] as! String)!
         let longpick = Double(tripDetail["longitude_pick"] as! String)!
         let pick = (tripDetail["pick_journey"])
@@ -83,7 +84,8 @@ class MapViewController:UIViewController {
             }
             
             let route = response.routes[0]
-            print(route.distance.description)
+            let distance = (route.distance)/1000
+            print(distance)
             self.mapView.add((route.polyline), level: MKOverlayLevel.aboveRoads)
             
             let rect = route.polyline.boundingMapRect

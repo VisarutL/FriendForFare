@@ -34,7 +34,7 @@ class FriendListViewController:UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: friendViewCell, bundle: nil), forCellReuseIdentifier: friendViewCelldentifier)
-        tableView?.rowHeight = 80
+        tableView?.rowHeight = 90
         setPullToRefresh()
 
     }

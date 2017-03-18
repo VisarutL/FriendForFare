@@ -109,7 +109,20 @@ class MyListViewController: UITableViewController {
             cell.pickUpLabel.text = "PICK-UP : \(tripwait["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripwait["drop_journey"] as! String)"
             cell.amountLabel.text = "0/\(tripwait["count_journey"] as! String)"
-            cell.dateTmeLabel.text = "\(tripwait["date_journey"] as! String) \(tripwait["time_journey"] as! String)"
+            let dateTime  = "\(tripwait["date_journey"] as! String) \(tripwait["time_journey"] as! String)"
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            
+            if let date = dateFormatter.date(from: dateTime) {
+                dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
+                dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                let timeStamp = dateFormatter.string(from: date)
+                cell.dateTmeLabel.text = timeStamp
+            } else {
+                cell.dateTmeLabel.text = "..."
+            }
             
             guard let imageName = tripwait["pic_user"] as? String ,imageName != "" else {
                 return cell
@@ -128,8 +141,21 @@ class MyListViewController: UITableViewController {
             let tripme = tripmyList[indexPath.row]
             cell.pickUpLabel.text = "PICK-UP : \(tripme["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
-            cell.amountLabel.text = "0/\(tripme["count_journey"] as! String)"
-            cell.dateTmeLabel.text = "\(tripme["date_journey"] as! String) \(tripme["time_journey"] as! String)"
+            cell.amountLabel.text = "\(tripme["countuser"] as! String)/\(tripme["count_journey"] as! String)"
+            let dateTime  = "\(tripme["date_journey"] as! String) \(tripme["time_journey"] as! String)"
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            
+            if let date = dateFormatter.date(from: dateTime) {
+                dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
+                dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                let timeStamp = dateFormatter.string(from: date)
+                cell.dateTmeLabel.text = timeStamp
+            } else {
+                cell.dateTmeLabel.text = "..."
+            }
             
             guard let imageName = tripme["pic_user"] as? String ,imageName != "" else {
                 return cell
@@ -148,7 +174,7 @@ class MyListViewController: UITableViewController {
             let tripjoin = tripmyjoinList[indexPath.row]
             cell.pickUpLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
             cell.dropOffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
-            cell.amountLabel.text = "0/\(tripjoin["count_journey"] as! String)"
+            cell.amountLabel.text = "\(tripjoin["countuser"] as! String)/\(tripjoin["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripjoin["date_journey"] as! String) \(tripjoin["time_journey"] as! String)"
             
             guard let imageName = tripjoin["pic_user"] as? String ,imageName != "" else {

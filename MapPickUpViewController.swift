@@ -14,7 +14,7 @@ class MapPickUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Map"
         print(latitude)
         print(longitude)
         print(pick)

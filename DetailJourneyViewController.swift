@@ -114,7 +114,7 @@ class DetailJourneyViewController:UIViewController {
         
         switch joinButtonToggle!.lowercased() {
         case "myTrip".lowercased():
-            actionButton.setTitle("LET'S GO", for: .normal)
+            actionButton.setTitle("CHECK", for: .normal)
             actionButton.backgroundColor = UIColor.greenBT
             actionButton.addTarget(self, action: #selector(CheckListAction), for: .touchUpInside)
             
@@ -196,10 +196,10 @@ class DetailJourneyViewController:UIViewController {
     }
     
     func setButton() {
-        postButton.backgroundColor = .clear
-        postButton.layer.cornerRadius = 0
-        postButton.layer.borderWidth = 1
-        postButton.layer.borderColor = UIColor.black.cgColor
+        postButton.backgroundColor = UIColor.black
+//        postButton.layer.cornerRadius = 0
+//        postButton.layer.borderWidth = 1
+//        postButton.layer.borderColor = UIColor.black.cgColor
     }
     
     @IBAction func postAction(_ sender: Any) {

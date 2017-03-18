@@ -64,8 +64,21 @@ class HistoryListViewController: UITableViewController {
         let trip = tripList[indexPath.row]
         cell.pickUpLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
         cell.dropOffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
-        cell.amountLabel.text = "0/\(trip["count_journey"] as! String)"
-        cell.dateTmeLabel.text = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
+        cell.amountLabel.text = "\(trip["countuser"] as! String)/\(trip["count_journey"] as! String)"
+        let dateTime  = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        
+        if let date = dateFormatter.date(from: dateTime) {
+            dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
+            dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            let timeStamp = dateFormatter.string(from: date)
+            cell.dateTmeLabel.text = timeStamp
+        } else {
+            cell.dateTmeLabel.text = "..."
+        }
         
         guard let imageName = trip["pic_user"] as? String ,imageName != "" else {
             return cell

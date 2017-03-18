@@ -148,7 +148,7 @@ extension ViewController:FBSDKLoginButtonDelegate {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
-                        debugPrint(response)
+//                        debugPrint(response)
                         switch response.result {
                         case .success:
                             if let JSON = response.result.value as? NSDictionary {
