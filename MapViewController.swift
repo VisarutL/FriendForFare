@@ -16,7 +16,7 @@ protocol DetailJourneyMapDelegate: class {
 class MapViewController:UIViewController {
     
     var tripDetail = [String: Any]()
-    
+    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
     weak var delegate:DetailJourneyMapDelegate?
@@ -59,8 +59,6 @@ class MapViewController:UIViewController {
         self.mapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
 
         drawStock(source: sourceMapItem, destination: destinationMapItem)
-        
-        
     }
     
     
@@ -85,7 +83,7 @@ class MapViewController:UIViewController {
             
             let route = response.routes[0]
             let distance = (route.distance)/1000
-            print(distance)
+            self.distanceLabel.text = "Distance: \(distance) KM"
             self.mapView.add((route.polyline), level: MKOverlayLevel.aboveRoads)
             
             let rect = route.polyline.boundingMapRect

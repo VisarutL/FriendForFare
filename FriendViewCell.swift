@@ -14,6 +14,7 @@ class FriendViewCell:UITableViewCell {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var countjoinLabel: UILabel!
     
     
     var indexPath = NSIndexPath()

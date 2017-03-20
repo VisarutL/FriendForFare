@@ -150,7 +150,11 @@ class DetailJourneyViewController:UIViewController {
     }
     
     func setCloseButton() {
-        closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
+//        closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
+//        self.navigationItem.leftBarButtonItem = closeBarButton
+        let buttonIcon = UIImage(named: "Close1")
+        let closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
+        closeBarButton.image = buttonIcon
         self.navigationItem.leftBarButtonItem = closeBarButton
     }
     

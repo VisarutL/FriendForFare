@@ -144,9 +144,11 @@ extension JoinViewController:UITableViewDataSource {
             let rate = reviewprofile["rate_review"] as! String
             let comment = reviewprofile["comment_review"] as! String
             let time = reviewprofile["datetime_review"] as! String
+            let journey = reviewprofile["drop_journey"] as! String
             
             cell.comemtLabel.text = "\(comment)"
             cell.timeLabel.text = "\(time)"
+            cell.journeyReviewLabel.text = "\(journey)"
             cell.setRateImage(rate: Int(rate)!)
             
             let path = "http://localhost/friendforfare/images/"

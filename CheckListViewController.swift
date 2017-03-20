@@ -118,39 +118,42 @@ extension CheckListViewController {
     func checkList(trip:Int) {
         let checklistJSON = try! JSONSerialization.data(withJSONObject: userjoinedList, options: .prettyPrinted)
         let checklistJSONString = NSString(data: checklistJSON, encoding: String.Encoding.utf8.rawValue)! as String
-        print("checklistJSON \(checklistJSON)")
-        print("checklistJSONString \(checklistJSONString)")
+//        print("checklistJSON \(checklistJSON)")
+//        print("checklistJSONString: \(checklistJSONString)")
         let tripid = trip
-        var parameter = Parameters()
-        parameter.updateValue(tripid, forKey: "tripid")
-        insertidUser(parameter: parameter)
-    }
-    
-    func insertidUser(parameter:Parameters)  {
-        
         let parameters: Parameters = [
             "function": "checkList",
-            "parameter": parameter
+            "idjourney": tripid,
+            "checklist": checklistJSONString
         ]
         let url = "http://localhost/friendforfare/post/index.php?function=checkList"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                //                debugPrint(response)
+//                debugPrint(response)
+//                switch response.result {
+//                case .success:
+//                    guard let JSON = response.result.value as! [String : Any]? else {
+//                        print("error: cannnot cast result value to JSON or nil.")
+//                        return
+//                    }
+//                    print("JSON: \(JSON)")
+//                    let status = JSON["status"] as! String
+//                    if  status == "404" {
+//                        print("error: \(JSON["message"] as! String)")
+//                        return
+//                    }
                 switch response.result {
                 case .success:
-                    guard let JSON = response.result.value as! [String : Any]? else {
-                        print("error: cannnot cast result value to JSON or nil.")
-                        return
+                    if let JSON = response.result.value as? NSDictionary {
+                        print("JSON: \(JSON)")
+                        let status = JSON["status"] as! String
+                        if  status == "404" {
+                            print("error: \(JSON["message"] as! String)")
+                            return
+                        }
                     }
-                    
-                    let status = JSON["status"] as! String
-                    if  status == "404" {
-                        print("error: \(JSON["message"] as! String)")
-                        return
-                    }
-                    
                 case .failure(let error):
                     
                     print(error.localizedDescription)

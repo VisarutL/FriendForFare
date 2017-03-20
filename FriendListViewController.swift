@@ -62,6 +62,7 @@ class FriendListViewController:UITableViewController {
         let friend = friendList[indexPath.row]
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
+        cell.countjoinLabel.text = "Count: \(friend["counttrip"]!)"
             
         guard let imageName = friend["pic_user"] as? String ,imageName != "" else {
             return cell

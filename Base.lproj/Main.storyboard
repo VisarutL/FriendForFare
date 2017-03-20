@@ -259,7 +259,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Review" id="6K2-Hj-I5G">
                         <barButtonItem key="backBarButtonItem" title=" " id="X1O-Sv-FFq"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Pqx-Wx-KxX">
+                        <barButtonItem key="leftBarButtonItem" image="Close1" id="Pqx-Wx-KxX">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="actionCancel:" destination="IUh-0i-kHO" id="uzN-Hc-Mgs"/>
@@ -274,7 +274,7 @@
             </objects>
             <point key="canvasLocation" x="7335.1999999999998" y="-359.37031484257875"/>
         </scene>
-        <!--Reivw Friend-->
+        <!--Reivew Friend-->
         <scene sceneID="pjE-cP-sa3">
             <objects>
                 <viewController storyboardIdentifier="ReviewUserViewController" id="SJv-Zv-hdj" customClass="ReviewUserViewController" customModule="FriendForFare" customModuleProvider="target" sceneMemberID="viewController">
@@ -392,7 +392,7 @@
                             <constraint firstItem="Kjh-Wm-1wK" firstAttribute="top" secondItem="aff-o0-T5j" secondAttribute="bottom" constant="10" id="zsi-Th-fbv"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Reivw Friend" id="oeI-93-i64">
+                    <navigationItem key="navigationItem" title="Reivew Friend" id="oeI-93-i64">
                         <barButtonItem key="backBarButtonItem" title=" " id="wP1-bb-jM2"/>
                         <barButtonItem key="rightBarButtonItem" title="Review" id="6ht-Sh-3sZ">
                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -574,6 +574,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Tnk-3f-otu"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                 <state key="normal" title="Pick Up">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -600,6 +601,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="aMa-sq-Un2"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                 <state key="normal" title="Drop Off">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -651,14 +653,14 @@
                                 <rect key="frame" x="0.0" y="364" width="375" height="250"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Companion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nC-Hc-QZ9">
-                                        <rect key="frame" x="0.0" y="8" width="375" height="20.5"/>
-                                        <color key="backgroundColor" red="0.99215686274509807" green="0.80392156862745101" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="8" width="375" height="19.5"/>
+                                        <color key="backgroundColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="F9F-pF-sOf">
-                                        <rect key="frame" x="8" y="38.5" width="359" height="40"/>
+                                        <rect key="frame" x="8" y="37.5" width="359" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yf-OO-t7y">
                                                 <rect key="frame" x="0.0" y="0.0" width="82.5" height="40"/>
@@ -694,14 +696,14 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlv-JV-Xgl">
-                                        <rect key="frame" x="0.0" y="86.5" width="375" height="20.5"/>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.80392156859999997" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="85.5" width="375" height="19.5"/>
+                                        <color key="backgroundColor" red="1" green="0.80392156862745101" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hOx-YN-5ki">
-                                        <rect key="frame" x="8" y="115" width="359" height="40"/>
+                                        <rect key="frame" x="8" y="113" width="359" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTi-Si-Ij8">
                                                 <rect key="frame" x="0.0" y="0.0" width="174.5" height="40"/>
@@ -709,7 +711,7 @@
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ3-Hi-9d8">
                                                         <rect key="frame" x="8" y="0.0" width="158.5" height="40"/>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <connections>
                                                             <action selector="textFieldEditing:" destination="IId-Ke-NPc" eventType="editingDidBegin" id="3Tv-pT-bZO"/>
@@ -730,7 +732,7 @@
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Time" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHw-oo-bkr">
                                                         <rect key="frame" x="8" y="0.0" width="158.5" height="40"/>
                                                         <nil key="textColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                         <connections>
                                                             <action selector="timeTextFieldEditing:" destination="IId-Ke-NPc" eventType="editingDidBegin" id="5J4-Xg-3DV"/>
@@ -751,7 +753,7 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VP0-AQ-YVX">
-                                        <rect key="frame" x="8" y="163" width="359" height="79"/>
+                                        <rect key="frame" x="8" y="161" width="359" height="81"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Detail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0EO-fH-bb4">
                                                 <rect key="frame" x="8" y="8" width="343" height="30"/>
@@ -759,7 +761,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="lOz-gm-L0a"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
@@ -874,7 +876,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="dcC-cq-27E">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="DHa-fa-lKt">
+                        <barButtonItem key="leftBarButtonItem" image="Edit1" id="DHa-fa-lKt">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="7Xh-em-Rvb" kind="show" id="WRP-WV-iL4"/>
@@ -1027,7 +1029,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" id="JTM-El-Z8P">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="17S-2b-IgS">
+                        <barButtonItem key="leftBarButtonItem" image="Close1" id="17S-2b-IgS">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="actionCancel:" destination="jFj-hZ-BgS" id="Cea-y8-9dv"/>
@@ -1542,7 +1544,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Notification" id="KhJ-cL-9bj">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="pa4-dC-9Ac">
+                        <barButtonItem key="leftBarButtonItem" image="Close1" id="pa4-dC-9Ac">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="backAction:" destination="Uoa-Nc-OIU" id="aib-dp-sCh"/>
@@ -1632,6 +1634,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Close1" width="23" height="23"/>
+        <image name="Edit1" width="23" height="23"/>
         <image name="Notification1" width="23" height="23"/>
         <image name="btn-star-disable" width="58" height="58"/>
         <image name="btn-star-enable" width="58" height="58"/>

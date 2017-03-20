@@ -33,6 +33,10 @@ class JourneyViewController:UIViewController {
     @IBOutlet weak var imageProfile2: UIImageView!
     @IBOutlet weak var imageProfile3: UIImageView!
     @IBOutlet weak var imageProfile4: UIImageView!
+    @IBOutlet weak var username1Label: UILabel!
+    @IBOutlet weak var username2Label: UILabel!
+    @IBOutlet weak var username3Label: UILabel!
+    @IBOutlet weak var username4Label: UILabel!
     @IBOutlet weak var joinButton: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var fullnameLabel: UILabel!
@@ -94,7 +98,9 @@ class JourneyViewController:UIViewController {
     }
     
     func setCloseButton() {
-        closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
+        let buttonIcon = UIImage(named: "Close1")
+        let closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
+        closeBarButton.image = buttonIcon
         self.navigationItem.leftBarButtonItem = closeBarButton
     }
     
@@ -332,15 +338,19 @@ extension JourneyViewController {
     
     func loadImage() {
         var profileImages:[UIImageView] = [imageProfile1,imageProfile2,imageProfile3,imageProfile4]
+        var allLabel:[UILabel] = [username1Label,username2Label,username3Label,username4Label]
         guard userjoinedList.count != 0 else { return }
         let count = userjoinedList.count - 1
         for i in 0...count {
+            let user = userjoinedList[i]
+            let pic_user = user["pic_user"] as! String
+            let username_user = user["username_user"] as! String
             let path = "http://localhost/friendforfare/images/"
-            let imageName = "\(userjoinedList[i]["pic_user"] as! String)"
-            let url = NSURL(string:"\(path)\(imageName)")
+            let url = NSURL(string:"\(path)\(pic_user)")
             let data = NSData(contentsOf:url as! URL)
             let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
             profileImages[i].image = image
+            allLabel[i].text = username_user
         }
     }
     
