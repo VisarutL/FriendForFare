@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="353"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="89q-Nq-6XO" id="cnS-cR-OxO">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="352"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="352.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5ZK-os-qpf">
@@ -35,7 +35,7 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IQr-Fi-S1r">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userprofile" translatesAutoresizingMaskIntoConstraints="NO" id="IQr-Fi-S1r">
                         <rect key="frame" x="128" y="20" width="120" height="120"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="120" id="Jgq-5Y-Ydx"/>
@@ -125,5 +125,6 @@
     </objects>
     <resources>
         <image name="rate-0" width="287" height="47"/>
+        <image name="userprofile" width="504" height="504"/>
     </resources>
 </document>

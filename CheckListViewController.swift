@@ -71,7 +71,7 @@ extension CheckListViewController:UITableViewDataSource,UITableViewDelegate {
         let last = user["lname_user"] as! String
         let username = user["username_user"] as! String
         
-        let image = check == 1 ? UIImage(named: "btn-star-enable") : UIImage(named: "btn-star-disable")
+        let image = check == 1 ? UIImage(named: "Check1") : UIImage(named: "Checkk1")
         cell.tickButton.tag = indexPath.row
         cell.tickButton.setImage(image, for: .normal)
         cell.tickButton.addTarget(self, action: #selector(toggleSelcted), for: .touchUpInside)
@@ -106,7 +106,7 @@ extension CheckListViewController:UITableViewDataSource,UITableViewDelegate {
         userjoinedList[index]["status_go"] = userStatus == 0 ? "1" : "0"
         let change = userjoinedList[index]["status_go"] as! String
         let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! CheckListViewCell
-        let image = Int(change) == 1 ? UIImage(named: "btn-star-enable") : UIImage(named: "btn-star-disable")
+        let image = Int(change) == 1 ? UIImage(named: "Check1") : UIImage(named: "Checkk1")
         cell.tickButton.setImage(image, for: .normal)
 //        print("\(user["user_id_joined"] as! String) : \(user["status_go"] as! String),\(userStatus!)")
     }
