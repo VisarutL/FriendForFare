@@ -98,9 +98,11 @@ class JourneyViewController:UIViewController {
     }
     
     func setCloseButton() {
-        let buttonIcon = UIImage(named: "Close1")
-        let closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
-        closeBarButton.image = buttonIcon
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "Close1"), for: .normal)
+        button.sizeToFit()
+        closeBarButton = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(self.self.closeAction), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = closeBarButton
     }
     
@@ -388,7 +390,6 @@ extension JourneyViewController {
                         return
                     }
                     self.alert( message: "Wait for accept", withCloseAction: true)
-//                    self.delegate?.journeyDidJoin()
                     
                 case .failure(let error):
  

@@ -150,8 +150,8 @@ extension MapViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    
-                case .failure(let error):
+                    self.alert( message: "Finish Journey", withCloseAction: true)
+                    case .failure(let error):
                     
                     print(error.localizedDescription)
                 }

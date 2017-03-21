@@ -172,7 +172,7 @@ extension ReviewUserViewController {
                         print("error: \(JSON["message"] as! String)")
                         return
                     }
-                    self.dismiss(animated: true, completion: nil)
+                    self.alert( message: "Review Completed", withCloseAction: true)
                     //status 202
                     print(JSON)
                 case .failure(let error):

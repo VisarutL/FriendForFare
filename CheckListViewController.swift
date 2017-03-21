@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class CheckListViewController:UIViewController {
 
@@ -64,7 +65,6 @@ extension CheckListViewController:UITableViewDataSource,UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: checkListCell, for: indexPath) as! CheckListViewCell
 
         let user = userjoinedList[indexPath.row]
-        let iduser = Int(user["user_id_joined"] as! String)
         let userPic = user["pic_user"] as? String
         let check = Int(user["status_go"] as! String)
         let frist = user["fname_user"] as! String
@@ -101,14 +101,15 @@ extension CheckListViewController:UITableViewDataSource,UITableViewDelegate {
     
     func toggleSelcted(button: UIButton) {
         let index = button.tag
-        let user = userjoinedList[index]
-        let userStatus = Int(user["status_go"] as! String)
-        userjoinedList[index]["status_go"] = userStatus == 0 ? "1" : "0"
-        let change = userjoinedList[index]["status_go"] as! String
+        let user = JSON(userjoinedList[index])
+        let new = user["status_go"].intValue == 0 ? 1 : 0
+        userjoinedList[index]["status_go"] = new
+        
         let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! CheckListViewCell
-        let image = Int(change) == 1 ? UIImage(named: "Check1") : UIImage(named: "Checkk1")
+        let image = new == 1 ? UIImage(named: "Check1") : UIImage(named: "Checkk1")
         cell.tickButton.setImage(image, for: .normal)
-//        print("\(user["user_id_joined"] as! String) : \(user["status_go"] as! String),\(userStatus!)")
+        
+        print("\(user["user_id_joined"].stringValue) : \(user["status_go"].stringValue)")
     }
     
 }
@@ -116,46 +117,24 @@ extension CheckListViewController:UITableViewDataSource,UITableViewDelegate {
 extension CheckListViewController {
     
     func checkList(trip:Int) {
-        let checklistJSON = try! JSONSerialization.data(withJSONObject: userjoinedList, options: .prettyPrinted)
-        let checklistJSONString = NSString(data: checklistJSON, encoding: String.Encoding.utf8.rawValue)! as String
-//        print("checklistJSON \(checklistJSON)")
-//        print("checklistJSONString: \(checklistJSONString)")
+        let checklistJSON = JSON(userjoinedList)
+        let checklistJSONString = checklistJSON.rawString(String.Encoding.utf8)!
+        print("checklistJSONString: \(checklistJSONString)")
         let tripid = trip
         let parameters: Parameters = [
             "function": "checkList",
             "idjourney": tripid,
             "checklist": checklistJSONString
         ]
-        let url = "http://localhost/friendforfare/post/index.php?function=checkList"
+        let url = "http://localhost/friendforfare/post/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
-//                switch response.result {
-//                case .success:
-//                    guard let JSON = response.result.value as! [String : Any]? else {
-//                        print("error: cannnot cast result value to JSON or nil.")
-//                        return
-//                    }
-//                    print("JSON: \(JSON)")
-//                    let status = JSON["status"] as! String
-//                    if  status == "404" {
-//                        print("error: \(JSON["message"] as! String)")
-//                        return
-//                    }
                 switch response.result {
                 case .success:
-                    if let JSON = response.result.value as? NSDictionary {
-                        print("JSON: \(JSON)")
-                        let status = JSON["status"] as! String
-                        if  status == "404" {
-                            print("error: \(JSON["message"] as! String)")
-                            return
-                        }
-                    }
+                    print("Success")
                 case .failure(let error):
-                    
                     print(error.localizedDescription)
                 }
             })

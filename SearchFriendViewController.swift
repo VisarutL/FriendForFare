@@ -103,6 +103,7 @@ extension SearchFriendViewController:SearchFriendViewCellDelegate {
             filteredUserList.remove(at:index.row)
             let userID = UserDefaults.standard.integer(forKey: "UserID")
             addFriendData(id: userID, idfriend: "\(addUser["id_user"] as! String)")
+            self.alert(message: "Add Success")
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }

@@ -159,7 +159,11 @@ class ProfileFriendTabBarController:UITableViewController{
     }
     
     func setCloseButton() {
-        closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "Close1"), for: .normal)
+        button.sizeToFit()
+        closeBarButton = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(self.self.closeAction), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = closeBarButton
     }
     

@@ -150,11 +150,11 @@ class DetailJourneyViewController:UIViewController {
     }
     
     func setCloseButton() {
-//        closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
-//        self.navigationItem.leftBarButtonItem = closeBarButton
-        let buttonIcon = UIImage(named: "Close1")
-        let closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeAction))
-        closeBarButton.image = buttonIcon
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "Close1"), for: .normal)
+        button.sizeToFit()
+        closeBarButton = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(self.self.closeAction), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = closeBarButton
     }
     
@@ -412,7 +412,8 @@ extension DetailJourneyViewController {
                     }
                     
                     print(JSON)
-                    self.delegate?.detailJourneyDidFinish()
+                    self.alert( message: "Cancel Journey", withCloseAction: true)
+//                    self.delegate?.detailJourneyDidFinish()
                     //status 202
                     
                     
