@@ -1,18 +1,19 @@
 //
-//  ProfileViewCell.swift
+//  ProfileView.swift
 //  FriendForFare
 //
-//  Created by Visarut on 12/11/2559 BE.
-//  Copyright © 2559 BE Newfml. All rights reserved.
+//  Created by TAFCloud on 3/21/17.
+//  Copyright © 2017 Newfml. All rights reserved.
 //
+
 
 import UIKit
 
-protocol ProfileViewCellDelegate:class {
-    func profileViewCellDidLogout()
+protocol ProfileViewDelegate:class {
+    func profileViewDidLogout()
 }
 
-class ProfileViewCell:UITableViewCell {
+class ProfileView:UIView {
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var fullnameLabel: UILabel!
@@ -23,20 +24,16 @@ class ProfileViewCell:UITableViewCell {
     
     var showLogout = false
     
-    weak var delegate:ProfileViewCellDelegate?
+    weak var delegate:ProfileViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setProfileImage()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        //        setProfileImage()
-        profileImage.image = UIImage(named: "userprofile")
+        
         fullnameLabel.text = "full name."
         telLabel.text = "telephone."
         emailLabel.text = "mail."
+        profileImage.image = UIImage(named: "userprofile")
+        setProfileImage()
     }
     
     override func layoutSubviews() {
@@ -44,7 +41,7 @@ class ProfileViewCell:UITableViewCell {
     }
     
     @IBAction func logoutAction(_ sender: Any) {
-        delegate?.profileViewCellDidLogout()
+        delegate?.profileViewDidLogout()
     }
     
     func setRateImageGirl(rate:Int) {
@@ -94,3 +91,4 @@ class ProfileViewCell:UITableViewCell {
         }
     }
 }
+

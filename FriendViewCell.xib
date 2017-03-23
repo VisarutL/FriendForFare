@@ -19,14 +19,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userprofile" translatesAutoresizingMaskIntoConstraints="NO" id="QXX-MG-Xxh">
-                        <rect key="frame" x="8" y="11" width="65" height="65"/>
+                        <rect key="frame" x="20" y="11" width="65" height="65"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="65" id="42e-5h-zKB"/>
                             <constraint firstAttribute="height" constant="65" id="iCd-gQ-yt9"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hiN-DE-UAD">
-                        <rect key="frame" x="85" y="21" width="46.5" height="45"/>
+                        <rect key="frame" x="105" y="21" width="46.5" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDs-1V-fB7">
                                 <rect key="frame" x="0.0" y="0.0" width="46.5" height="15"/>
@@ -54,8 +54,8 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="hiN-DE-UAD" firstAttribute="leading" secondItem="QXX-MG-Xxh" secondAttribute="trailing" constant="12" id="52A-pb-btu"/>
-                    <constraint firstItem="QXX-MG-Xxh" firstAttribute="leading" secondItem="j8C-6T-I9A" secondAttribute="leading" constant="8" id="gHU-BS-2mw"/>
+                    <constraint firstItem="hiN-DE-UAD" firstAttribute="leading" secondItem="QXX-MG-Xxh" secondAttribute="trailing" constant="20" id="52A-pb-btu"/>
+                    <constraint firstItem="QXX-MG-Xxh" firstAttribute="leading" secondItem="j8C-6T-I9A" secondAttribute="leading" constant="20" id="gHU-BS-2mw"/>
                     <constraint firstItem="hiN-DE-UAD" firstAttribute="centerY" secondItem="QXX-MG-Xxh" secondAttribute="centerY" id="lE9-h7-U0g"/>
                     <constraint firstItem="QXX-MG-Xxh" firstAttribute="centerY" secondItem="j8C-6T-I9A" secondAttribute="centerY" id="wjJ-TP-5h2"/>
                 </constraints>

@@ -190,7 +190,12 @@ extension FriendTabBarController {
     
     
     func setRequestRightButton() {
-        searchBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.searchAction))
+        
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "Addfriend1"), for: .normal)
+        button.sizeToFit()
+        searchBarButton = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(self.self.searchAction), for: .touchUpInside)
         self.navigationItem.rightBarButtonItems = [searchBarButton]
     }
 

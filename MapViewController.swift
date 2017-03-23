@@ -132,7 +132,7 @@ extension MapViewController {
             "function": "finishUpdate",
             "parameter": parameter
         ]
-        let url = "http://localhost/friendforfare/post/index.php?function=finishUpdate"
+        let url = "http://192.168.2.101/friendforfare/post/index.php?function=finishUpdate"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

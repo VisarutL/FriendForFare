@@ -190,7 +190,7 @@ class DetailJourneyViewController:UIViewController {
             let user = userjoinedList[i]
             let pic_user = user["pic_user"] as! String
             let username_user = user["username_user"] as! String
-            let path = "http://localhost/friendforfare/images/"
+            let path = "http://192.168.2.101/friendforfare/images/"
             let url = NSURL(string:"\(path)\(pic_user)")
             let data = NSData(contentsOf:url as! URL)
             let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
@@ -272,7 +272,7 @@ extension DetailJourneyViewController {
             "function": "commentjourneySelect",
             "journeyid" : idtrip
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=commentjourneySelect"
+        let url = "http://192.168.2.101/friendforfare/get/index.php?function=commentjourneySelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -311,7 +311,7 @@ extension DetailJourneyViewController {
             "function": "userJoined",
             "idjourney": idjourney
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=userJoined"
+        let url = "http://192.168.2.101/friendforfare/get/index.php?function=userJoined"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -351,7 +351,7 @@ extension DetailJourneyViewController {
             "function": "insertcommentPost",
             "parameter": parameter
         ]
-        let url = "http://localhost/friendforfare/post/index.php?function=insertcommentPost"
+        let url = "http://192.168.2.101/friendforfare/post/index.php?function=insertcommentPost"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -391,7 +391,7 @@ extension DetailJourneyViewController {
             "userid" : iduser,
             "journeyid" : idjourney
         ]
-        let url = "http://localhost/friendforfare/delete/index.php?function=cancelJoin"
+        let url = "http://192.168.2.101/friendforfare/delete/index.php?function=cancelJoin"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

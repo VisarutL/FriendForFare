@@ -209,7 +209,7 @@ extension RegisterViewController {
         //            ]
         //        ]
         
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=insertUser"
+        let url = "http://192.168.2.101/friendforfare/post/index.php?function=insertUser"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -248,7 +248,7 @@ extension RegisterViewController {
         let parameters: Parameters = [
             "function": "uploadImage"
         ]
-        let url = "http://worawaluns.in.th/friendforfare/post/index.php?function=uploadImage"
+        let url = "http://192.168.2.101/friendforfare/post/index.php?function=uploadImage"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 

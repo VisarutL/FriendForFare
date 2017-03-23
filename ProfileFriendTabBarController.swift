@@ -9,14 +9,20 @@
 import UIKit
 import Alamofire
 
-class ProfileFriendTabBarController:UITableViewController{
+class ProfileFriendTabBarController:UIViewController{
     
     let reviewuserCelldentifier = "Cell"
     let reviewCell = "ReviewUserViewCell"
     let profileViewCelldentifier = "ProfileCell"
     let profileViewCell = "ProfileViewCell"
     
-    var closeBarButton = UIBarButtonItem()
+    
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var fadeView: UIView!
+    @IBOutlet weak var containerView: UIView!
+    var userProfileView: ProfileView!
+    
     var myText:String?
     var friend = [String: Any]()
     
@@ -29,19 +35,24 @@ class ProfileFriendTabBarController:UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = UIColor.tabbarColor
-        tableView.showsVerticalScrollIndicator = false
-        
+        viewSetting()
+        tableSetting()
         selectData()
-        let iduser = "\(friend["id_user"] as! String)"
-        let userid = Int(iduser)
-        avgrate(iduser: userid!)
-        setCloseButton()
-        tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
-        tableView.rowHeight = 115
+        avgrate()
+        userProfileView = profileViewSetting()
+        self.containerView.addSubview(self.userProfileView)
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.userProfileView.frame = CGRect(x: 0, y: 0, width: self.containerView.frame.width, height: 260)
+        self.userProfileView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.userProfileView.addBorderBottom(size: 1, color: UIColor.gray)
+        self.userProfileView.backgroundColor = UIColor.tabColor
+        self.containerView.layoutIfNeeded()
+    }
+    
     func initManager() -> SessionManager {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.timeoutIntervalForRequest = 10
@@ -49,19 +60,74 @@ class ProfileFriendTabBarController:UITableViewController{
         let manager = Alamofire.SessionManager(configuration: configuration)
         return manager
     }
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    @IBAction func closeButton(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func closeAction() {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ProfileFriendTabBarController: UITableViewDelegate,UITableViewDataSource {
+    
+    func tableSetting() {
+        
+        let verticalOffset: CGFloat = 20
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        
+        tableView.rowHeight = 115
+        
+        let dummyFooterView: UIView = {
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 20))
+            view.backgroundColor = .white
+            return view
+        }()
+        tableView.tableFooterView = dummyFooterView
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -dummyFooterView.frame.height + verticalOffset, right: 0)
+        tableView.scrollIndicatorInsets = UIEdgeInsets(top: tableView.sectionHeaderHeight, left: 0, bottom: verticalOffset, right: 0)
+        
+        tableView.register(UINib(nibName: profileViewCell, bundle: nil), forCellReuseIdentifier: profileViewCelldentifier)
+        tableView.register(UINib(nibName: reviewCell, bundle: nil), forCellReuseIdentifier: reviewuserCelldentifier)
+        
+        automaticallyAdjustsScrollViewInsets = false
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if profilefriend.count == 0 {
+            return 1
+        }
+        return profilefriend.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if profilefriend.count == 0 {
+            return 60
+        }
         return 100
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if profilefriend.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell") ??
+                UITableViewCell(style: .default, reuseIdentifier: "emptyCell")
+            cell.textLabel?.text = "ยังไม่มีคนรีวิว"
+            cell.textLabel?.textColor = UIColor.gray
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell.textLabel?.textAlignment = .center
+            return cell
+        }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reviewuserCelldentifier, for: indexPath) as! ReviewUserViewCell
         
@@ -70,17 +136,19 @@ class ProfileFriendTabBarController:UITableViewController{
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
-        let profilefriend = self.profilefriend[indexPath.row]
-        cell.comemtLabel.text = "\(profilefriend["comment_review"]!)"
-        cell.timeLabel.text = "\(profilefriend["datetime_review"]!)"
-        let rate = profilefriend["rate_review"] as! String
+        let item = self.profilefriend[indexPath.row]
+        cell.comemtLabel.text = "\(item["comment_review"]!)"
+        cell.timeLabel.text = "\(item["datetime_review"]!)"
+        cell.journeyReviewLabel.text = "\(item["drop_journey"]!)"
+        
+        let rate = item["rate_review"] as! String
         cell.setRateImage(rate: Int(rate)!)
         
-        guard let imageName = profilefriend["pic_user"] as? String ,imageName != "" else {
+        guard let imageName = item["pic_user"] as? String ,imageName != "" else {
             return cell
         }
         
-        let path = "http://localhost/friendforfare/images/"
+        let path = "http://192.168.2.101/friendforfare/images/"
         if let url = NSURL(string: "\(path)\(imageName)") {
             if let data = NSData(contentsOf: url as URL) {
                 DispatchQueue.main.async {
@@ -94,86 +162,91 @@ class ProfileFriendTabBarController:UITableViewController{
         
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profilefriend.count
+    func setReview() {
+        if rateProfile.count == 0 {
+            userProfileView.setRateImage(rate: 0)
+        } else {
+            let rate = "\(rateProfile[0]["rate"]!)"
+            let rateprofile = Int(rate)
+            if rateprofile == nil {
+            } else {
+                userProfileView.setRateImage(rate: rateprofile!)
+            }
+            if rateProfileGirl.count == 0 {
+                userProfileView.setRateImageGirl(rate: 0)
+            } else {
+                let rategirl = "\(rateProfileGirl[0]["rategirl"]!)"
+                let rateprofileGirl = Int(rategirl)
+                if rateprofileGirl == nil {
+                    userProfileView.setRateImageGirl(rate: 0)
+                } else {
+                    userProfileView.setRateImageGirl(rate: rateprofileGirl!)
+                }
+            }
+        }
+    }
+    
+}
+
+extension ProfileFriendTabBarController {
+    
+    func viewSetting() {
+        
+        navigationController?.isNavigationBarHidden = true
+        view.backgroundColor = .clear
+        
+        //        DispatchQueue.main.async {
+        //            self.profileViewSetting()
+        //        }
+        
+        
+        
+        
+        
+        containerView.layer.cornerRadius = 10
+        containerView.layer.masksToBounds = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeAction))
+        fadeView.addGestureRecognizer(tap)
     }
     
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        tableView.register(UINib(nibName: profileViewCell, bundle: nil), forCellReuseIdentifier: profileViewCelldentifier)
-        let cell = tableView.dequeueReusableCell(withIdentifier: profileViewCelldentifier) as! ProfileViewCell
+    func profileViewSetting() -> ProfileView {
+        
+        let userProfileView = Bundle.main.loadNibNamed("ProfileView",
+                                                       owner: nil,
+                                                       options: nil)?.first as! ProfileView
         
         if friend.count == 0 {
-            cell.fullnameLabel.text = "full name."
-            cell.telLabel.text = "telephone."
-            cell.emailLabel.text = "mail."
+            userProfileView.fullnameLabel.text = "full name."
+            userProfileView.telLabel.text = "telephone."
+            userProfileView.emailLabel.text = "mail."
         } else {
-            cell.fullnameLabel.text = "\(friend["fname_user"] as! String) \(friend["lname_user"] as! String)"
-            cell.telLabel.text = "Tel : \(friend["tel_user"] as! String)"
-            cell.emailLabel.text = "Email : \(friend["email_user"] as! String)"
-            if rateProfile.count == 0 {
-                cell.setRateImage(rate: 0)
-            } else {
-                let rate = "\(rateProfile[0]["rate"]!)"
-                let rateprofile = Int(rate)
-                if rateprofile == nil {
-                } else {
-                    cell.setRateImage(rate: rateprofile!)
-                }
-                if rateProfileGirl.count == 0 {
-                    cell.setRateImageGirl(rate: 0)
-                } else {
-                    let rategirl = "\(rateProfileGirl[0]["rategirl"]!)"
-                    let rateprofileGirl = Int(rategirl)
-                    if rateprofileGirl == nil {
-                        cell.setRateImageGirl(rate: 0)
-                    } else {
-                        cell.setRateImageGirl(rate: rateprofileGirl!)
-                    }
-                }
-            }
+            userProfileView.fullnameLabel.text = "\(friend["fname_user"] as! String) \(friend["lname_user"] as! String)"
+            userProfileView.telLabel.text = "Tel : \(friend["tel_user"] as! String)"
+            userProfileView.emailLabel.text = "Email : \(friend["email_user"] as! String)"
             
             
             guard let imageName = friend["pic_user"] as? String ,imageName != "" else {
-                return cell
+                return userProfileView
             }
             
-            let path = "http://localhost/friendforfare/images/"
+            let path = "http://192.168.2.101/friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
-                        cell.profileImage.image = UIImage(data: data as Data)
+                        userProfileView.profileImage.image = UIImage(data: data as Data)
                     }
                     
                 }
             }
         }
         
-        cell.setRateImage(rate: userRate)
+        userProfileView.setRateImage(rate: userRate)
         
-        return cell
+        return userProfileView
+        
     }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 260
-    }
-    
-    func setCloseButton() {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "Close1"), for: .normal)
-        button.sizeToFit()
-        closeBarButton = UIBarButtonItem(customView: button)
-        button.addTarget(self, action: #selector(self.self.closeAction), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = closeBarButton
-    }
-    
-    func closeAction() {
-        dismiss(animated: true, completion: nil)
-    }
-}
-
-extension ProfileFriendTabBarController {
-    //    (completionHandler:@escaping (_ r:[Region]?
     
     func selectData() {
         let iduser = (friend["id_user"] as! String)
@@ -181,26 +254,23 @@ extension ProfileFriendTabBarController {
             "function": "profilefriendSelect",
             "userid" : iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=profilefriendSelect"
+        let url = "http://192.168.2.101/friendforfare/get/index.php?function=profilefriendSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
                     
                     
                     if let JSON = response.result.value {
-//                        print("JSON: \(JSON)")
+                        //                        print("JSON: \(JSON)")
                         
                         for item in JSON as! NSArray {
                             self.profilefriend.append(item as! NSDictionary)
                         }
-                        
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
+                        self.avgrate()
                     }
                 case .failure(let error):
                     print(error)
@@ -208,12 +278,13 @@ extension ProfileFriendTabBarController {
             })
     }
     
-    func avgrate(iduser:Int) {
+    func avgrate() {
+        let iduser = "\(friend["id_user"] as! String)"
         let parameters: Parameters = [
             "function": "avgrate",
             "iduser" : iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -241,7 +312,7 @@ extension ProfileFriendTabBarController {
             "function": "avgrategirl",
             "iduser" : iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -254,6 +325,7 @@ extension ProfileFriendTabBarController {
                         for item in JSON as! NSArray {
                             self.rateProfileGirl.append(item as! NSDictionary)
                         }
+                        self.setReview()
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
@@ -263,5 +335,5 @@ extension ProfileFriendTabBarController {
                 }
             })
     }
-
+    
 }

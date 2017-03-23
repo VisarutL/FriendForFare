@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MobileCoreServices
 
-protocol EditProfileViewDelegate:class {
+protocol EditProfileViewCellDelegate:class {
     func editProfileViewDidFinish()
 }
 
@@ -28,7 +28,7 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var lastnameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var telTextField: UITextField!
-
+    
     var profileList = [NSDictionary]()
     
     var allTextField:[UITextField] {
@@ -42,13 +42,13 @@ class EditProfileViewController: UIViewController {
     
     var picker = UIImagePickerController()
     
-    weak var delegate:EditProfileViewDelegate?
+    weak var delegate:EditProfileViewCellDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         profileImageSetting()
         
-        let path = "http://localhost/friendforfare/images/"
+        let path = "http://192.168.2.101/friendforfare/images/"
         let url = NSURL(string:"\(path)\(picuser)")
         let data = NSData(contentsOf:url! as URL)
         profileimage.image = UIImage(data:data as! Data)
@@ -92,7 +92,7 @@ class EditProfileViewController: UIViewController {
         }
         
     }
-
+    
     @IBAction func uploadImage(_ sender: Any) {
         uploadimage()
     }
@@ -126,7 +126,7 @@ extension EditProfileViewController {
             "parameter": parameter
         ]
         
-        let url = "http://localhost/friendforfare/update/index.php"
+        let url = "http://192.168.2.101/friendforfare/update/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -156,7 +156,7 @@ extension EditProfileViewController {
             })
         
     }
-
+    
     
     func uploadUserImage() {
         //mark: - set folder permition using command line
@@ -166,7 +166,7 @@ extension EditProfileViewController {
         let parameters: Parameters = [
             "function": "uploadImage"
         ]
-        let url = "http://localhost/friendforfare/post/index.php?function=uploadImage"
+        let url = "http://192.168.2.101/friendforfare/post/index.php?function=uploadImage"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
@@ -184,10 +184,10 @@ extension EditProfileViewController {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
                         
-//                        debugPrint(response)
+                        //                        debugPrint(response)
                         if let result = response.result.value {
                             let JSON = result as! NSDictionary
-//                            let imageLocation = JSON.object(forKey: "filepath") as? String
+                            //                            let imageLocation = JSON.object(forKey: "filepath") as? String
                             
                             let uniqid = JSON["uniqid"] as! String
                             self.simulateEdit(uid:uniqid)

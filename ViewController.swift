@@ -131,7 +131,7 @@ extension ViewController:FBSDKLoginButtonDelegate {
             "name": name,
             "id": id
         ]
-        let url = "http://localhost/friendforfare/post/index.php"
+        let url = "http://192.168.2.101/friendforfare/post/index.php"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
@@ -211,7 +211,7 @@ extension ViewController {
             "password": password
             
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

@@ -20,6 +20,7 @@ class FriendListViewController:UITableViewController {
     var fristTime = true
     
     var itemInfo = IndicatorInfo(title: "New")
+    
     var deleteID:Int?
     
     init(style: UITableViewStyle, itemInfo: IndicatorInfo) {
@@ -36,7 +37,7 @@ class FriendListViewController:UITableViewController {
         tableView.register(UINib(nibName: friendViewCell, bundle: nil), forCellReuseIdentifier: friendViewCelldentifier)
         tableView?.rowHeight = 90
         setPullToRefresh()
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +64,7 @@ class FriendListViewController:UITableViewController {
         cell.nameLabel.text = "\(friend["fname_user"]!) \(friend["lname_user"]!)"
         cell.usernameLabel.text = "\(friend["username_user"]!)"
         cell.countjoinLabel.text = "Count: \(friend["counttrip"]!)"
-            
+        
         guard let imageName = friend["pic_user"] as? String ,imageName != "" else {
             return cell
         }
@@ -80,7 +81,7 @@ class FriendListViewController:UITableViewController {
         
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friendList.count
     }
@@ -91,11 +92,15 @@ class FriendListViewController:UITableViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
         vc.myText = "Friend"
         vc.friend = friendList[indexPath.row] as! [String : Any]
-        let nvc = NavController(rootViewController: vc)
-        self.present(nvc, animated: true, completion: nil)
+        
+        let nvc = UINavigationController(rootViewController: vc)
+        nvc.modalPresentationStyle = .overFullScreen
+        nvc.modalTransitionStyle = .crossDissolve
+        present(nvc, animated: true, completion: nil)
+        
     }
     
-
+    
 }
 
 
@@ -148,12 +153,12 @@ extension FriendListViewController {
             "function": "deleteFriend",
             "userid" : id
         ]
-        let url = "http://localhost/friendforfare/delete/index.php?function=deleteFriend"
+        let url = "http://192.168.2.101/friendforfare/delete/index.php?function=deleteFriend"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
                     
@@ -181,7 +186,7 @@ extension FriendListViewController {
                 }
             })
     }
-
+    
 }
 
 extension FriendListViewController {
@@ -199,50 +204,50 @@ extension FriendListViewController {
         
     }
     
-//    func loadData() {
-//        selectData()
-//        
-//    }
+    //    func loadData() {
+    //        selectData()
+    //
+    //    }
     
     func selectData(iduser:Int) {
         let parameters: Parameters = [
             "function": "friendSelect",
             "iduser": iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
-                if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
-                    for friend in JSON as! NSArray {
-                        self.friendList.append(friend as! NSDictionary)
-                    }
-                    
-                }
-                let now = NSDate()
-                let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
-                self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
-                
-                DispatchQueue.main.async {
-                    self.fristTime = true
-                    
-                    if let refreshControl = self.refreshControl {
-                        if refreshControl.isRefreshing {
-                            refreshControl.endRefreshing()
+                    if let JSON = response.result.value {
+                        //                    print("JSON: \(JSON)")
+                        for friend in JSON as! NSArray {
+                            self.friendList.append(friend as! NSDictionary)
                         }
+                        
                     }
+                    let now = NSDate()
+                    let updateString = "Last Update at " + self.dateFormatter.string(from: now as Date)
+                    self.refreshControl?.attributedTitle = NSAttributedString(string: updateString)
                     
-                    self.tableView?.reloadData()
+                    DispatchQueue.main.async {
+                        self.fristTime = true
+                        
+                        if let refreshControl = self.refreshControl {
+                            if refreshControl.isRefreshing {
+                                refreshControl.endRefreshing()
+                            }
+                        }
+                        
+                        self.tableView?.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
-            }
-        })
+            })
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -254,8 +259,8 @@ extension FriendListViewController {
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-//        self.refreshControl?.backgroundColor = UIColor.tabbarColor
-//        self.refreshControl?.tintColor = UIColor.white
+        //        self.refreshControl?.backgroundColor = UIColor.tabbarColor
+        //        self.refreshControl?.tintColor = UIColor.white
         
         let selector = #selector(self.handleRefresh)
         self.refreshControl?.addTarget(self,

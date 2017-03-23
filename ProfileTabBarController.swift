@@ -94,24 +94,24 @@ class ProfileTabBarController:UITableViewController{
                 cell.profileImage.image = UIImage(named: "Female1")
                 cell.setRateImageGirl(rate: Int(rate)!)
             }
-//            guard let imageName = reviewprofile["pic_user"] as? String ,imageName != "" else {
-//                return cell
-//            }
-//            
-//            let path = "http://localhost/friendforfare/images/"
-//            if let url = NSURL(string: "\(path)\(imageName)") {
-//                if let data = NSData(contentsOf: url as URL) {
-//                    DispatchQueue.main.async {
-//                        cell.profileImage.image = UIImage(data: data as Data)
-//                    }
-//                    
-//                }
-//            }
-
+            //            guard let imageName = reviewprofile["pic_user"] as? String ,imageName != "" else {
+            //                return cell
+            //            }
+            //
+            //            let path = "http://192.168.2.101/friendforfare/images/"
+            //            if let url = NSURL(string: "\(path)\(imageName)") {
+            //                if let data = NSData(contentsOf: url as URL) {
+            //                    DispatchQueue.main.async {
+            //                        cell.profileImage.image = UIImage(data: data as Data)
+            //                    }
+            //
+            //                }
+            //            }
+            
         }
         
         return cell
-
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -162,7 +162,7 @@ class ProfileTabBarController:UITableViewController{
                 return cell
             }
             
-            let path = "http://localhost/friendforfare/images/"
+            let path = "http://192.168.2.101/friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
@@ -183,10 +183,10 @@ class ProfileTabBarController:UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.row < 0 {
-//            let cell = tableView.cellForRow(at: indexPath) as! ProfileViewCell
-//            cell.setProfileImage()
-//        }
+        //        if indexPath.row < 0 {
+        //            let cell = tableView.cellForRow(at: indexPath) as! ProfileViewCell
+        //            cell.setProfileImage()
+        //        }
         
     }
     
@@ -207,7 +207,7 @@ class ProfileTabBarController:UITableViewController{
         
         alert.addAction(logoutAction)
         alert.addAction(cancelAction)
-    
+        
         alert.popoverPresentationController?.sourceView = self.view
         let cgRectMake = CGRect(x: self.view.bounds.size.width / 2.0, y:self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         alert.popoverPresentationController?.sourceRect = cgRectMake
@@ -220,7 +220,7 @@ class ProfileTabBarController:UITableViewController{
     
 }
 
-extension ProfileTabBarController:EditProfileViewDelegate {
+extension ProfileTabBarController:EditProfileViewCellDelegate {
     func editProfileViewDidFinish() {
         profile = [NSDictionary]()
         reviewprofile = [NSDictionary]()
@@ -234,8 +234,8 @@ extension ProfileTabBarController:EditProfileViewDelegate {
     }
 }
 
-extension ProfileTabBarController:ProfileViewDelegate {
-    func profileViewDidLogout(){
+extension ProfileTabBarController:ProfileViewCellDelegate {
+    func profileViewCellDidLogout(){
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "LoginVC")
         present(vc, animated: true, completion: nil)
@@ -243,23 +243,23 @@ extension ProfileTabBarController:ProfileViewDelegate {
 }
 
 extension ProfileTabBarController {
-
+    
     
     func selectData(iduser:Int) {
         let parameters: Parameters = [
             "function": "profileSelect",
             "iduser": iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=profileSelect"
+        let url = "http://192.168.2.101/friendforfare/get/index.php?function=profileSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-//                        print("JSON: \(JSON)")
+                        //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.profile.append(item as! NSDictionary)
                             
@@ -279,16 +279,16 @@ extension ProfileTabBarController {
             "function": "reviewprofileSelect",
             "userid" : id
         ]
-        let url = "http://localhost/friendforfare/get/index.php?function=reviewprofileSelect"
+        let url = "http://192.168.2.101/friendforfare/get/index.php?function=reviewprofileSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-//                        print("JSON: \(JSON)")
+                        //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.reviewprofile.append(item as! NSDictionary)
                         }
@@ -299,23 +299,23 @@ extension ProfileTabBarController {
                     print(error)
                 }
             })
-        }
+    }
     
     func avgrate(iduser:Int) {
         let parameters: Parameters = [
             "function": "avgrate",
             "iduser" : iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                //                debugPrint(response)
                 switch response.result {
                 case .success:
                     if let JSON = response.result.value {
-//                        print("JSON: \(JSON)")
+                        //                        print("JSON: \(JSON)")
                         for item in JSON as! NSArray {
                             self.rateProfile.append(item as! NSDictionary)
                         }
@@ -333,7 +333,7 @@ extension ProfileTabBarController {
             "function": "avgrategirl",
             "iduser" : iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -355,5 +355,5 @@ extension ProfileTabBarController {
                 }
             })
     }
-
+    
 }

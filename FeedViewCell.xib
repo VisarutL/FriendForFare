@@ -15,21 +15,21 @@
             <rect key="frame" x="0.0" y="0.0" width="733" height="197"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I3u-it-TXl" id="bPU-Rz-n4K">
-                <rect key="frame" x="0.0" y="0.0" width="733" height="196"/>
+                <rect key="frame" x="0.0" y="0.0" width="733" height="196.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="8B6A4EF6-AB03-4B52-A74D-E24639980A1E" translatesAutoresizingMaskIntoConstraints="NO" id="Qdb-bc-uv5">
-                        <rect key="frame" x="8" y="66" width="65" height="65"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="57475C81-D9A8-43A7-8500-7BD51B5EAD79" translatesAutoresizingMaskIntoConstraints="NO" id="Qdb-bc-uv5">
+                        <rect key="frame" x="20" y="66" width="65" height="65"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="65" id="Ibj-V5-hrF"/>
                             <constraint firstAttribute="width" constant="65" id="mGL-k6-8hY"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="tIG-XQ-BCg">
-                        <rect key="frame" x="85" y="67" width="628" height="64"/>
+                        <rect key="frame" x="105" y="67" width="608" height="64"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eG0-E6-EFn">
-                                <rect key="frame" x="0.0" y="0.0" width="628" height="16"/>
+                                <rect key="frame" x="0.0" y="0.0" width="608" height="16"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pickup" translatesAutoresizingMaskIntoConstraints="NO" id="ORP-uT-e3r">
                                         <rect key="frame" x="0.0" y="-1" width="18" height="18"/>
@@ -39,7 +39,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5Y-7T-fBd">
-                                        <rect key="frame" x="26" y="0.0" width="602" height="17"/>
+                                        <rect key="frame" x="26" y="0.0" width="582" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -55,7 +55,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKO-hC-9yV">
-                                <rect key="frame" x="0.0" y="16" width="628" height="16"/>
+                                <rect key="frame" x="0.0" y="16" width="608" height="16"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropoff" translatesAutoresizingMaskIntoConstraints="NO" id="P6W-9v-dPr">
                                         <rect key="frame" x="0.0" y="-1" width="18" height="18"/>
@@ -67,7 +67,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCr-3M-p8P">
-                                        <rect key="frame" x="26" y="0.0" width="602" height="17"/>
+                                        <rect key="frame" x="26" y="0.0" width="582" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -83,13 +83,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9G-gL-OAV">
-                                <rect key="frame" x="0.0" y="32" width="628" height="16"/>
+                                <rect key="frame" x="0.0" y="32" width="608" height="16"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" red="0.53708748283854424" green="0.55044574774145882" blue="0.56171875000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIh-4R-u8n">
-                                <rect key="frame" x="0.0" y="48" width="628" height="16"/>
+                                <rect key="frame" x="0.0" y="48" width="608" height="16"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" red="0.53725490196078429" green="0.5490196078431373" blue="0.5607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -103,9 +103,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="Qdb-bc-uv5" firstAttribute="centerY" secondItem="bPU-Rz-n4K" secondAttribute="centerY" id="E3B-4x-i4f"/>
-                    <constraint firstItem="Qdb-bc-uv5" firstAttribute="leading" secondItem="bPU-Rz-n4K" secondAttribute="leading" constant="8" id="Eem-Vy-TRr"/>
+                    <constraint firstItem="Qdb-bc-uv5" firstAttribute="leading" secondItem="bPU-Rz-n4K" secondAttribute="leading" constant="20" id="Eem-Vy-TRr"/>
                     <constraint firstAttribute="trailing" secondItem="tIG-XQ-BCg" secondAttribute="trailing" constant="20" id="WZC-Dj-hOq"/>
-                    <constraint firstItem="tIG-XQ-BCg" firstAttribute="leading" secondItem="Qdb-bc-uv5" secondAttribute="trailing" constant="12" id="laZ-kh-2a8"/>
+                    <constraint firstItem="tIG-XQ-BCg" firstAttribute="leading" secondItem="Qdb-bc-uv5" secondAttribute="trailing" constant="20" id="laZ-kh-2a8"/>
                     <constraint firstItem="tIG-XQ-BCg" firstAttribute="centerY" secondItem="Qdb-bc-uv5" secondAttribute="centerY" id="zV2-Qv-0bh"/>
                 </constraints>
             </tableViewCellContentView>
@@ -120,7 +120,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="8B6A4EF6-AB03-4B52-A74D-E24639980A1E" width="504" height="504">
+        <image name="57475C81-D9A8-43A7-8500-7BD51B5EAD79" width="504" height="504">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

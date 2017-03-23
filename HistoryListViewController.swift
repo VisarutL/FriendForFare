@@ -84,7 +84,7 @@ class HistoryListViewController: UITableViewController {
             return cell
         }
         
-        let path = "http://localhost/friendforfare/images/"
+        let path = "http://192.168.2.101/friendforfare/images/"
         if let url = NSURL(string: "\(path)\(imageName)") {
             if let data = NSData(contentsOf: url as URL) {
                 DispatchQueue.main.async {
@@ -133,7 +133,7 @@ extension HistoryListViewController {
             "function": "historyjourneySelect",
             "iduser": iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

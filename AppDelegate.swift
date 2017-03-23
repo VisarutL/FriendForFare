@@ -22,11 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         setNavigationBarAppearace()
-        setLocationService()
         
         let userID = UserDefaults.standard.integer(forKey: "UserID")
-        print("userID: \(userID)")
-        
         if userID > 0 {
             DispatchQueue.main.async {
                 let storyBoard = UIStoryboard(name: "Main", bundle: nil)
@@ -36,6 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        let userID = UserDefaults.standard.integer(forKey: "UserID")
+        if userID > 0 {
+            setLocationService()
+        }
+        return true
     }
     
     public func application(_ app: UIApplication,open url: URL,options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {

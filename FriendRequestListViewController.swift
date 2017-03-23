@@ -66,7 +66,7 @@ class FriendRequestListViewController:UITableViewController {
                 return cell
             }
             
-            let path = "http://localhost/friendforfare/images/"
+            let path = "http://192.168.2.101/friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
@@ -91,8 +91,11 @@ class FriendRequestListViewController:UITableViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
         vc.myText = "FriendRequest"
         vc.friend = friendrequestList[indexPath.row] as! [String : Any]
-        let nvc = NavController(rootViewController: vc)
-        self.present(nvc, animated: true, completion: nil)
+        
+        let nvc = UINavigationController(rootViewController: vc)
+        nvc.modalPresentationStyle = .overFullScreen
+        nvc.modalTransitionStyle = .crossDissolve
+        present(nvc, animated: true, completion: nil)
     }
 }
 
@@ -116,7 +119,7 @@ extension FriendRequestListViewController {
             "function": "friendrequestSelect",
             "iduser": iduser
         ]
-        let url = "http://localhost/friendforfare/get/index.php"
+        let url = "http://192.168.2.101/friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -214,7 +217,7 @@ extension FriendRequestListViewController {
             "userid" : userID,
             "status" : status
         ]
-        let url = "http://localhost/friendforfare/update/index.php"
+        let url = "http://192.168.2.101/friendforfare/update/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
