@@ -47,7 +47,7 @@ class JoinViewController:UIViewController {
     }
     
     func dataProfile() {
-        let path = "http://192.168.2.101/friendforfare/images/"
+        let path = "\(URLbase.URLbase)friendforfare/images/"
         let url = NSURL(string:"\(path)\(join["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
@@ -151,7 +151,7 @@ extension JoinViewController:UITableViewDataSource {
             cell.journeyReviewLabel.text = "\(journey)"
             cell.setRateImage(rate: Int(rate)!)
             
-            let path = "http://192.168.2.101/friendforfare/images/"
+            let path = "\(URLbase.URLbase)friendforfare/images/"
             let url = NSURL(string:"\(path)\(reviewprofile["pic_user"]!)")
             let data = NSData(contentsOf:url! as URL)
             if let data = data as? Data {
@@ -173,7 +173,6 @@ extension JoinViewController:UITableViewDataSource {
         //            let cell = tableView.cellForRow(at: indexPath) as! ProfileViewCell
         //            cell.setProfileImage()
         //        }
-        
     }
 }
 
@@ -197,7 +196,7 @@ extension JoinViewController {
             "function": "profileSelect",
             "iduser": iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php?function=profileSelect"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php?function=profileSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -226,7 +225,7 @@ extension JoinViewController {
             "function": "reviewprofileSelect",
             "userid" : id
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php?function=reviewprofileSelect"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php?function=reviewprofileSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -253,7 +252,7 @@ extension JoinViewController {
             "function": "avgrate",
             "iduser" : iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -290,7 +289,7 @@ extension JoinViewController {
             "function": "joinAccept",
             "parameter": parameter
         ]
-        let url = "http://192.168.2.101/friendforfare/post/index.php?function=joinAccept"
+        let url = "\(URLbase.URLbase)friendforfare/post/index.php?function=joinAccept"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -329,7 +328,7 @@ extension JoinViewController {
             "function": "joinCancel",
             "parameter": parameter
         ]
-        let url = "http://192.168.2.101/friendforfare/post/index.php?function=joinCancel"
+        let url = "\(URLbase.URLbase)friendforfare/post/index.php?function=joinCancel"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

@@ -62,8 +62,8 @@ class HistoryListViewController: UITableViewController {
         
         
         let trip = tripList[indexPath.row]
-        cell.pickUpLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
-        cell.dropOffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
+        cell.pickUpLabel.text = "\(trip["pick_journey"] as! String)"
+        cell.dropOffLabel.text = "\(trip["drop_journey"] as! String)"
         cell.amountLabel.text = "\(trip["countuser"] as! String)/\(trip["count_journey"] as! String)"
         let dateTime  = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
         
@@ -84,7 +84,7 @@ class HistoryListViewController: UITableViewController {
             return cell
         }
         
-        let path = "http://192.168.2.101/friendforfare/images/"
+        let path = "\(URLbase.URLbase)friendforfare/images/"
         if let url = NSURL(string: "\(path)\(imageName)") {
             if let data = NSData(contentsOf: url as URL) {
                 DispatchQueue.main.async {
@@ -133,7 +133,7 @@ extension HistoryListViewController {
             "function": "historyjourneySelect",
             "iduser": iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

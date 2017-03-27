@@ -66,7 +66,7 @@ class FriendRequestListViewController:UITableViewController {
                 return cell
             }
             
-            let path = "http://192.168.2.101/friendforfare/images/"
+            let path = "\(URLbase.URLbase)friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
@@ -119,7 +119,7 @@ extension FriendRequestListViewController {
             "function": "friendrequestSelect",
             "iduser": iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -217,7 +217,7 @@ extension FriendRequestListViewController {
             "userid" : userID,
             "status" : status
         ]
-        let url = "http://192.168.2.101/friendforfare/update/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/update/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

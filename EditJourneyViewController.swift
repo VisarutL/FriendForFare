@@ -193,7 +193,7 @@ extension EditJourneyViewController {
             "function": "updateData",
             "parameter": parameter
         ]
-        let url = "http://192.168.2.101/friendforfare/post/index.php?function=updateData"
+        let url = "\(URLbase.URLbase)friendforfare/post/index.php?function=updateData"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -234,7 +234,7 @@ extension EditJourneyViewController {
             "function": "deletePost",
             "parameter": parameter
         ]
-        let url = "http://192.168.2.101/friendforfare/post/index.php?function=deletePost"
+        let url = "\(URLbase.URLbase)friendforfare/post/index.php?function=deletePost"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

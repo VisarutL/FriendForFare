@@ -350,7 +350,7 @@ extension PostTabBarController {
             "function": "insertPost",
             "parameter": parameter
         ]
-        let url = "http://192.168.2.101/friendforfare/post/index.php?function=insertPost"
+        let url = "\(URLbase.URLbase)friendforfare/post/index.php?function=insertPost"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

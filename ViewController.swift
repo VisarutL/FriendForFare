@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 import Alamofire
 import FBSDKCoreKit
@@ -131,7 +132,7 @@ extension ViewController:FBSDKLoginButtonDelegate {
             "name": name,
             "id": id
         ]
-        let url = "http://192.168.2.101/friendforfare/post/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/post/index.php"
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
@@ -211,7 +212,7 @@ extension ViewController {
             "password": password
             
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -219,18 +220,19 @@ extension ViewController {
 //                debugPrint(response)
                 switch response.result {
                 case .success:
-                    if let JSON = response.result.value as? NSDictionary {
-                        let status = JSON["status"] as! String
+                    if let result = response.result.value {
+                        let json = JSON(result)
+                        let status = json["status"].stringValue
                         switch status {
                         case "202":
-                            let iduser = JSON["iduser"] as! Int
-                            let gender = JSON["gender"] as! Int
+                            let iduser = json["iduser"].intValue
+                            let gender = json["gender"].intValue
                             self.login(iduser: iduser,genderuser: gender )
                         case "404":
-                            let message = JSON["message"] as! String
+                            let message = json["message"].stringValue
                             self.alert(message: "\(message)")
                         default:
-                            print("error: \(JSON)")
+                            print("error: \(json)")
                             break
                         }
 //                        print("JSON: \(JSON)")

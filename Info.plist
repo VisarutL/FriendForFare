@@ -29,6 +29,8 @@
 	<string>1150761898353433</string>
 	<key>FacebookDisplayName</key>
 	<string>FriendForFare</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

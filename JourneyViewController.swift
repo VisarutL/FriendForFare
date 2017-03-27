@@ -111,7 +111,7 @@ class JourneyViewController:UIViewController {
     }
     
     func setProfile() {
-        let path = "http://192.168.2.101/friendforfare/images/"
+        let path = "\(URLbase.URLbase)friendforfare/images/"
         let url = NSURL(string:"\(path)\(profileList[0]["pic_user"]!)")
         let data = NSData(contentsOf:url! as URL)
         if data == nil {
@@ -237,7 +237,7 @@ extension JourneyViewController {
             "function": "userJoined",
             "idjourney": idjourney
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php?function=userJoined"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php?function=userJoined"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -264,7 +264,7 @@ extension JourneyViewController {
             "function": "selectOwnerJourney",
             "idjourney": idjourney
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php?function=selectOwnerJourney"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php?function=selectOwnerJourney"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -291,7 +291,7 @@ extension JourneyViewController {
             "function": "avgrate",
             "iduser" : iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -317,7 +317,7 @@ extension JourneyViewController {
             "function": "avgrategirl",
             "iduser" : iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -347,7 +347,7 @@ extension JourneyViewController {
             let user = userjoinedList[i]
             let pic_user = user["pic_user"] as! String
             let username_user = user["username_user"] as! String
-            let path = "http://192.168.2.101/friendforfare/images/"
+            let path = "\(URLbase.URLbase)friendforfare/images/"
             let url = NSURL(string:"\(path)\(pic_user)")
             let data = NSData(contentsOf:url as! URL)
             let image = data == nil ? #imageLiteral(resourceName: "userprofile") : UIImage(data:data as! Data)
@@ -371,7 +371,7 @@ extension JourneyViewController {
             "function": "joinJourney",
             "parameter": parameter
         ]
-        let url = "http://192.168.2.101/friendforfare/post/index.php?function=joinJourney"
+        let url = "\(URLbase.URLbase)friendforfare/post/index.php?function=joinJourney"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

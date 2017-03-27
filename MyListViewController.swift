@@ -106,9 +106,9 @@ class MyListViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let tripwait = tripmywaitList[indexPath.row]
-            cell.pickUpLabel.text = "PICK-UP : \(tripwait["pick_journey"] as! String)"
-            cell.dropOffLabel.text = "DROP-OFF : \(tripwait["drop_journey"] as! String)"
-            cell.amountLabel.text = "0/\(tripwait["count_journey"] as! String)"
+            cell.pickUpLabel.text = "\(tripwait["pick_journey"] as! String)"
+            cell.dropOffLabel.text = "\(tripwait["drop_journey"] as! String)"
+            cell.amountLabel.text = "\(tripwait["countuser"] as! String)/\(tripwait["count_journey"] as! String)"
             let dateTime  = "\(tripwait["date_journey"] as! String) \(tripwait["time_journey"] as! String)"
             
             let dateFormatter = DateFormatter()
@@ -128,7 +128,7 @@ class MyListViewController: UITableViewController {
                 return cell
             }
             
-            let path = "http://192.168.2.101/friendforfare/images/"
+            let path = "\(URLbase.URLbase)friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
@@ -139,8 +139,8 @@ class MyListViewController: UITableViewController {
             }
         case 1:
             let tripme = tripmyList[indexPath.row]
-            cell.pickUpLabel.text = "PICK-UP : \(tripme["pick_journey"] as! String)"
-            cell.dropOffLabel.text = "DROP-OFF : \(tripme["drop_journey"] as! String)"
+            cell.pickUpLabel.text = "\(tripme["pick_journey"] as! String)"
+            cell.dropOffLabel.text = "\(tripme["drop_journey"] as! String)"
             cell.amountLabel.text = "\(tripme["countuser"] as! String)/\(tripme["count_journey"] as! String)"
             let dateTime  = "\(tripme["date_journey"] as! String) \(tripme["time_journey"] as! String)"
             
@@ -161,7 +161,7 @@ class MyListViewController: UITableViewController {
                 return cell
             }
             
-            let path = "http://192.168.2.101/friendforfare/images/"
+            let path = "\(URLbase.URLbase)friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
@@ -172,8 +172,8 @@ class MyListViewController: UITableViewController {
             }
         case 2:
             let tripjoin = tripmyjoinList[indexPath.row]
-            cell.pickUpLabel.text = "PICK-UP : \(tripjoin["pick_journey"] as! String)"
-            cell.dropOffLabel.text = "DROP-OFF : \(tripjoin["drop_journey"] as! String)"
+            cell.pickUpLabel.text = "\(tripjoin["pick_journey"] as! String)"
+            cell.dropOffLabel.text = "\(tripjoin["drop_journey"] as! String)"
             cell.amountLabel.text = "\(tripjoin["countuser"] as! String)/\(tripjoin["count_journey"] as! String)"
             cell.dateTmeLabel.text = "\(tripjoin["date_journey"] as! String) \(tripjoin["time_journey"] as! String)"
             
@@ -181,7 +181,7 @@ class MyListViewController: UITableViewController {
                 return cell
             }
             
-            let path = "http://192.168.2.101/friendforfare/images/"
+            let path = "\(URLbase.URLbase)friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
@@ -277,7 +277,7 @@ extension MyListViewController {
             "function": "journeymylistSelect",
             "iduser": iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -317,7 +317,7 @@ extension MyListViewController {
             "function": "journeymyjoinedSelect",
             "iduser": iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -357,7 +357,7 @@ extension MyListViewController {
             "function": "journeymywaitedSelect",
             "iduser": iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in

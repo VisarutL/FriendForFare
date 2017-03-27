@@ -98,7 +98,7 @@ class ProfileTabBarController:UITableViewController{
             //                return cell
             //            }
             //
-            //            let path = "http://192.168.2.101/friendforfare/images/"
+            //            let path = "\(URLbase.URLbase)friendforfare/images/"
             //            if let url = NSURL(string: "\(path)\(imageName)") {
             //                if let data = NSData(contentsOf: url as URL) {
             //                    DispatchQueue.main.async {
@@ -162,7 +162,7 @@ class ProfileTabBarController:UITableViewController{
                 return cell
             }
             
-            let path = "http://192.168.2.101/friendforfare/images/"
+            let path = "\(URLbase.URLbase)friendforfare/images/"
             if let url = NSURL(string: "\(path)\(imageName)") {
                 if let data = NSData(contentsOf: url as URL) {
                     DispatchQueue.main.async {
@@ -250,7 +250,7 @@ extension ProfileTabBarController {
             "function": "profileSelect",
             "iduser": iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php?function=profileSelect"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php?function=profileSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -279,7 +279,7 @@ extension ProfileTabBarController {
             "function": "reviewprofileSelect",
             "userid" : id
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php?function=reviewprofileSelect"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php?function=reviewprofileSelect"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -306,7 +306,7 @@ extension ProfileTabBarController {
             "function": "avgrate",
             "iduser" : iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
@@ -333,7 +333,7 @@ extension ProfileTabBarController {
             "function": "avgrategirl",
             "iduser" : iduser
         ]
-        let url = "http://192.168.2.101/friendforfare/get/index.php"
+        let url = "\(URLbase.URLbase)friendforfare/get/index.php"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding:URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
