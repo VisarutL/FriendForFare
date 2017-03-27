@@ -28,7 +28,7 @@ class JourneyViewController:UIViewController {
     @IBOutlet weak var dropoffLabel: UILabel!
     @IBOutlet weak var datetimeLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var detailTextView: UITextView!
+    @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var imageProfile1: UIImageView!
     @IBOutlet weak var imageProfile2: UIImageView!
     @IBOutlet weak var imageProfile3: UIImageView!
@@ -65,6 +65,7 @@ class JourneyViewController:UIViewController {
         super.viewDidAppear(animated)
         
     }
+    
     
     func initManager() -> SessionManager {
         let configuration = URLSessionConfiguration.ephemeral
@@ -210,7 +211,7 @@ class JourneyViewController:UIViewController {
         dropoffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
         datetimeLabel.text = "\(trip["date_journey"] as! String) , \(trip["time_journey"] as! String)"
         countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
-        detailTextView.text = "\(trip["detail_journey"] as! String)"
+        detailLabel.text = "\(trip["detail_journey"] as! String)"
     }
     
     func handleJoinButton() {
@@ -227,7 +228,6 @@ class JourneyViewController:UIViewController {
         let userID = UserDefaults.standard.integer(forKey: "UserID")
         joinJourney(id: userID,idjour:idjour )
     }
-    
 }
 
 extension JourneyViewController {

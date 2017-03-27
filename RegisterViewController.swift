@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import MobileCoreServices
+import SwiftyJSON
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     
@@ -74,10 +75,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
         
         if checkTextField() {
-            uploadUserImage()
+            if passwordTextField.text == checkpasswordTextField.text {
+                uploadUserImage()
+            } else {
+                return alert(message: "Password don't match")
+            }
             
         } else {
-            return alert(message: "alert please fill all information.")
+            return alert(message: "Alert please fill all information.")
         }
     }
 
@@ -200,15 +205,6 @@ extension RegisterViewController {
             "function": "insertUser",
             "parameter": parameter
         ]
-        //        let oldParameters: Parameters = [
-        //            "function": "insertUser",
-        //            "parameter": [
-        //                "UserID": "2016120005",
-        //                "UserName": "test",
-        //                "UserPassword": "password",
-        //            ]
-        //        ]
-        
         let url = "\(URLbase.URLbase)friendforfare/post/index.php?function=insertUser"
         let manager = initManager()
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
@@ -265,13 +261,16 @@ extension RegisterViewController {
                 switch encodingResult {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
-                        
 //                        debugPrint(response)
                         if let result = response.result.value {
-                            let JSON = result as! NSDictionary
-                            let imageLocation = JSON.object(forKey: "filepath") as? String
+                            debugPrint(response)
+//                            let JSON = result as! NSDictionary
+//                            let imageLocation = JSON.object(forKey: "filepath") as? String
+//                            let uniqid = JSON["uniqid"] as! String
                             
-                            let uniqid = JSON["uniqid"] as! String
+                            let json = JSON(result)
+                            let uniqid = json["uniqid"].stringValue
+                            
                             self.simulateRegister(uid:uniqid)
                         }
                     }

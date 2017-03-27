@@ -38,13 +38,17 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYS-va-8mg">
-                                                        <rect key="frame" x="38" y="8" width="44.5" height="14"/>
+                                                        <rect key="frame" x="38" y="8" width="282" height="14"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xB-5S-7UI">
                                                         <rect key="frame" x="328" y="4" width="23" height="23"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="23" id="GyB-jl-6Dj"/>
+                                                            <constraint firstAttribute="width" constant="23" id="Zbe-5V-kgf"/>
+                                                        </constraints>
                                                         <state key="normal" image="Map1">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </state>
@@ -55,6 +59,7 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
+                                                    <constraint firstItem="1xB-5S-7UI" firstAttribute="leading" secondItem="iYS-va-8mg" secondAttribute="trailing" constant="8" id="65v-ru-Dbd"/>
                                                     <constraint firstItem="iYS-va-8mg" firstAttribute="leading" secondItem="eC3-aQ-LIj" secondAttribute="trailing" constant="8" id="BQf-Dv-GdL"/>
                                                     <constraint firstItem="iYS-va-8mg" firstAttribute="top" secondItem="eoH-kV-vOT" secondAttribute="top" constant="8" id="DCC-YR-taa"/>
                                                     <constraint firstAttribute="bottom" secondItem="iYS-va-8mg" secondAttribute="bottom" constant="8" id="RN8-Db-IDD"/>
@@ -196,33 +201,26 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="H4Z-Qd-2OW">
-                                        <rect key="frame" x="4" y="125.5" width="367" height="40"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="zKe-fU-BCo"/>
-                                        </constraints>
-                                        <string key="text">Tel. 0932857443
-adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-</string>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5EX-mx-Unp">
                                         <rect key="frame" x="8" y="113.5" width="359" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQf-6o-tQb">
+                                        <rect key="frame" x="8" y="130.5" width="359" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="TQf-6o-tQb" firstAttribute="leading" secondItem="Cuj-Vu-WIz" secondAttribute="leading" constant="8" id="0ui-uD-XCd"/>
                                     <constraint firstAttribute="trailing" secondItem="Amr-AV-5dY" secondAttribute="trailing" constant="8" id="CsE-cN-ogM"/>
                                     <constraint firstItem="q9S-bT-NQT" firstAttribute="leading" secondItem="Cuj-Vu-WIz" secondAttribute="leading" constant="8" id="JPF-Y9-1mw"/>
                                     <constraint firstItem="5EX-mx-Unp" firstAttribute="leading" secondItem="Cuj-Vu-WIz" secondAttribute="leading" constant="8" id="Nzb-H3-agK"/>
-                                    <constraint firstItem="H4Z-Qd-2OW" firstAttribute="leading" secondItem="Cuj-Vu-WIz" secondAttribute="leading" constant="4" id="U02-6Q-BfB"/>
                                     <constraint firstItem="q9S-bT-NQT" firstAttribute="centerY" secondItem="xUQ-LL-lOa" secondAttribute="centerY" id="XoK-MJ-urD"/>
-                                    <constraint firstItem="H4Z-Qd-2OW" firstAttribute="top" secondItem="5EX-mx-Unp" secondAttribute="bottom" constant="-5" id="YPE-bQ-IBV"/>
                                     <constraint firstItem="xUQ-LL-lOa" firstAttribute="top" secondItem="Cuj-Vu-WIz" secondAttribute="top" id="bT5-CK-3hS"/>
                                     <constraint firstItem="5EX-mx-Unp" firstAttribute="top" secondItem="Amr-AV-5dY" secondAttribute="bottom" constant="8" id="dSS-yg-1v4"/>
                                     <constraint firstAttribute="trailing" secondItem="xUQ-LL-lOa" secondAttribute="trailing" constant="8" id="k16-xZ-Dr8"/>
@@ -232,9 +230,10 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                     <constraint firstItem="xUQ-LL-lOa" firstAttribute="leading" secondItem="q9S-bT-NQT" secondAttribute="trailing" constant="4" id="oGj-GA-rNE"/>
                                     <constraint firstAttribute="trailing" secondItem="hO5-il-cDP" secondAttribute="trailing" constant="8" id="rGy-Ud-Rcf"/>
                                     <constraint firstAttribute="height" constant="175" id="sc1-RH-CYK"/>
-                                    <constraint firstAttribute="trailing" secondItem="H4Z-Qd-2OW" secondAttribute="trailing" constant="4" id="t6V-DR-cjG"/>
                                     <constraint firstItem="hO5-il-cDP" firstAttribute="top" secondItem="xUQ-LL-lOa" secondAttribute="bottom" constant="8" id="tQ5-vh-pU9"/>
+                                    <constraint firstAttribute="trailing" secondItem="TQf-6o-tQb" secondAttribute="trailing" constant="8" id="ut5-Pm-HqQ"/>
                                     <constraint firstAttribute="trailing" secondItem="5EX-mx-Unp" secondAttribute="trailing" constant="8" id="z3q-wW-W4v"/>
+                                    <constraint firstItem="TQf-6o-tQb" firstAttribute="top" secondItem="5EX-mx-Unp" secondAttribute="bottom" id="ziU-Rv-s7p"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z38-fM-m1Y">
@@ -344,7 +343,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                     <connections>
                         <outlet property="countLabel" destination="xUQ-LL-lOa" id="K46-IU-mIc"/>
                         <outlet property="datetimeLabel" destination="k9B-MO-914" id="flG-Yz-S9K"/>
-                        <outlet property="detailTextView" destination="H4Z-Qd-2OW" id="CWb-5q-6oQ"/>
+                        <outlet property="detailLabel" destination="TQf-6o-tQb" id="ldv-UE-AMa"/>
                         <outlet property="dropoffLabel" destination="WrH-CU-h4n" id="nLv-li-TKW"/>
                         <outlet property="fullnameLabel" destination="BnK-gn-wJ8" id="Zkf-EO-uar"/>
                         <outlet property="imageProfile1" destination="IE1-uL-ac6" id="Adf-Gg-fYt"/>
@@ -522,26 +521,30 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                 <rect key="frame" x="0.0" y="64" width="375" height="106"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="A7X-v9-sfe">
-                                        <rect key="frame" x="8" y="8" width="359" height="80"/>
+                                        <rect key="frame" x="8" y="8" width="359" height="90"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uRE-xE-sJj">
-                                                <rect key="frame" x="0.0" y="0.0" width="359" height="26.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="359" height="30"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pickup" translatesAutoresizingMaskIntoConstraints="NO" id="mc8-dw-1f9">
-                                                        <rect key="frame" x="0.0" y="-1" width="30" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="VHn-2q-m2W"/>
                                                             <constraint firstAttribute="width" constant="30" id="wNh-pk-lbE"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pickup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NG9-MH-qQr">
-                                                        <rect key="frame" x="38" y="3" width="56" height="20.5"/>
+                                                        <rect key="frame" x="38" y="5.5" width="282" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hia-1u-68m">
-                                                        <rect key="frame" x="328" y="2" width="23" height="23"/>
+                                                        <rect key="frame" x="328" y="4" width="23" height="23"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="23" id="BCt-Kb-H7t"/>
+                                                            <constraint firstAttribute="height" constant="23" id="Esr-xG-cdE"/>
+                                                        </constraints>
                                                         <state key="normal" image="Map1">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </state>
@@ -557,20 +560,21 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                                     <constraint firstAttribute="trailing" secondItem="Hia-1u-68m" secondAttribute="trailing" constant="8" id="4fD-S3-aLY"/>
                                                     <constraint firstItem="mc8-dw-1f9" firstAttribute="leading" secondItem="uRE-xE-sJj" secondAttribute="leading" id="62U-7W-nTr"/>
                                                     <constraint firstItem="mc8-dw-1f9" firstAttribute="centerY" secondItem="uRE-xE-sJj" secondAttribute="centerY" id="8BE-AL-2WO"/>
+                                                    <constraint firstItem="Hia-1u-68m" firstAttribute="leading" secondItem="NG9-MH-qQr" secondAttribute="trailing" constant="8" id="c2F-c0-Lpc"/>
                                                     <constraint firstItem="Hia-1u-68m" firstAttribute="centerY" secondItem="NG9-MH-qQr" secondAttribute="centerY" id="vI9-hf-8QZ"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17J-xG-LAw">
-                                                <rect key="frame" x="0.0" y="26.5" width="359" height="27"/>
+                                                <rect key="frame" x="0.0" y="30" width="359" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dropoff" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAy-bh-M0X">
-                                                        <rect key="frame" x="38" y="4" width="313" height="19.5"/>
+                                                        <rect key="frame" x="38" y="5.5" width="313" height="19.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropoff" translatesAutoresizingMaskIntoConstraints="NO" id="kbU-9H-PBn">
-                                                        <rect key="frame" x="0.0" y="-1.5" width="30" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="5CI-5z-qOR"/>
                                                             <constraint firstAttribute="width" constant="30" id="WNO-Pl-A2l"/>
@@ -586,18 +590,18 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Klg-w3-E5z">
-                                                <rect key="frame" x="0.0" y="53.5" width="359" height="26.5"/>
+                                                <rect key="frame" x="0.0" y="60" width="359" height="30"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="7fw-zx-EQ8">
-                                                        <rect key="frame" x="2" y="2.5" width="20" height="20"/>
+                                                        <rect key="frame" x="2" y="5" width="20" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="6r5-dm-zsg"/>
                                                             <constraint firstAttribute="height" constant="20" id="E6I-rK-LWu"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Datetime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LUQ-LZ-Zzs">
-                                                        <rect key="frame" x="30" y="5.5" width="321" height="16"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <rect key="frame" x="30" y="6.5" width="321" height="17.5"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -612,7 +616,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                             </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="80" id="EEM-Kz-OS1"/>
+                                            <constraint firstAttribute="height" constant="90" id="EEM-Kz-OS1"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -667,15 +671,6 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                             <constraint firstAttribute="height" constant="60" id="t33-mQ-joK"/>
                                         </constraints>
                                     </stackView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zjn-7T-yYa">
-                                        <rect key="frame" x="4" y="138" width="367" height="39"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <string key="text">Tel. 0932857443
-adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-</string>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rE-qq-PJc">
                                         <rect key="frame" x="8" y="126" width="359" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
@@ -714,6 +709,12 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                             <constraint firstAttribute="height" constant="21" id="YtR-Qa-4qJ"/>
                                         </constraints>
                                     </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wW-Ba-w8Z">
+                                        <rect key="frame" x="8" y="147" width="359" height="17"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -725,17 +726,16 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                     <constraint firstAttribute="trailing" secondItem="Oaf-KS-n62" secondAttribute="trailing" constant="8" id="Ibn-Fq-Gx8"/>
                                     <constraint firstAttribute="trailing" secondItem="7rE-qq-PJc" secondAttribute="trailing" constant="8" id="Lk7-65-Jod"/>
                                     <constraint firstItem="wl3-Fs-NFA" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="8" id="Nre-fG-nI1"/>
-                                    <constraint firstAttribute="trailing" secondItem="Zjn-7T-yYa" secondAttribute="trailing" constant="4" id="OQn-5L-6lJ"/>
+                                    <constraint firstItem="1wW-Ba-w8Z" firstAttribute="top" secondItem="7rE-qq-PJc" secondAttribute="bottom" constant="4" id="P56-XX-vAC"/>
                                     <constraint firstAttribute="trailing" secondItem="vlt-xm-Fzk" secondAttribute="trailing" id="Sfl-SH-haj"/>
-                                    <constraint firstItem="Zjn-7T-yYa" firstAttribute="top" secondItem="7rE-qq-PJc" secondAttribute="bottom" constant="-5" id="SgB-jj-viS"/>
                                     <constraint firstItem="jWc-IP-Dx5" firstAttribute="leading" secondItem="q4X-Dp-gT8" secondAttribute="trailing" constant="4" id="Sug-sl-biG"/>
                                     <constraint firstItem="wl3-Fs-NFA" firstAttribute="top" secondItem="Oaf-KS-n62" secondAttribute="bottom" constant="4" id="byi-Bu-zMW"/>
-                                    <constraint firstItem="Zjn-7T-yYa" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="4" id="dvj-GW-Org"/>
                                     <constraint firstItem="jWc-IP-Dx5" firstAttribute="top" secondItem="GDz-DB-BUh" secondAttribute="top" constant="8" id="gfw-B6-oh7"/>
+                                    <constraint firstItem="1wW-Ba-w8Z" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="8" id="kok-2J-zQX"/>
                                     <constraint firstAttribute="bottom" secondItem="vlt-xm-Fzk" secondAttribute="bottom" id="mV3-pI-feQ"/>
                                     <constraint firstItem="7rE-qq-PJc" firstAttribute="top" secondItem="wl3-Fs-NFA" secondAttribute="bottom" constant="8" id="ssc-nJ-4x4"/>
+                                    <constraint firstAttribute="trailing" secondItem="1wW-Ba-w8Z" secondAttribute="trailing" constant="8" id="uRv-F1-Lay"/>
                                     <constraint firstAttribute="trailing" secondItem="jWc-IP-Dx5" secondAttribute="trailing" constant="8" id="vHy-T1-10v"/>
-                                    <constraint firstAttribute="bottom" secondItem="Zjn-7T-yYa" secondAttribute="bottom" constant="8" id="vee-gd-MsQ"/>
                                     <constraint firstItem="q4X-Dp-gT8" firstAttribute="leading" secondItem="GDz-DB-BUh" secondAttribute="leading" constant="8" id="wXe-Di-aIv"/>
                                     <constraint firstAttribute="height" constant="185" id="xdy-An-Wtu"/>
                                     <constraint firstAttribute="trailing" secondItem="wl3-Fs-NFA" secondAttribute="trailing" constant="8" id="yQ9-Yw-jqv"/>
@@ -749,18 +749,18 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JiS-4A-4Vs" id="tu5-bF-qv8">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5RK-TL-bi9">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="4" width="34" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cOj-2C-w5r">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
+                                                    <rect key="frame" x="15" y="25" width="44" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -857,7 +857,7 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
                         <outlet property="commentTextField" destination="kUt-iy-5RS" id="IgW-cZ-M5d"/>
                         <outlet property="countLabel" destination="jWc-IP-Dx5" id="4TI-0e-PkB"/>
                         <outlet property="datetimeLabel" destination="LUQ-LZ-Zzs" id="R1y-os-rTM"/>
-                        <outlet property="detailTextView" destination="Zjn-7T-yYa" id="soq-dy-MUa"/>
+                        <outlet property="detailLabel" destination="1wW-Ba-w8Z" id="pxr-1n-wfc"/>
                         <outlet property="dropoffLabel" destination="GAy-bh-M0X" id="RZk-mL-drV"/>
                         <outlet property="editButton" destination="lp4-Qo-hOp" id="mbb-1Z-y57"/>
                         <outlet property="pickupLabel" destination="NG9-MH-qQr" id="GyW-0e-XHu"/>
@@ -1314,6 +1314,6 @@ adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna ali
         <image name="userprofile" width="504" height="504"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="V4Z-Sf-Qoj"/>
+        <segue reference="nS5-da-YIf"/>
     </inferredMetricsTieBreakers>
 </document>

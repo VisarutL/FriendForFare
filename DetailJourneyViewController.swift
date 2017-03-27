@@ -20,10 +20,9 @@ class DetailJourneyViewController:UIViewController {
     @IBOutlet weak var dropoffLabel: UILabel!
     @IBOutlet weak var datetimeLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var detailTextView: UITextView!
+    @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var editButton: UIBarButtonItem!
-    
     @IBOutlet weak var profile1ImageView: UIImageView!
     @IBOutlet weak var profile2ImageView: UIImageView!
     @IBOutlet weak var profile3ImageView: UIImageView!
@@ -60,6 +59,10 @@ class DetailJourneyViewController:UIViewController {
         setCloseButton()
         loadImage()
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     func initManager() -> SessionManager {
@@ -135,7 +138,7 @@ class DetailJourneyViewController:UIViewController {
         dropoffLabel.text = "DROP-OFF : \(tripDetail["drop_journey"] as! String)"
         datetimeLabel.text = "\(tripDetail["date_journey"] as! String) , \(tripDetail["time_journey"] as! String)"
         countLabel.text = "0/\(tripDetail["count_journey"] as! String)"
-        detailTextView.text = "\(tripDetail["detail_journey"] as! String)"
+        detailLabel.text = "\(tripDetail["detail_journey"] as! String)"
         let idtrip = "\(tripDetail["id_journey"] as! String)"
         userJoined(idjourney: idtrip)
     }
