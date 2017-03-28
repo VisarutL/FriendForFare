@@ -131,6 +131,7 @@ extension CheckListViewController {
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
+                debugPrint(response)
                 switch response.result {
                 case .success:
                     print("Success")

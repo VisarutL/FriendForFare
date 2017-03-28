@@ -24,7 +24,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let userID = UserDefaults.standard.integer(forKey: "UserID")
         print("userID: \(userID)")
     
@@ -60,6 +59,7 @@ class ViewController: UIViewController {
         print("uesrGender: \(genderuser)")
         UserDefaults.standard.set(iduser, forKey: "UserID")
         UserDefaults.standard.set(genderuser, forKey: "UserGender")
+        
         self.presentNavTabBarController()
     }
     

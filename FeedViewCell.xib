@@ -15,10 +15,10 @@
             <rect key="frame" x="0.0" y="0.0" width="350" height="197"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I3u-it-TXl" id="bPU-Rz-n4K">
-                <rect key="frame" x="0.0" y="0.0" width="350" height="196"/>
+                <rect key="frame" x="0.0" y="0.0" width="350" height="196.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FCEA89AA-B265-4B68-B294-2F77626061EA" translatesAutoresizingMaskIntoConstraints="NO" id="Qdb-bc-uv5">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="E281EEBC-EC3C-4237-B74A-00CBA4A99EFE" translatesAutoresizingMaskIntoConstraints="NO" id="Qdb-bc-uv5">
                         <rect key="frame" x="20" y="66" width="65" height="65"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="65" id="Ibj-V5-hrF"/>
@@ -39,13 +39,16 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PICK-UP : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buU-Sy-Trq">
-                                        <rect key="frame" x="26" y="-0.5" width="68.5" height="16.5"/>
+                                        <rect key="frame" x="26" y="-1" width="68.5" height="16.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="68.5" id="tFJ-ty-X5o"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5Y-7T-fBd">
-                                        <rect key="frame" x="94.5" y="-0.5" width="37" height="17"/>
+                                        <rect key="frame" x="94" y="-1" width="131" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -59,6 +62,7 @@
                                     <constraint firstItem="ORP-uT-e3r" firstAttribute="centerY" secondItem="eG0-E6-EFn" secondAttribute="centerY" id="Ncj-Cl-qAm"/>
                                     <constraint firstItem="buU-Sy-Trq" firstAttribute="centerY" secondItem="ORP-uT-e3r" secondAttribute="centerY" id="XP1-bt-Jw6"/>
                                     <constraint firstItem="Y5Y-7T-fBd" firstAttribute="centerY" secondItem="eG0-E6-EFn" secondAttribute="centerY" id="hNL-QQ-VXb"/>
+                                    <constraint firstAttribute="trailing" secondItem="Y5Y-7T-fBd" secondAttribute="trailing" id="w8Z-s2-dAP"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKO-hC-9yV">
@@ -69,18 +73,19 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="Orb-qv-Wem"/>
                                             <constraint firstAttribute="width" constant="18" id="abk-1c-6Sz"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="doR-S0-Tol"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="yGU-oM-pzO"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCr-3M-p8P">
-                                        <rect key="frame" x="109" y="-0.5" width="37" height="17"/>
+                                        <rect key="frame" x="109" y="-1" width="116" height="17"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DROP-OFF : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yxp-js-qJ8">
-                                        <rect key="frame" x="26" y="0.5" width="83" height="16.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="DROP-OFF : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yxp-js-qJ8">
+                                        <rect key="frame" x="26" y="0.0" width="83" height="16.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="83" id="Llj-qx-Wjm"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -88,12 +93,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="zCr-3M-p8P" firstAttribute="leading" secondItem="Yxp-js-qJ8" secondAttribute="trailing" id="Jh3-LD-LJS"/>
+                                    <constraint firstItem="Yxp-js-qJ8" firstAttribute="centerY" secondItem="bKO-hC-9yV" secondAttribute="centerY" id="MRb-2J-N0q"/>
                                     <constraint firstItem="zCr-3M-p8P" firstAttribute="centerY" secondItem="bKO-hC-9yV" secondAttribute="centerY" id="VAa-UL-Gp1"/>
-                                    <constraint firstItem="Yxp-js-qJ8" firstAttribute="centerY" secondItem="P6W-9v-dPr" secondAttribute="centerY" id="g93-Wv-WxT"/>
                                     <constraint firstItem="P6W-9v-dPr" firstAttribute="leading" secondItem="bKO-hC-9yV" secondAttribute="leading" id="hdO-9s-ARN"/>
+                                    <constraint firstItem="zCr-3M-p8P" firstAttribute="leading" secondItem="Yxp-js-qJ8" secondAttribute="trailing" id="kNY-0G-oy6"/>
+                                    <constraint firstItem="Yxp-js-qJ8" firstAttribute="leading" secondItem="P6W-9v-dPr" secondAttribute="trailing" constant="8" id="mEU-M5-DeJ"/>
                                     <constraint firstItem="P6W-9v-dPr" firstAttribute="centerY" secondItem="bKO-hC-9yV" secondAttribute="centerY" id="uHV-Cg-bfU"/>
-                                    <constraint firstItem="Yxp-js-qJ8" firstAttribute="leading" secondItem="P6W-9v-dPr" secondAttribute="trailing" constant="8" id="uRe-nD-yL4"/>
+                                    <constraint firstAttribute="trailing" secondItem="zCr-3M-p8P" secondAttribute="trailing" id="yMT-8j-04r"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9G-gL-OAV">
@@ -134,7 +140,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="FCEA89AA-B265-4B68-B294-2F77626061EA" width="504" height="504">
+        <image name="E281EEBC-EC3C-4237-B74A-00CBA4A99EFE" width="504" height="504">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

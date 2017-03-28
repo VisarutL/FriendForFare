@@ -126,27 +126,27 @@ class JourneyViewController:UIViewController {
         print(genderUser)
         if genderUser == 1 {
             rateImageGirl.isHidden = true
-            if rateProfileGirl.count == 0 {
-                setRateImageGirl(rate: 0)
+            if rateProfile.count == 0 {
+                setRateImage(rate: 0)
             } else {
-                let rategirl = "\(rateProfileGirl[0]["rategirl"]!)"
-                let rateprofileGirl = Int(rategirl)
-                if rateprofileGirl == nil {
-                    setRateImageGirl(rate: 0)
+                let rate = "\(rateProfile[0]["rate"]!)"
+                let rateprofile = Int(rate)
+                if rateprofile == nil {
                 } else {
-                    setRateImageGirl(rate: rateprofileGirl!)
+                    setRateImage(rate: rateprofile!)
                 }
             }
             } else {
                 rateImage.isHidden = true
-                if rateProfile.count == 0 {
-                    setRateImage(rate: 0)
+                if rateProfileGirl.count == 0 {
+                    setRateImageGirl(rate: 0)
                 } else {
-                    let rate = "\(rateProfile[0]["rate"]!)"
-                    let rateprofile = Int(rate)
-                    if rateprofile == nil {
+                    let rategirl = "\(rateProfileGirl[0]["rategirl"]!)"
+                    let rateprofileGirl = Int(rategirl)
+                    if rateprofileGirl == nil {
+                        setRateImageGirl(rate: 0)
                     } else {
-                        setRateImage(rate: rateprofile!)
+                        setRateImageGirl(rate: rateprofileGirl!)
                     }
                 }
             }

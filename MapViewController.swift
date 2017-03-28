@@ -137,7 +137,7 @@ extension MapViewController {
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-                //                debugPrint(response)
+//                debugPrint(response)
                 switch response.result {
                 case .success:
                     guard let JSON = response.result.value as! [String : Any]? else {

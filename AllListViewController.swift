@@ -51,14 +51,13 @@ class AllListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.currentLocation = LocationService.sharedInstance.currentLocation
-        let latitude = currentLocation?.coordinate.latitude
-        let longitude = currentLocation?.coordinate.longitude
-        self.refresh(lat:latitude!,long:longitude!)
+        let latitude = currentLocation!.coordinate.latitude
+        let longitude = currentLocation!.coordinate.longitude
         print("latitude: \(latitude)")
         print("longitude: \(longitude)")
         print("currentLocation: \(currentLocation)")
+        self.refresh(lat:latitude,long:longitude)
         
     }
     
