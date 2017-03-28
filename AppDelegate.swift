@@ -72,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         let userID = UserDefaults.standard.integer(forKey: "UserID")
+        setLocationService()
         if userID > 0 {
             setLocationService()
         }

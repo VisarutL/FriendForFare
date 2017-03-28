@@ -59,18 +59,17 @@ class ViewController: UIViewController {
         print("uesrGender: \(genderuser)")
         UserDefaults.standard.set(iduser, forKey: "UserID")
         UserDefaults.standard.set(genderuser, forKey: "UserGender")
-        
+        self.presentNavTabBarController()
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        appDelegate.setLocationService()
-//        
-//            let currentLocation = LocationService.sharedInstance.currentLocation
-//            let latitude = currentLocation?.coordinate.latitude
-//            let longitude = currentLocation?.coordinate.longitude
-//            print("latitude:\(latitude), longitude:\(longitude)")
-//            guard latitude != nil else {  continue }
-//            if latitude! > 0 || longitude! > 0  {
-                self.presentNavTabBarController()
-//            }
+//       
+//        let currentLocation = LocationService.sharedInstance.currentLocation
+//        let latitude = currentLocation?.coordinate.latitude
+//        let longitude = currentLocation?.coordinate.longitude
+//        print("latitude:\(latitude), longitude:\(longitude)")
+//        if latitude! > 0 || longitude! > 0  {
+//            self.presentNavTabBarController()
+//        }
         
     }
     

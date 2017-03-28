@@ -35,7 +35,7 @@ class AllListViewController: UIViewController {
     var itemInfo:IndicatorInfo?
     var fristTime = true
     
-    var currentLocation:CLLocation?
+    var currentLocation:CLLocation!
     
     weak var delegate:ListTapBarDelegate?
     
@@ -54,14 +54,7 @@ class AllListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.currentLocation = LocationService.sharedInstance.currentLocation
-        let latitude = currentLocation?.coordinate.latitude
-        let longitude = currentLocation?.coordinate.longitude
-        print("latitude: \(latitude)")
-        print("longitude: \(longitude)")
-        print("currentLocation: \(currentLocation)")
-//        guard latitude != nil else {  continue }
-        self.refresh(lat:latitude!,long:longitude!)
+        refresh()
         
 //        var connected = true
 //        repeat {
@@ -129,9 +122,7 @@ extension AllListViewController:JourneyDelegate {
     func journeyDidJoin() {
         dismiss(animated: true, completion: nil)
         delegate?.didMoveController(index: 1)
-        let latitude = currentLocation?.coordinate.latitude
-        let longitude = currentLocation?.coordinate.longitude
-        refresh(lat: latitude!, long: longitude!)
+        refresh()
         
     }
 }
@@ -298,7 +289,7 @@ extension AllListViewController:UISearchBarDelegate {
 extension AllListViewController {
 //    (completionHandler:@escaping (_ r:[Region]?
     
-    func refresh(lat:Double,long:Double) {
+    func refresh() {
             
         if fristTime {
             
@@ -309,7 +300,11 @@ extension AllListViewController {
             self.tripfriendList = [NSDictionary]()
             cpGroup.enter()
             let userID = UserDefaults.standard.integer(forKey: "UserID")
-            selectData(iduser: userID,latt: lat, longg: long)
+            self.currentLocation = LocationService.sharedInstance.currentLocation
+            let latitude = currentLocation?.coordinate.latitude
+            let longitude = currentLocation?.coordinate.longitude
+            print("latitude: \(latitude!), longitude: \(longitude!)")
+            selectData(iduser: userID,latt: latitude!, longg: longitude!)
             cpGroup.enter()
             selectFriendData(iduser: userID)
             cpGroup.notify(queue: DispatchQueue.main, execute: {
