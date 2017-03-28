@@ -46,18 +46,35 @@ class AllListViewController: UIViewController {
         initTableView()
         setPullToRefresh()
         tableView?.rowHeight = 90
-        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.currentLocation = LocationService.sharedInstance.currentLocation
-        let latitude = currentLocation!.coordinate.latitude
-        let longitude = currentLocation!.coordinate.longitude
+        let latitude = currentLocation?.coordinate.latitude
+        let longitude = currentLocation?.coordinate.longitude
         print("latitude: \(latitude)")
         print("longitude: \(longitude)")
         print("currentLocation: \(currentLocation)")
-        self.refresh(lat:latitude,long:longitude)
+//        guard latitude != nil else {  continue }
+        self.refresh(lat:latitude!,long:longitude!)
+        
+//        var connected = true
+//        repeat {
+//            self.currentLocation = LocationService.sharedInstance.currentLocation
+//            let latitude = currentLocation?.coordinate.latitude
+//            let longitude = currentLocation?.coordinate.longitude
+//            print("latitude:\(latitude), longitude:\(longitude)")
+//            guard latitude != nil else {  continue }
+//            if latitude! > 0 || longitude! > 0  {
+//                connected = false
+//                self.refresh(lat:latitude!,long:longitude!)
+//            }
+//        } while connected
         
     }
     
@@ -138,10 +155,13 @@ extension AllListViewController:UITableViewDataSource {
         default:
             break
         }
-
+        
+        let countpeople = Int(trip["count_journey"] as! String)
+        let count = countpeople! + 1
+        
         cell.pickUpLabel.text = "\(trip["pick_journey"] as! String)"
         cell.dropOffLabel.text = "\(trip["drop_journey"] as! String)"
-        cell.amountLabel.text = "\(trip["countuser"] as! String)/\(trip["count_journey"] as! String)"
+        cell.amountLabel.text = "\(trip["countuser"] as! String)/\(count)"
         
         
         let dateTime  = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
@@ -369,9 +389,6 @@ extension AllListViewController {
                 self.cpGroup.leave()
             }
         })
-    }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
     
     func setPullToRefresh() {

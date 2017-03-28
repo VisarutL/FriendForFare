@@ -63,7 +63,7 @@ class JourneyViewController:UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        setInfomation()
     }
     
     
@@ -207,15 +207,21 @@ class JourneyViewController:UIViewController {
     }
     
     func setInfomation() {
+        let countpeople = Int(trip["count_journey"] as! String)
+        let count = countpeople! + 1
+        
         pickupLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
         dropoffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
         datetimeLabel.text = "\(trip["date_journey"] as! String) , \(trip["time_journey"] as! String)"
-        countLabel.text = "\(userjoinedList.count)/\(trip["count_journey"] as! String)"
+        countLabel.text = "\(userjoinedList.count)/\(count)"
         detailLabel.text = "\(trip["detail_journey"] as! String)"
     }
     
     func handleJoinButton() {
-        if userjoinedList.count == Int(trip["count_journey"] as! String)! {
+        let countpeople = Int(trip["count_journey"] as! String)
+        let count = countpeople! + 1
+        
+        if userjoinedList.count == count {
             joinButton.setTitle("Full", for: .normal)
             joinButton.backgroundColor = UIColor.redBT
             joinButton.isEnabled = false

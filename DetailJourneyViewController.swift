@@ -13,7 +13,7 @@ protocol DetailJourneyDelegate: class {
     func detailJourneyDidFinish()
 }
 
-class DetailJourneyViewController:UIViewController {
+class DetailJourneyViewController:UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var pickupLabel: UILabel!
     @IBOutlet weak var tableview: UITableView!
@@ -34,6 +34,8 @@ class DetailJourneyViewController:UIViewController {
     
     @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var postButton: UIButton!
+    var activeField: UITextField?
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var tripDetail = [String: Any]()
     var closeBarButton = UIBarButtonItem()
@@ -58,7 +60,11 @@ class DetailJourneyViewController:UIViewController {
         tableViewSetting()
         setCloseButton()
         loadImage()
-        
+        allTextField.forEach({ $0.delegate = self })
+        registerForKeyboardNotifications()
+    }
+    deinit {
+        deregisterFromKeyboardNotifications()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -76,7 +82,10 @@ class DetailJourneyViewController:UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         selectData()
-        countLabel.text = "\(userjoinedList.count)/\(tripDetail["count_journey"] as! String)"
+        let countpeople = Int(tripDetail["count_journey"] as! String)
+        let count = countpeople! + 1
+        
+        countLabel.text = "\(userjoinedList.count)/\(count)"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -430,3 +439,69 @@ extension DetailJourneyViewController {
     
 }
 
+//mark: - keyboard
+extension DetailJourneyViewController {
+    
+    func registerForKeyboardNotifications() {
+        //Adding notifies on keyboard appearing
+        print("registerForKeyboardNotifications")
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func deregisterFromKeyboardNotifications() {
+        print("deregisterFromKeyboardNotifications")
+        //Removing notifies on keyboard appearing
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func keyboardWasShown(_ notification: Notification) {
+        print("keyboardWasShown")
+        self.scrollView.isScrollEnabled = true
+        let info : NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(64, 0.0, keyboardSize!.height+40, 0.0)
+        
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        
+        var aRect : CGRect = self.view.frame
+        aRect.size.height -= keyboardSize!.height+40
+        if let _ = activeField{
+            if (!aRect.contains(activeField!.frame.origin)){
+                self.scrollView.scrollRectToVisible(activeField!.frame, animated: true)
+            }
+        }
+    }
+    
+    func keyboardWillBeHidden(_ notification: Notification){
+        print("keyboardWillBeHidden")
+        let info : NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(64, 0.0, -keyboardSize!.height, 0.0)
+        
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        self.view.endEditing(true)
+        self.scrollView.isScrollEnabled = false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        print("textFieldDidBeginEditing")
+        textField.textColor = UIColor.black
+        //        #selector(self.closeAction)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapView))
+        self.view.addGestureRecognizer(tapRecognizer)
+        activeField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField){
+        print("textFieldDidEndEditing")
+        activeField = nil
+    }
+    
+    func didTapView() {
+        self.view.endEditing(true)
+    }
+}

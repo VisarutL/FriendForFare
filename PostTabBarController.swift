@@ -14,7 +14,7 @@ protocol PostTabBarDelegate:class {
     func postTabBarDidClose()
 }
 
-class PostTabBarController:UIViewController {
+class PostTabBarController:UIViewController, UITextFieldDelegate {
 
     var closeBarButton = UIBarButtonItem()
     @IBOutlet weak var mapView: MKMapView!
@@ -30,11 +30,12 @@ class PostTabBarController:UIViewController {
     @IBOutlet weak var oneButton: UIButton!
     @IBOutlet weak var twoButton: UIButton!
     @IBOutlet weak var threeButton: UIButton!
-    @IBOutlet weak var fourButton: UIButton!
     
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var timeTextField: UITextField!
+    var activeField: UITextField?
+    @IBOutlet weak var scrollView: UIScrollView!
     
     
     var count = 1
@@ -62,17 +63,20 @@ class PostTabBarController:UIViewController {
         oneButton.addTarget(self, action: #selector(selectCount), for: .touchUpInside)
         twoButton.addTarget(self, action: #selector(selectCount), for: .touchUpInside)
         threeButton.addTarget(self, action: #selector(selectCount), for: .touchUpInside)
-        fourButton.addTarget(self, action: #selector(selectCount), for: .touchUpInside)
         oneButton.tag = 1
         twoButton.tag = 2
         threeButton.tag = 3
-        fourButton.tag = 4
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
+        allTextField.forEach({ $0.delegate = self })
+        registerForKeyboardNotifications()
+    }
+    deinit {
+        deregisterFromKeyboardNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -159,29 +163,19 @@ class PostTabBarController:UIViewController {
             oneButton.backgroundColor = UIColor.tabbarColor
             twoButton.backgroundColor = UIColor.textfield
             threeButton.backgroundColor = UIColor.textfield
-            fourButton.backgroundColor = UIColor.textfield
             count = 1
             print(count)
         } else if ((button as AnyObject).tag == 2) {
             oneButton.backgroundColor = UIColor.textfield
             twoButton.backgroundColor = UIColor.tabbarColor
             threeButton.backgroundColor = UIColor.textfield
-            fourButton.backgroundColor = UIColor.textfield
             count = 2
             print(count)
         } else if ((button as AnyObject).tag == 3) {
             oneButton.backgroundColor = UIColor.textfield
             twoButton.backgroundColor = UIColor.textfield
             threeButton.backgroundColor = UIColor.tabbarColor
-            fourButton.backgroundColor = UIColor.textfield
             count = 3
-            print(count)
-        } else if ((button as AnyObject).tag == 4) {
-            oneButton.backgroundColor = UIColor.textfield
-            twoButton.backgroundColor = UIColor.textfield
-            threeButton.backgroundColor = UIColor.textfield
-            fourButton.backgroundColor = UIColor.tabbarColor
-            count = 4
             print(count)
         }
     }
@@ -374,3 +368,72 @@ extension PostTabBarController {
             })
     }
 }
+
+//mark: - keyboard
+extension PostTabBarController {
+    
+    func registerForKeyboardNotifications() {
+        //Adding notifies on keyboard appearing
+        print("registerForKeyboardNotifications")
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func deregisterFromKeyboardNotifications() {
+        print("deregisterFromKeyboardNotifications")
+        //Removing notifies on keyboard appearing
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func keyboardWasShown(_ notification: Notification) {
+        print("keyboardWasShown")
+        self.scrollView.isScrollEnabled = true
+        let info : NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(64, 0.0, keyboardSize!.height+40, 0.0)
+        
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        
+        var aRect : CGRect = self.view.frame
+        aRect.size.height -= keyboardSize!.height+40
+        if let _ = activeField{
+            if (!aRect.contains(activeField!.frame.origin)){
+                self.scrollView.scrollRectToVisible(activeField!.frame, animated: true)
+            }
+        }
+    }
+    
+    func keyboardWillBeHidden(_ notification: Notification){
+        print("keyboardWillBeHidden")
+        let info : NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(64, 0.0, -keyboardSize!.height, 0.0)
+        
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        self.view.endEditing(true)
+        self.scrollView.isScrollEnabled = false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        print("textFieldDidBeginEditing")
+        textField.textColor = UIColor.black
+        //        #selector(self.closeAction)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapView))
+        self.view.addGestureRecognizer(tapRecognizer)
+        activeField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField){
+        print("textFieldDidEndEditing")
+        activeField = nil
+    }
+    
+    func didTapView() {
+        self.view.endEditing(true)
+    }
+}
+
+

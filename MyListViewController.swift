@@ -106,9 +106,12 @@ class MyListViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let tripwait = tripmywaitList[indexPath.row]
+            let countpeople = Int(tripwait["count_journey"] as! String)
+            let count = countpeople! + 1
+            
             cell.pickUpLabel.text = "\(tripwait["pick_journey"] as! String)"
             cell.dropOffLabel.text = "\(tripwait["drop_journey"] as! String)"
-            cell.amountLabel.text = "\(tripwait["countuser"] as! String)/\(tripwait["count_journey"] as! String)"
+            cell.amountLabel.text = "\(tripwait["countuser"] as! String)/\(count)"
             let dateTime  = "\(tripwait["date_journey"] as! String) \(tripwait["time_journey"] as! String)"
             
             let dateFormatter = DateFormatter()
@@ -139,9 +142,12 @@ class MyListViewController: UITableViewController {
             }
         case 1:
             let tripme = tripmyList[indexPath.row]
+            let countpeople = Int(tripme["count_journey"] as! String)
+            let count = countpeople! + 1
+            
             cell.pickUpLabel.text = "\(tripme["pick_journey"] as! String)"
             cell.dropOffLabel.text = "\(tripme["drop_journey"] as! String)"
-            cell.amountLabel.text = "\(tripme["countuser"] as! String)/\(tripme["count_journey"] as! String)"
+            cell.amountLabel.text = "\(tripme["countuser"] as! String)/\(count)"
             let dateTime  = "\(tripme["date_journey"] as! String) \(tripme["time_journey"] as! String)"
             
             let dateFormatter = DateFormatter()
@@ -172,9 +178,12 @@ class MyListViewController: UITableViewController {
             }
         case 2:
             let tripjoin = tripmyjoinList[indexPath.row]
+            let countpeople = Int(tripjoin["count_journey"] as! String)
+            let count = countpeople! + 1
+            
             cell.pickUpLabel.text = "\(tripjoin["pick_journey"] as! String)"
             cell.dropOffLabel.text = "\(tripjoin["drop_journey"] as! String)"
-            cell.amountLabel.text = "\(tripjoin["countuser"] as! String)/\(tripjoin["count_journey"] as! String)"
+            cell.amountLabel.text = "\(tripjoin["countuser"] as! String)/\(count)"
             cell.dateTmeLabel.text = "\(tripjoin["date_journey"] as! String) \(tripjoin["time_journey"] as! String)"
             
             guard let imageName = tripjoin["pic_user"] as? String ,imageName != "" else {

@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-
 import Alamofire
 import FBSDKCoreKit
 import FBSDKShareKit
@@ -19,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var fbloginButton: FBSDKLoginButton!
+    
     
     var userlogin = [NSDictionary]()
     
@@ -60,7 +60,18 @@ class ViewController: UIViewController {
         UserDefaults.standard.set(iduser, forKey: "UserID")
         UserDefaults.standard.set(genderuser, forKey: "UserGender")
         
-        self.presentNavTabBarController()
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        appDelegate.setLocationService()
+//        
+//            let currentLocation = LocationService.sharedInstance.currentLocation
+//            let latitude = currentLocation?.coordinate.latitude
+//            let longitude = currentLocation?.coordinate.longitude
+//            print("latitude:\(latitude), longitude:\(longitude)")
+//            guard latitude != nil else {  continue }
+//            if latitude! > 0 || longitude! > 0  {
+                self.presentNavTabBarController()
+//            }
+        
     }
     
     func presentNavTabBarController() {
@@ -239,7 +250,7 @@ extension ViewController {
 
                     }
                 case .failure(let error):
-                    print(error)
+                    self.alert(title: "", message: "login: \(error.localizedDescription)", withCloseAction: false)
                 }
             })
     }

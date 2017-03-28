@@ -56,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         setNavigationBarAppearace()
+//        setLocationService()
         
         let userID = UserDefaults.standard.integer(forKey: "UserID")
         if userID > 0 {

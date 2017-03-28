@@ -54,6 +54,16 @@ class HistoryListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tripList.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell") ??
+                UITableViewCell(style: .default, reuseIdentifier: "emptyCell")
+            cell.textLabel?.text = "ยังไม่มีทริปที่จบ"
+            cell.textLabel?.textColor = UIColor.gray
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell.textLabel?.textAlignment = .center
+            cell.selectionStyle = .none
+            return cell
+        }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: feedViewCelldentifier, for: indexPath) as! FeedViewCell
         cell.preservesSuperviewLayoutMargins = false
@@ -62,9 +72,12 @@ class HistoryListViewController: UITableViewController {
         
         
         let trip = tripList[indexPath.row]
+        let countpeople = Int(trip["count_journey"] as! String)
+        let count = countpeople! + 1
+        
         cell.pickUpLabel.text = "\(trip["pick_journey"] as! String)"
         cell.dropOffLabel.text = "\(trip["drop_journey"] as! String)"
-        cell.amountLabel.text = "\(trip["countuser"] as! String)/\(trip["count_journey"] as! String)"
+        cell.amountLabel.text = "\(trip["countuser"] as! String)/\(count)"
         let dateTime  = "\(trip["date_journey"] as! String) \(trip["time_journey"] as! String)"
         
         let dateFormatter = DateFormatter()
@@ -97,17 +110,24 @@ class HistoryListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tripList.count == 0 {
+            return 1
+        }
         return tripList.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ReviewViewController") as! ReviewViewController
-        vc.myText = "Review"
-        vc.trip = tripList[indexPath.row] as! [String : Any]
-        let nvc = NavController(rootViewController: vc)
-        self.present(nvc, animated: true, completion: nil)
+        if tripList.isEmpty == true {
+
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ReviewViewController") as! ReviewViewController
+            vc.myText = "Review"
+            vc.trip = tripList[indexPath.row] as! [String : Any]
+            let nvc = NavController(rootViewController: vc)
+            self.present(nvc, animated: true, completion: nil)
+        }
         
     }
 }

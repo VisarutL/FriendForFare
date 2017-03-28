@@ -55,6 +55,17 @@ class FriendListViewController:UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if friendList.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell") ??
+                UITableViewCell(style: .default, reuseIdentifier: "emptyCell")
+            cell.textLabel?.text = "ยังไม่มีเพื่อน"
+            cell.textLabel?.textColor = UIColor.gray
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell.textLabel?.textAlignment = .center
+            cell.selectionStyle = .none;
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: friendViewCelldentifier, for: indexPath) as! FriendViewCell
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
@@ -83,21 +94,27 @@ class FriendListViewController:UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if friendList.count == 0 {
+            return 1
+        }
         return friendList.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
-        vc.myText = "Friend"
-        vc.friend = friendList[indexPath.row] as! [String : Any]
-        
-        let nvc = UINavigationController(rootViewController: vc)
-        nvc.modalPresentationStyle = .overFullScreen
-        nvc.modalTransitionStyle = .crossDissolve
-        present(nvc, animated: true, completion: nil)
-        
+        if friendList.isEmpty == true {
+            
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
+            vc.myText = "Friend"
+            vc.friend = friendList[indexPath.row] as! [String : Any]
+            
+            let nvc = UINavigationController(rootViewController: vc)
+            nvc.modalPresentationStyle = .overFullScreen
+            nvc.modalTransitionStyle = .crossDissolve
+            present(nvc, animated: true, completion: nil)
+        }
     }
     
     

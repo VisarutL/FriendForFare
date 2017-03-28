@@ -50,6 +50,16 @@ class FriendRequestListViewController:UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if friendrequestList.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell") ??
+                UITableViewCell(style: .default, reuseIdentifier: "emptyCell")
+            cell.textLabel?.text = "ยังไม่มีเพื่อนที่แอดมา"
+            cell.textLabel?.textColor = UIColor.gray
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell.textLabel?.textAlignment = .center
+            cell.selectionStyle = .none
+            return cell
+        }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: friendRequestViewCelldentifier, for: indexPath) as! FriendRequestViewCell
         cell.preservesSuperviewLayoutMargins = false
@@ -57,9 +67,6 @@ class FriendRequestListViewController:UITableViewController {
         cell.layoutMargins = UIEdgeInsets.zero
         cell.delegate = self
         cell.indexPath = indexPath as NSIndexPath
-        if friendrequestList.count == 0 {
-            cell.nameLabel.text = "name"
-        } else {
         let friendrequest = friendrequestList[indexPath.row]
             cell.nameLabel.text = "\(friendrequest["fname_user"]!) \(friendrequest["lname_user"]!)"
             guard let imageName = friendrequest["pic_user"] as? String ,imageName != "" else {
@@ -75,27 +82,33 @@ class FriendRequestListViewController:UITableViewController {
                     
                 }
             }
-        }
         return cell
         
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if friendrequestList.count == 0 {
+            return 1
+        }
         return friendrequestList.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
-        vc.myText = "FriendRequest"
-        vc.friend = friendrequestList[indexPath.row] as! [String : Any]
-        
-        let nvc = UINavigationController(rootViewController: vc)
-        nvc.modalPresentationStyle = .overFullScreen
-        nvc.modalTransitionStyle = .crossDissolve
-        present(nvc, animated: true, completion: nil)
+        if friendrequestList.isEmpty == true {
+            
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ProfileFriendTabBarController") as! ProfileFriendTabBarController
+            vc.myText = "FriendRequest"
+            vc.friend = friendrequestList[indexPath.row] as! [String : Any]
+            
+            let nvc = UINavigationController(rootViewController: vc)
+            nvc.modalPresentationStyle = .overFullScreen
+            nvc.modalTransitionStyle = .crossDissolve
+            present(nvc, animated: true, completion: nil)
+        }
     }
 }
 

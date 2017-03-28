@@ -42,6 +42,16 @@ class NotificationViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        if joinList.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell") ??
+                UITableViewCell(style: .default, reuseIdentifier: "emptyCell")
+            cell.textLabel?.text = "ยังไม่มีแจ้งเตือน"
+            cell.textLabel?.textColor = UIColor.gray
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell.textLabel?.textAlignment = .center
+            cell.selectionStyle = .none;
+            return cell
+        }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: notificationCelldentifier, for: indexPath) as! NotificationViewCell
         
@@ -73,18 +83,24 @@ class NotificationViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if joinList.count == 0 {
+            return 1
+        }
         return joinList.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard = UIStoryboard(name: "ListTapBarDetail", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "JoinViewController") as! JoinViewController
-        vc.myText = "joinUser"
-        vc.join = joinList[indexPath.row] as! [String : Any]
-        let nvc = NavController(rootViewController: vc)
-        self.navigationController?.pushViewController(vc, animated: true)
-        
+        if joinList.isEmpty == true {
+            
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            let storyboard = UIStoryboard(name: "ListTapBarDetail", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "JoinViewController") as! JoinViewController
+            vc.myText = "joinUser"
+            vc.join = joinList[indexPath.row] as! [String : Any]
+            let nvc = NavController(rootViewController: vc)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     

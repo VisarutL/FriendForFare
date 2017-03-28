@@ -70,6 +70,15 @@ class ProfileTabBarController:UITableViewController{
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        if self.reviewprofile.count == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell") ??
+                    UITableViewCell(style: .default, reuseIdentifier: "emptyCell")
+                cell.textLabel?.text = "ยังไม่มีคนรีวิว"
+                cell.textLabel?.textColor = UIColor.gray
+                cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+                cell.textLabel?.textAlignment = .center
+                return cell
+        }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reviewuserCelldentifier, for: indexPath) as! ReviewUserViewCell
         
@@ -78,9 +87,7 @@ class ProfileTabBarController:UITableViewController{
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
         
-        if reviewprofile.count == 0 {
-            
-        } else {
+        
             let reviewprofile = self.reviewprofile[indexPath.row]
             cell.comemtLabel.text = "\(reviewprofile["comment_review"]!)"
             cell.timeLabel.text = "\(reviewprofile["datetime_review"]!)"
@@ -107,14 +114,15 @@ class ProfileTabBarController:UITableViewController{
             //
             //                }
             //            }
-            
-        }
         
         return cell
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if reviewprofile.count == 0 {
+            return 1
+        }
         return reviewprofile.count
     }
     
