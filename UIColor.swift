@@ -36,8 +36,13 @@ extension UIColor {
     
     
     public class var borderImage: UIColor {
-    let borderImage = UIColor(red: 240 / 255, green: 240 / 255, blue: 240 / 255, alpha: 0.0)
+        let borderImage = UIColor(red: 240 / 255, green: 240 / 255, blue: 240 / 255, alpha: 0.0)
     return borderImage
+    }
+    
+    public class var routeMap: UIColor {
+        let routeMap = UIColor(red: 63 / 255, green: 135 / 255, blue: 248 / 255, alpha: 1.0)
+        return routeMap
     }
     
     public class var backgroundImage: UIColor {

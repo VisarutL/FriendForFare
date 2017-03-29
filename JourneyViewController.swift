@@ -212,7 +212,7 @@ class JourneyViewController:UIViewController {
         
         pickupLabel.text = "PICK-UP : \(trip["pick_journey"] as! String)"
         dropoffLabel.text = "DROP-OFF : \(trip["drop_journey"] as! String)"
-        datetimeLabel.text = "\(trip["date_journey"] as! String) , \(trip["time_journey"] as! String)"
+        datetimeLabel.text = "\(trip["date_journey"] as! String), Time: \(trip["time_journey"] as! String)"
         countLabel.text = "\(userjoinedList.count)/\(count)"
         detailLabel.text = "\(trip["detail_journey"] as! String)"
     }

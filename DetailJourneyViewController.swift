@@ -145,7 +145,7 @@ class DetailJourneyViewController:UIViewController, UITextFieldDelegate {
         
         pickupLabel.text = "PICK-UP : \(tripDetail["pick_journey"] as! String)"
         dropoffLabel.text = "DROP-OFF : \(tripDetail["drop_journey"] as! String)"
-        datetimeLabel.text = "\(tripDetail["date_journey"] as! String) , \(tripDetail["time_journey"] as! String)"
+        datetimeLabel.text = "\(tripDetail["date_journey"] as! String), Time: \(tripDetail["time_journey"] as! String)"
         countLabel.text = "0/\(tripDetail["count_journey"] as! String)"
         detailLabel.text = "\(tripDetail["detail_journey"] as! String)"
         let idtrip = "\(tripDetail["id_journey"] as! String)"

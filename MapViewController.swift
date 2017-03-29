@@ -17,6 +17,7 @@ class MapViewController:UIViewController {
     
     var tripDetail = [String: Any]()
     @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
     weak var delegate:DetailJourneyMapDelegate?
@@ -82,8 +83,17 @@ class MapViewController:UIViewController {
             }
             
             let route = response.routes[0]
-            let distance = (route.distance)/1000
-            self.distanceLabel.text = "Distance: \(distance) KM"
+            let travelTime = (route.expectedTravelTime)/60
+            let travelDistance = (route.distance)/1000
+            let myFormatter = NumberFormatter()
+            myFormatter.maximumFractionDigits = 0
+            
+            let time = myFormatter.string(from: NSNumber(value:travelTime))
+            let distance = myFormatter.string(from: NSNumber(value:travelDistance))
+            print(time!)
+            print(distance!)
+            self.distanceLabel.text = "Distance: \(distance!) KM"
+            self.timeLabel.text = "Traveltime: \(time!) Min"
             self.mapView.add((route.polyline), level: MKOverlayLevel.aboveRoads)
             
             let rect = route.polyline.boundingMapRect
@@ -111,7 +121,7 @@ class MapViewController:UIViewController {
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.black
+        renderer.strokeColor = UIColor.routeMap
         renderer.lineWidth = 4.0
         return renderer
     }
