@@ -12,6 +12,7 @@ import Alamofire
 import FBSDKCoreKit
 import FBSDKShareKit
 import FBSDKLoginKit
+import Firebase
 
 class ViewController: UIViewController {
     
@@ -24,7 +25,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let token = FIRInstanceID.instanceID().token()
         let userID = UserDefaults.standard.integer(forKey: "UserID")
+        print("InstanceID token: \(token!)")
         print("userID: \(userID)")
     
         configureFacebook()
