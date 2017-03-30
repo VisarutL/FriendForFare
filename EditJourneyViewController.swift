@@ -155,7 +155,21 @@ class EditJourneyViewController: UIViewController {
     }
     
     @IBAction func deleteAction(_ sender: Any) {
-        deletePost()
+        let alert = UIAlertController(title: "", message: "Are you sure you want to Delete?", preferredStyle: .actionSheet)
+        
+        let logoutAction = UIAlertAction(title: "Yes", style: .destructive, handler: {
+            _ in
+            self.deletePost()
+        })
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        
+        alert.addAction(logoutAction)
+        alert.addAction(cancelAction)
+        
+        alert.popoverPresentationController?.sourceView = self.view
+        let cgRectMake = CGRect(x: self.view.bounds.size.width / 2.0, y:self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        alert.popoverPresentationController?.sourceRect = cgRectMake
+        self.present(alert, animated: true, completion: nil)
     }
     
     

@@ -365,9 +365,11 @@ extension JourneyViewController {
     func joinJourney(id:Int,idjour:String) {
         let userid = id
         let idjourney = idjour
+        let usertoken = "\(self.profileList[0]["token_user"]!)"
         var parameter = Parameters()
         parameter.updateValue(userid, forKey: "user_id")
         parameter.updateValue(idjourney, forKey: "id_journey")
+        parameter.updateValue(usertoken, forKey: "usertoken")
         insertUserService(parameter: parameter)
     }
     
@@ -382,7 +384,7 @@ extension JourneyViewController {
         manager.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(completionHandler: { response in
                 manager.session.invalidateAndCancel()
-//                debugPrint(response)
+                debugPrint(response)
                 switch response.result {
                 case .success:
                     guard let JSON = response.result.value as! [String : Any]? else {

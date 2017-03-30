@@ -13,8 +13,6 @@ import FBSDKShareKit
 import FBSDKLoginKit
 import UserNotifications
 import Firebase
-import FirebaseInstanceID
-import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,8 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
-        
         // [END register_for_notifications]
+        
         FIRApp.configure()
         
         // [START add_token_refresh_observer]
@@ -142,7 +140,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         connectToFcm()
     }
     // [END refresh_token]
-    
     // [START connect_to_fcm]
     func connectToFcm() {
         // Won't connect since there is no token
@@ -162,7 +159,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     // [END connect_to_fcm]
-    
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Unable to register for remote notifications: \(error.localizedDescription)")
     }
@@ -194,6 +190,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         connectToFcm()
+        application.applicationIconBadgeNumber = 0;
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -226,6 +223,7 @@ extension AppDelegate : LocationServiceDelegate {
     }
 }
 
+// [START ios_10_message_handling]
 @available(iOS 10, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {
     
@@ -241,9 +239,6 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         
         // Print full message.
         print(userInfo)
-        
-        NotificationCenter.default.post(name: Notification.Name("getJob"), object: nil, userInfo: userInfo)
-        
         
         // Change this to your preferred presentation option
         completionHandler([])
@@ -270,8 +265,7 @@ extension AppDelegate : FIRMessagingDelegate {
     // Receive data message on iOS 10 devices while app is in the foreground.
     func applicationReceivedRemoteMessage(_ remoteMessage: FIRMessagingRemoteMessage) {
         print(remoteMessage.appData)
-        
     }
 }
-
+// [END ios_10_data_message_handling]
 
